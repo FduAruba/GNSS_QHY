@@ -1,0 +1,47 @@
+$$ Ocean loading displacement
+$$
+$$ Calculated on holt using olfg/olmpp of H.-G. Scherneck
+$$
+$$ Greens function: mc00egbc
+$$ 
+$$ COLUMN ORDER:  M2  S2  N2  K2  K1  O1  P1  Q1  MF  MM SSA
+$$
+$$ ROW ORDER:
+$$ AMPLITUDES (m)
+$$   RADIAL
+$$   TANGENTL    EW
+$$   TANGENTL    NS
+$$ PHASES (degrees)
+$$   RADIAL
+$$   TANGENTL    EW
+$$   TANGENTL    NS
+$$
+$$ Displacement is defined positive in Upwards, South and West direction.
+$$ The phase lag is relative to Greenwich and lags positive. The 
+$$ Gutenberg-Bullen Greens function is used. In the ocean tide model the 
+$$ deficit of tidal water mass has been corrected by subtracting a uniform 
+$$ layer of water with a certain phase lag globally.
+$$
+$$ Complete <model name> : No interpolation of ocean model was necessary
+$$ <model name>_PP       : Ocean model has been interpolated near the station 
+$$                         (PP = Post-Processing)
+$$ 
+$$ CMC:  NO   (corr.tide centre of mass)
+$$
+$$ Ocean tide model: FES2004
+$$
+$$ END HEADER
+$$
+  FDHD_QHY  
+$$ FES2004_PP ID: 2022-02-23 14:03:04
+$$ Computed by OLMPP by H G Scherneck, Onsala Space Observatory, 2022
+$$ FDHD_QHY,                  RADI TANG  lon/lat:  121.4985   31.3009   38.148
+  .00735 .00136 .00157 .00014 .00728 .00566 .00233 .00118 .00005 .00008 .00009
+  .00234 .00044 .00053 .00003 .00260 .00181 .00084 .00036 .00008 .00003 .00001
+  .00403 .00117 .00074 .00032 .00147 .00130 .00049 .00027 .00002 .00002 .00002
+  -142.4 -133.6 -167.0 -128.5  -98.0 -113.3  -96.4 -123.5 -128.2 -151.2 -174.8
+  -162.0 -157.4 -175.0 -150.0 -115.5 -138.8 -114.8 -148.7  -39.0  -85.5 -155.9
+   -25.4   14.2  -40.7    2.2  128.4  101.5  128.1   93.1   49.5   42.3    5.0
+$$ END TABLE
+Errors:
+Warnings:
