@@ -1,13 +1,4 @@
-#include "gnss.h"
-
-/* Global variables ------------------------------------------------*/
-
-static vector<ObsRecData_t> obsall;		  // obs data set
-static NavPack_t navall = { 0 };		  // nav packet
-static Station_t sta;					  // station infomation
-static vector<PCV_t> pcvs;				  // pcv data
-static vector<FILE*> fps = vector<FILE*>(50, NULL);		// file pointers
-static map<int, Sat_t> sat_stat;		  // sat status
+#include "gnss_pos.h"
 
 /* post process functions ------------------------------------------*/
 
