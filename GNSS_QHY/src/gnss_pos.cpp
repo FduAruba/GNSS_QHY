@@ -1,4 +1,13 @@
-#include "gnss_pos.h"
+#include "gnss.h"
+
+/* Global variables ------------------------------------------------*/
+
+static vector<ObsRecData_t> obsall;		  // obs data set
+static NavPack_t navall = { 0 };		  // nav packet
+static Station_t sta;					  // station infomation
+static vector<PCV_t> pcvs;				  // pcv data
+static vector<FILE*> fps = vector<FILE*>(50, NULL);		// file pointers
+static map<int, Sat_t> sat_stat;		  // sat status
 
 /* post process functions ------------------------------------------*/
 
@@ -80,7 +89,7 @@ static int obsScan_SPP(const ProcOpt_t* popt, ObsEphData_t* obs, const int nobs)
 	return 0;
 }
 
-static int inputobs(vector<ObsRecData_t>* obsall, int revs, int rcv, int* ieph, ObsEphData_t* obs)
+static int inputobs(ObsEphData_t* obs, vector<ObsRecData_t>* obsall, int revs, int rcv, int* ieph)
 {
 	double ep[6];
 
@@ -114,7 +123,7 @@ static int inputobs(vector<ObsRecData_t>* obsall, int revs, int rcv, int* ieph, 
 	return (*obs).nsat;
 }
 
-static void procpos(ProcOpt_t* popt, Solopt_t* sopt, int mode, Sol_t* sol)
+static void procpos(Sol_t* sol, ProcOpt_t* popt, Solopt_t* sopt, int mode)
 {
 	/* 局部变量定义 ========================================================= */
 	Sol_t sol_tmp = { {0} };				// 解算结果结构体(全0)
@@ -130,7 +139,7 @@ static void procpos(ProcOpt_t* popt, Solopt_t* sopt, int mode, Sol_t* sol)
 
 	/* processing epoch-wise */
 	/* 1.obs获取一个历元内所有的obs数据，并返回obs个数nobs */
-	while ((nobs = inputobs(&obsall, popt->sol_mode, 0, &(popt->ieph), &obs)) >= 0) {
+	while ((nobs = inputobs(&obs, &obsall, popt->sol_mode, 0, &(popt->ieph))) >= 0) {
 
 		if (k == 0) { popt->ts = obs.eph; }
 		k++;
@@ -162,7 +171,6 @@ static void procpos(ProcOpt_t* popt, Solopt_t* sopt, int mode, Sol_t* sol)
 			}
 		}
 	}
-
 	return;
 }
 
@@ -191,7 +199,7 @@ static int execses(ProcOpt_t* popt, FileOpt_t* fopt, Solopt_t* sopt)
 			}
 		}
 		
-		procpos(popt, sopt, 0, &sol);
+		procpos(&sol, popt, sopt, 0);
 
 		if (sol.fp_sat) { fclose(sol.fp_sat); sol.fp_sat = NULL; }
 		if (sol.fp_itr) { fclose(sol.fp_itr); sol.fp_sat = NULL; }
@@ -200,7 +208,7 @@ static int execses(ProcOpt_t* popt, FileOpt_t* fopt, Solopt_t* sopt)
 		popt->ieph = obsall[0].neph - 1;
 		popt->ts = obsall[0].obseph[0].eph;
 		popt->te = obsall[0].obseph[obsall[0].neph - 1].eph;
-		procpos(popt, sopt, 0, &sol);
+		procpos(&sol, popt, sopt, 0); 
 	}
 
 	printf("bad epoch not iterated=%d\n", sol.n_ite);
@@ -208,7 +216,7 @@ static int execses(ProcOpt_t* popt, FileOpt_t* fopt, Solopt_t* sopt)
 	return 0;
 }
 
-static int read_products(GpsTime_t ts, GpsTime_t te, double ti, ProcOpt_t* popt, FileOpt_t* fopt)
+static int read_products(ProcOpt_t* popt, FileOpt_t* fopt, GpsTime_t ts, GpsTime_t te, double ti)
 {
 	int stat;
 
@@ -284,7 +292,7 @@ extern int posFDU(GpsTime_t ts, GpsTime_t te, double ti, ProcOpt_t* popt, FileOp
 	/* ==========================================================================*/
 
 	/* read files ===============================================================*/
-	if (!(stat = read_products(ts, te, ti, popt, fopt))) {
+	if (!(stat = read_products(popt, fopt, ts, te, ti))) {
 		printf("*** Read products error, program exit\n");
 		return 0;
 	}

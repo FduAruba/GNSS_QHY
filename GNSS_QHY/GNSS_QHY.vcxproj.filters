@@ -21,9 +21,6 @@
     <ClInclude Include="include\gnss.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="include\gnss_pos.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\broad_eph.cpp">
