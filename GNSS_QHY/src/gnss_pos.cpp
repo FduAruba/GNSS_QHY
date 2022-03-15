@@ -80,7 +80,7 @@ static int obsScan_SPP(const ProcOpt_t* popt, ObsEphData_t* obs, const int nobs)
 	return 0;
 }
 
-static int inputobs(ObsEphData_t* obs, vector<ObsRecData_t>* obsall, int revs, int rcv, int* ieph)
+static int inputobs(vector<ObsRecData_t>* obsall, int revs, int rcv, int* ieph, ObsEphData_t* obs)
 {
 	double ep[6];
 
@@ -114,7 +114,7 @@ static int inputobs(ObsEphData_t* obs, vector<ObsRecData_t>* obsall, int revs, i
 	return (*obs).nsat;
 }
 
-static void procpos(Sol_t* sol, ProcOpt_t* popt, Solopt_t* sopt, int mode)
+static void procpos(ProcOpt_t* popt, Solopt_t* sopt, int mode, Sol_t* sol)
 {
 	/* 局部变量定义 ========================================================= */
 	Sol_t sol_tmp = { {0} };				// 解算结果结构体(全0)
@@ -130,7 +130,7 @@ static void procpos(Sol_t* sol, ProcOpt_t* popt, Solopt_t* sopt, int mode)
 
 	/* processing epoch-wise */
 	/* 1.obs获取一个历元内所有的obs数据，并返回obs个数nobs */
-	while ((nobs = inputobs(&obs, &obsall, popt->sol_mode, 0, &(popt->ieph))) >= 0) {
+	while ((nobs = inputobs(&obsall, popt->sol_mode, 0, &(popt->ieph), &obs)) >= 0) {
 
 		if (k == 0) { popt->ts = obs.eph; }
 		k++;
@@ -190,7 +190,7 @@ static int execses(ProcOpt_t* popt, FileOpt_t* fopt, Solopt_t* sopt)
 			}
 		}
 		
-		procpos(&sol, popt, sopt, 0);
+		procpos(popt, sopt, 0, &sol);
 
 		if (sol.fp_sat) { fclose(sol.fp_sat); sol.fp_sat = NULL; }
 		if (sol.fp_itr) { fclose(sol.fp_itr); sol.fp_sat = NULL; }
@@ -199,7 +199,7 @@ static int execses(ProcOpt_t* popt, FileOpt_t* fopt, Solopt_t* sopt)
 		popt->ieph = obsall[0].neph - 1;
 		popt->ts = obsall[0].obseph[0].eph;
 		popt->te = obsall[0].obseph[obsall[0].neph - 1].eph;
-		procpos(&sol, popt, sopt, 0); 
+		procpos(popt, sopt, 0, &sol);
 	}
 
 	printf("bad epoch not iterated=%d\n", sol.n_ite);
@@ -207,7 +207,7 @@ static int execses(ProcOpt_t* popt, FileOpt_t* fopt, Solopt_t* sopt)
 	return 0;
 }
 
-static int read_products(ProcOpt_t* popt, FileOpt_t* fopt, GpsTime_t ts, GpsTime_t te, double ti)
+static int read_products(GpsTime_t ts, GpsTime_t te, double ti, ProcOpt_t* popt, FileOpt_t* fopt)
 {
 	int stat;
 
@@ -283,7 +283,7 @@ extern int posFDU(GpsTime_t ts, GpsTime_t te, double ti, ProcOpt_t* popt, FileOp
 	/* ==========================================================================*/
 
 	/* read files ===============================================================*/
-	if (!(stat = read_products(popt, fopt, ts, te, ti))) {
+	if (!(stat = read_products(ts, te, ti, popt, fopt))) {
 		printf("*** Read products error, program exit\n");
 		return 0;
 	}
