@@ -9,9 +9,11 @@ static Station_t sta;					  // station infomation
 static vector<PCV_t> pcvs;				  // pcv data
 static map<int, Sat_t> sat_stat;		  // sat status
 static vector<FILE*> fps = vector<FILE*>(50, NULL);	// file pointers
+//static PPP_Glob_t pppglob;
 
 /* functions -------------------------------------------------------*/
 
+static int clk_Repair(ObsEphData_t* obs, NavPack_t* navall);
 /**
 * @brief API of specific position processes (SPP, PPP...)
 *
@@ -28,11 +30,19 @@ static int position(ObsEphData_t* obs, int n, NavPack_t* navall, ProcOpt_t* popt
 *
 * @param <ProcOpt_t>    [*popt] process option
 * @param <ObsEphData_t> [*obs]  obs data in i-th epoch
-* @param <int>          [nobs]  number of obs in i-th epoch
 *
 * @return <int> number of obs after sort (0:error)
 */
-static int obsScan_SPP(const ProcOpt_t* popt, ObsEphData_t* obs, const int nobs);
+static int obsScan_SPP(const ProcOpt_t* popt, ObsEphData_t* obs);
+/**
+* @brief scan obs data and exclude satellite by double frequency carruier phace and code coarse difference
+*
+* @param <ProcOpt_t>    [*popt] process option
+* @param <ObsEphData_t> [*obs]  obs data in i-th epoch
+*
+* @return <int> number of obs after sort (0:error)
+*/
+static int obsScan_PPP(const  ProcOpt_t* popt, ObsEphData_t* obs);
 /**
 * @brief input obs data from obs set
 *

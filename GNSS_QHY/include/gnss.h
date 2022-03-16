@@ -648,6 +648,14 @@ struct Sat_t
     //double  ph[2][NFREQ];       // previous carrier-phase observable (cycle) 
 };
 
+/* PPP global status ------------------------------------------------------------*/
+struct PPP_Glob_t
+{
+    double clk_jump = 0.0;
+    map<int, vector<double>> obs_past;
+};
+static PPP_Glob_t pppglob;
+
 /* functions --------------------------------------------------------------------*/
 /* comm_fun.cpp -----------------------------------------------------------------*/
 

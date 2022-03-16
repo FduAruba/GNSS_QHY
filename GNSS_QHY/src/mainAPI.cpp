@@ -86,7 +86,7 @@ void test_matmul() {
 
 int main()
 {
-	//test_matmul();
+	long t1, t2;
 	GpsTime_t tmp = { 0 };
 	int ret;
 	double err[5] = { 100.0,0.003,0.003,0.0,1.0 };
@@ -124,7 +124,11 @@ int main()
 	sopt.time_sys = TIMES_GPST;
 	sopt.time_fmt = 1;
 
+	t1 = clock();
 	ret = posFDU(tmp, tmp, 0.0, &popt, &fopt, &sopt);
+	t2 = clock();
+
+	printf("\n* The total time for running the program: %6.3f seconds\n%c", (double)(t2 - t1) / CLOCKS_PER_SEC, '\0');
 
 	//system("pause");
 	return 0;
