@@ -24,6 +24,9 @@
     <ClInclude Include="include\gnss_pos.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="include\ppp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\broad_eph.cpp">
@@ -45,6 +48,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\spp.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ppp.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

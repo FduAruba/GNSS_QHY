@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="include\gnss.h" />
     <ClInclude Include="include\gnss_pos.h" />
+    <ClInclude Include="include\ppp.h" />
     <ClInclude Include="include\readfile.h" />
   </ItemGroup>
   <ItemGroup>
@@ -28,6 +29,7 @@
     <ClCompile Include="src\comm_fun.cpp" />
     <ClCompile Include="src\gnss_pos.cpp" />
     <ClCompile Include="src\mainAPI.cpp" />
+    <ClCompile Include="src\ppp.cpp" />
     <ClCompile Include="src\readfile.cpp" />
     <ClCompile Include="src\results.cpp" />
     <ClCompile Include="src\spp.cpp" />

@@ -779,6 +779,7 @@ static int decode_obsdata(FILE* fp, char* buff, double ver, int mask, Sigind_t* 
 		}
 		case 1: {	// œ‡Œª
 			satdata.   L[p[i]] = val[i];
+
 			satdata. LLI[p[i]] = lli[i];
 			break;
 		}

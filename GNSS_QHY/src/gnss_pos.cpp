@@ -6,7 +6,7 @@ static int position(ObsEphData_t* obs, int n, NavPack_t* navall, ProcOpt_t* popt
 {
 	/* 局部变量定义 ========================================================= */
 	GpsTime_t time;						// GPS时间变量
-	int nu;								// 有效obs数
+	int nu;								// PPP算法有效obs数
 	char msg[128] = "";					// 错误信息字符串
 	int stat;
 	/* ====================================================================== */
@@ -17,20 +17,19 @@ static int position(ObsEphData_t* obs, int n, NavPack_t* navall, ProcOpt_t* popt
 	/* 1.rover position by single point positioning */
 	if ((stat = spp(obs, n, navall, popt, sol, &sat_stat)) == 0) {
 		//printf("*** ERROR: spp error\n");
-		sta.nbad++;
 		return -1;
 	}
 
-	//if (time.time != 0) rtk->tt = timediff(rtk->sol.time, time);
+	if (time.time != 0) { sol->tt = timediff(sol->time, time); }
 
 	/* 2.通过筛选，更新有效卫星个数nu */
-	//nu = n;
-	//obsScan_PPP(opt, obs, n, &nu);
-	//if (nu <= 4) {
-	//	sprintf(PPP_Glo.chMsg, "*** WARNING: There are only %d satellites observed, skip PPP!\n", nu);
-	//	outDebug(OUTWIN, OUTFIL, 0);
-	//	return 0;
-	//}
+	nu = n;
+	/*obsScan_PPP(opt, obs, n, &nu);
+	if (nu <= 4) {
+		sprintf(PPP_Glo.chMsg, "*** WARNING: There are only %d satellites observed, skip PPP!\n", nu);
+		outDebug(OUTWIN, OUTFIL, 0);
+		return 0;
+	}*/
 
 	///* 3.clock jump repair 钟跳修复 */
 	//clkRepair(obs, nu);

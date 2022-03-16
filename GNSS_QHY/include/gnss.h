@@ -273,7 +273,6 @@ struct Station_t
     double pos[3];                      // station position (ecef) (m) 
     double del[3];                      // antenna position delta (e/n/u or x/y/z) (m) 
     double hgt;                         // antenna height (m) 
-    int nbad = 0;
 };
 
 /* Ephemeris data struct ------------------------------------------------------------*/
@@ -590,6 +589,7 @@ struct Solopt_t
 struct Sol_t
 {       
     GpsTime_t time;             // time (GPST)
+    double tt;                  // time difference
     double rr_snx[3];           // position from SNX file
     double rr[6];               // position/velocity (m|m/s) {x,y,z,vx,vy,vz} or {e,n,u,ve,vn,vu}
     double dtr[6];              // receiver clock bias to time systems (s)
@@ -609,7 +609,8 @@ struct Sol_t
     float thres;                // AR ratio threshold for valiation
     double rms;
     double dcb_rcv;             // receiver DCB
-    /* QHY add */
+
+    /* QHY add debug */
     int n_ite = 0;              // bad epoch: epoch not iterated
     int n_les = 0;              // bad epoch: epoch satellite number not enough
     FILE* fp_sat;               // Debug file pointer: satellite select position/clock file
@@ -998,7 +999,6 @@ extern int getcodepri(const int sys, unsigned char code, const char* opt);
 * @return void
 */
 extern void setcodepri(int sys, int freq, const char* pri);
-
 /* math functions ---------------------------------------------*/
 
 /**
@@ -1115,7 +1115,7 @@ extern int lsq(vector<vector<double>>* A, vector<double>* y, int nx, int ny, vec
 */
 extern double iono_model(GpsTime_t time, int sat, const double* ion, vector<double> pos, map<int, vector<double>>* azel);
 /**
-* @brief compute tropospheric delay by standard atmosphere and saastamoinen model
+* @brief compute tropospheric delay by standard atmosphere and Saastamoinen model
 *
 * @param <GpsTime_t> [time] epoch time
 * @param <int> [sat] satellite number
