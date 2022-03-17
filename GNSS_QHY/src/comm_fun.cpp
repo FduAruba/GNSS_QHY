@@ -557,9 +557,9 @@ extern vector<vector<double>> rot_matrix(const vector<double> pos)
 
 	double sinp = sin(pos[0]), cosp = cos(pos[0]), sinl = sin(pos[1]), cosl = cos(pos[1]);
 
-	R[0][0] = -sinl;    R[1][0] = -sinp * cosl;    R[2][0] = cosp * cosl;
-	R[0][1] = cosl;    R[1][1] = -sinp * sinl;    R[2][1] = cosp * sinl;
-	R[0][2] = 0.0;    R[1][2] = cosp;    R[2][2] = sinp;
+	R[0][0] = -sinl;  R[1][0] = -sinp * cosl;  R[2][0] = cosp * cosl;
+	R[0][1] = cosl;   R[1][1] = -sinp * sinl;  R[2][1] = cosp * sinl;
+	R[0][2] = 0.0;    R[1][2] = cosp;          R[2][2] = sinp;
 
 	return R;
 }

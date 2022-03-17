@@ -1,5 +1,119 @@
 #include"gnss.h"
 
+/* interpolate antenna phase center variation --------------------------------*/
+static double interpvar0(int sat, double ang, const double* var, int bsat)
+{
+	int i, sys, limit = 18;
+	char sid[30];
+	double a;
+
+	if (bsat) {	// 计算卫星pcv
+		ang = ang / 5.0;
+		//sys = satsys(sat, NULL);
+		//if (sys==SYS_GPS) limit=14;
+		//else if (sys==SYS_GLO) limit=15;
+
+		if (ang >= limit) {
+			if (ang > limit + 0.25) {
+				satno2id(sat, sid);
+				printf("*** %s (nadir=%f) >= %2d°\n", sid, ang, limit);
+			}
+			return var[limit];
+		}
+		if (ang < 0) {
+			printf("*** ERROR: compute satellite antenna offset: nadir < 0\n");
+			return var[0];
+		}
+
+		i = (int)ang;
+
+		return var[i] * (1.0 + i - ang) + var[i + 1] * (ang - i);
+	}
+	else {
+		a = ang / 5.0; /* ang=0-90 */
+		i = (int)a;
+		if (i < 0) {
+			printf("*** ERROR: compute receiver antenna offset: i<0\n");
+			return var[0];
+		}
+		else if (i > 18) {
+			printf("*** ERROR: compute receiver antenna offset: i>18\n");
+			return var[18];
+		}
+		return var[i] * (1.0 - a + i) + var[i + 1] * (a - i);
+	}
+}
+
+/* satellite antenna model ------------------------------------------------------
+* compute satellite antenna phase center parameters
+* args   : pcv_t *pcv       I   antenna phase center parameters
+*          double nadir     I   nadir angle for satellite (rad)
+*          double *dant     O   range offsets for each frequency (m)
+* return : none
+*-----------------------------------------------------------------------------*/
+extern void antmodel_s(int sat, map<int, PCV_t>* pcvs, double nadir, double* pcv)
+{
+	int i, sys;
+
+	sys = satsys(sat, NULL);
+	for (i = 0; i < NFREQ; i++) {
+		//在interpvar函数里对nadir也除以了5.0，这是正确的吗？
+		//输出nadir*R2D的值，都在14°以内；
+		//分别使用两种方案计算alrt站2010年的数据，发现除以5.0的结果高程方向偏差系统为正；
+		//不除以5.0的结果高程方向无系统偏差
+		//dant[i]=interpvar(sat, nadir*R2D*5.0, pcv->var[i], true);
+		if (sys == SYS_GPS) {
+			pcv[i] = interpvar0(sat, nadir * R2D * 5.0, (*pcvs)[sat].var[i], 1);
+			if (i == 2) {
+				pcv[i] = interpvar0(sat, nadir * R2D * 5.0, (*pcvs)[sat].var[1], 1);
+			}
+		}
+		else if (sys == SYS_GLO) {
+			pcv[i] = interpvar0(sat, nadir * R2D * 5.0, (*pcvs)[sat].var[i + NFREQ], 1);
+			if (i == 2) {
+				pcv[i] = interpvar0(sat, nadir * R2D * 5.0, (*pcvs)[sat].var[1 + NFREQ], 1);
+			}
+		}
+		else if (sys == SYS_BDS) {
+			pcv[i] = interpvar0(sat, nadir * R2D * 5.0, (*pcvs)[sat].var[i + 2 * NFREQ], 1);
+			if (i == 2) {
+				pcv[i] = interpvar0(sat, nadir * R2D * 5.0, (*pcvs)[sat].var[1 + 2 * NFREQ], 1);
+			}
+		}
+		else if (sys == SYS_GAL) {
+			pcv[i] = interpvar0(sat, nadir * R2D * 5.0, (*pcvs)[sat].var[i + 3 * NFREQ], 1);
+			if (i == 2) {
+				pcv[i] = interpvar0(sat, nadir * R2D * 5.0, (*pcvs)[sat].var[1 + 3 * NFREQ], 1);
+			}
+		}
+		/*else if (sys == SYS_QZS) {
+			pcv[i] = interpvar0(sat, nadir * R2D * 5.0, pcv->var[i + 4 * NFREQ], 1);
+			if (i == 2) {
+				pcv[i] = interpvar0(sat, nadir * R2D * 5.0, pcv->var[1 + 4 * NFREQ], 1);
+			}
+		}*/
+	}
+}
+
+/* satellite antenna phase center variation ----------------------------------*/
+static void cal_sat_PCV(int sat, map<int, vector<double>>* rs, const double* rr, map<int, PCV_t>* pcvs, double* pcv)
+{
+	double ru[3], rz[3], eu[3], ez[3], nadir, cosa;
+	int i;
+
+	for (i = 0; i < 3; i++) {
+		ru[i] = rr[i] - (*rs)[sat][i];
+		rz[i] = -(*rs)[sat][i];
+	}
+	if (!normv3(ru, eu) || !normv3(rz, ez)) { return; }
+
+	cosa = dot(eu, ez, 3);
+	cosa = cosa < -1.0 ? -1.0 : (cosa > 1.0 ? 1.0 : cosa);
+	nadir = acos(cosa);
+
+	antmodel_s(sat, pcvs, nadir, pcv);
+}
+
 //calculate satellite elevation
 extern void calElev(Sol_t* sol, const ObsEphData_t* obs, int n, map<int, vector<double>>* rs, map<int, Sat_t>* sat_stat)
 {
@@ -142,14 +256,26 @@ extern int ppp(ObsEphData_t* obs, int n, NavPack_t* navall, const ProcOpt_t* pop
 
 	//for (i = 0; i < MAXSAT; i++) for (j = 0; j < opt->nf; j++) rtk->ssat[i].fix[j] = 0;
 
-	/* 1.satellite positions and clocks */
+	// 1.satellite positions and clocks
 	cal_satpos(obs->eph, obs, n, navall, popt->eph_opt, &rs, &dts, &var, &svh);
 
-	/* 2.exclude measurements of eclipsing satellite (block IIA) 没搞懂 */
+	// 2.exclude measurements of eclipsing satellite (block IIA) 没搞懂
 	test_eclipse(obs, n, navall, &rs);
 
 	// 3.calculate satellite elevation
 	calElev(sol, obs, n, &rs, sat_stat);
+
+	for (auto it = obs->obssat.begin(); it != obs->obssat.end(); it++) {
+		sat = it->first;
+
+		cal_sat_PCV(sat, &rs, sol->rr, &(navall->sat_pcv), (*sat_stat)[sat].pcv);
+
+		/* 【未完成】接收机PCV计算，如果不是公开站，则不计算 */
+		//antmodel(sat, &opt->pcvr, opt->antdel, rtk->ssat[sat - 1].azel, 1, PPP_Glo.ssat_Ex[sat - 1].dantr);
+
+
+
+	}
 
 	for (i = 0; i < n; i++) {
 		sat = obs[i].sat;

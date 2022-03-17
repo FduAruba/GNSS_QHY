@@ -624,6 +624,7 @@ struct Sat_t
     unsigned char sys;          // navigation system 
     unsigned char vs;           // valid satellite flag single 
     double azel[2];             // azimuth/elevation angles {az,el} (rad)
+    double pcv[3];              // sat pcv (m)
     double resp[NFREQ];         // residuals of pseudorange (m) 
     double resc[NFREQ];         // residuals of carrier-phase (m) 
     double resp_pri[NFREQ];     // residuals of pseudorange (m) 
