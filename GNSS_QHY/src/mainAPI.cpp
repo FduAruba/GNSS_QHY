@@ -92,8 +92,8 @@ int main()
 	double err[5] = { 100.0,0.003,0.003,0.0,1.0 };
 
 	popt.nav_sys = SYS_GPS;
-	popt.pos_mode = PMODE_PPP_STATIC;
-	popt.eph_opt = EPHOPT_BRDC;
+	popt.pos_mode = PMODE_SINGLE;
+	popt.eph_opt = EPHOPT_PREC;
 	popt.thres_GDOP = 30.0;
 	popt.thres_PDOP = 20.0;
 	popt.elmin = 15.0 * D2R;

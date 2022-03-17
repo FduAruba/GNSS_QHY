@@ -1071,6 +1071,11 @@ extern int normv3(vector<double> a, double* b)
 	return 1;
 }
 
+extern void matcpy(double* A, const double* B, int n, int m)
+{
+	memcpy(A, B, sizeof(double) * n * m);
+}
+
 extern void matmul(const char* tr, int n, int k, int m, double alpha, 
 	const double* A, const double* B, double beta, double* C)
 {

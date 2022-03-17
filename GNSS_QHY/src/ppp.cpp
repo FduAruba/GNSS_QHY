@@ -1,5 +1,116 @@
 #include"gnss.h"
 
+/* nominal yaw-angle ---------------------------------------------------------*/
+static double yaw_nominal(double beta, double mu)
+{
+	if (fabs(beta) < 1E-12 && fabs(mu) < 1E-12) { return PI; }
+	return atan2(-tan(beta), sin(mu)) + PI;
+}
+
+/* yaw-angle of satellite ----------------------------------------------------*/
+extern int yaw_angle(int sat, const char* type, int opt, double beta, double mu, double* yaw)
+{
+	*yaw = yaw_nominal(beta, mu);
+	return 1;
+}
+
+/* satellite attitude model --------------------------------------------------*/
+static int sat_yaw(GpsTime_t time, int sat, const char* type, int opt, map<int, vector<double>>* rs, double* exs, double* eys)
+{
+	double rsun[3], ri[6], es[3], esun[3], n[3], p[3], en[3], ep[3], ex[3], E, beta, mu;
+	double yaw, cosy, siny, erpv[5] = { 0 };
+	int i;
+	double rs_tmp[3];
+
+	for (i = 0; i < 3; i++) { rs_tmp[i] = (*rs)[sat][i]; }
+
+	sun_moon_pos(gpst2utc(time), erpv, rsun, NULL, NULL);
+
+	/* beta and orbit angle */
+	matcpy(ri, rs_tmp, 6, 1);
+	ri[3] -= OMGE * ri[1];
+	ri[4] += OMGE * ri[0];
+	cross3(ri, ri + 3, n);
+	cross3(rsun, n, p);
+	if (!normv3(rs_tmp, es) || !normv3(rsun, esun) ||
+		!normv3(n, en) || !normv3(p, ep)) {
+		return 0;
+	}
+	beta = PI / 2.0 - acos(dot(esun, en, 3));
+	E = acos(dot(es, ep, 3));
+	mu = PI / 2.0 + (dot(es, esun, 3) <= 0 ? -E : E);
+	if (mu < -PI / 2.0) mu += 2.0 * PI;
+	else if (mu >= PI / 2.0) mu -= 2.0 * PI;
+
+	/* yaw-angle of satellite */
+	if (!yaw_angle(sat, type, opt, beta, mu, &yaw)) { return 0; }
+
+	/* satellite fixed x,y-vector */
+	cross3(en, es, ex);
+	cosy = cos(yaw);
+	siny = sin(yaw);
+	for (i = 0; i < 3; i++) {
+		exs[i] = -siny * en[i] + cosy * ex[i];
+		eys[i] = -cosy * en[i] - siny * ex[i];
+	}
+
+	return 1;
+}
+
+/* phase windup model --------------------------------------------------------*/
+static int model_phw(GpsTime_t time, int sat, map<int, PCV_t>* pcv_s, int opt, 
+	map<int, vector<double>>* rs, const double* rr, map<int, Sat_t>* sat_stat)
+{
+	double exs[3], eys[3], ek[3], exr[3], eyr[3], eks[3], ekr[3];
+	double dr[3], ds[3], drs[3], r[3], cosp, ph;
+	int i;
+
+	vector<double>       pos = vector<double>(3, 0.0);
+	vector<double>    rr_tmp = vector<double>(3, 0.0);
+	vector<vector<double>> E = vector<vector<double>>(3, vector<double>(3, 0.0));
+
+	if (opt <= 0) { return 1; }	/* no phase windup */
+
+	if (norm(rr, 3) <= 0.0) { return 0; }
+
+	for (i = 0; i < 3; i++) { rr_tmp[i] = rr[i]; }
+
+	/* satellite yaw attitude model */
+	if (!sat_yaw(time, sat, (*pcv_s)[sat].type, opt, rs, exs, eys)) { return 0; }
+
+	/* unit vector satellite to receiver */
+	for (i = 0; i < 3; i++) { r[i] = rr_tmp[i] - (*rs)[sat][i]; }
+	if (!normv3(r, ek)) { return 0; }
+
+	/* unit vectors of receiver antenna */
+	pos = ecef2pos(rr_tmp);
+	//ecef2pos(rr, pos);
+	E = rot_matrix(rr_tmp);
+	//xyz2enu(pos, E);
+	exr[0] = E[1][0];  exr[1] =  E[1][1]; exr[2] =  E[1][2]; /* x = north */
+	eyr[0] = -E[0][0]; eyr[1] = -E[0][1]; eyr[2] = -E[0][2]; /* y = west  */
+
+	/* phase windup effect */
+	cross3(ek, eys, eks);
+	cross3(ek, eyr, ekr);
+	for (i = 0; i < 3; i++) {
+		ds[i] = exs[i] - ek[i] * dot(ek, exs, 3) - eks[i];
+		dr[i] = exr[i] - ek[i] * dot(ek, exr, 3) + ekr[i];
+	}
+	cosp = dot(ds, dr, 3) / norm(ds, 3) / norm(dr, 3);
+	if (cosp < -1.0) cosp = -1.0;
+	else if (cosp > 1.0) cosp = 1.0;
+	//acos（-1） invalid
+	if (fabs(fabs(cosp) - 1.0) < 1.0e-10) { return 0; }
+
+	ph = acos(cosp) / 2.0 / PI;
+	cross3(ds, dr, drs);
+	if (dot(ek, drs, 3) < 0.0) ph = -ph;
+
+	(*sat_stat)[sat].phw = ph + floor((*sat_stat)[sat].phw - ph + 0.5); /* in cycle */
+
+	return 1;
+}
 /* interpolate antenna phase center variation --------------------------------*/
 static double interpvar0(int sat, double ang, const double* var, int bsat)
 {
@@ -43,7 +154,6 @@ static double interpvar0(int sat, double ang, const double* var, int bsat)
 		return var[i] * (1.0 - a + i) + var[i + 1] * (a - i);
 	}
 }
-
 /* satellite antenna model ------------------------------------------------------
 * compute satellite antenna phase center parameters
 * args   : pcv_t *pcv       I   antenna phase center parameters
@@ -273,23 +383,25 @@ extern int ppp(ObsEphData_t* obs, int n, NavPack_t* navall, const ProcOpt_t* pop
 		/* 【未完成】接收机PCV计算，如果不是公开站，则不计算 */
 		//antmodel(sat, &opt->pcvr, opt->antdel, rtk->ssat[sat - 1].azel, 1, PPP_Glo.ssat_Ex[sat - 1].dantr);
 
-
-
-	}
-
-	for (i = 0; i < n; i++) {
-		sat = obs[i].sat;
-		for (j = 0; j < 3; j++) PPP_Glo.ssat_Ex[sat - 1].rs[j] = rs[j + i * 6];
-
-		/* satellite and receiver antenna model */
-		satantpcv(sat, rs + i * 6, PPP_Glo.rr, nav->pcvs + sat - 1, PPP_Glo.ssat_Ex[sat - 1].dants);
-		antmodel(sat, &opt->pcvr, opt->antdel, rtk->ssat[sat - 1].azel, 1, PPP_Glo.ssat_Ex[sat - 1].dantr);
-
-		/* phase windup model */
-		if (!model_phw(rtk->sol.time, sat, nav->pcvs[sat - 1].type, 2, rs + i * 6, PPP_Glo.rr, &PPP_Glo.ssat_Ex[sat - 1].phw)) {
+		if (!model_phw(sol->time, sat, &(navall->sat_pcv), 2, &rs, sol->rr, sat_stat)) {
 			continue;
 		}
+
 	}
+
+	//for (i = 0; i < n; i++) {
+	//	sat = obs[i].sat;
+	//	for (j = 0; j < 3; j++) PPP_Glo.ssat_Ex[sat - 1].rs[j] = rs[j + i * 6];
+
+	//	/* satellite and receiver antenna model */
+	//	satantpcv(sat, rs + i * 6, PPP_Glo.rr, nav->pcvs + sat - 1, PPP_Glo.ssat_Ex[sat - 1].dants);
+	//	antmodel(sat, &opt->pcvr, opt->antdel, rtk->ssat[sat - 1].azel, 1, PPP_Glo.ssat_Ex[sat - 1].dantr);
+
+	//	/* phase windup model */
+	//	if (!model_phw(rtk->sol.time, sat, nav->pcvs[sat - 1].type, 2, rs + i * 6, PPP_Glo.rr, &PPP_Glo.ssat_Ex[sat - 1].phw)) {
+	//		continue;
+	//	}
+	//}
 
 	////to compute the elements of initialized PPP files
 	//if (PPP_Glo.outFp[OFILE_IPPP]) {

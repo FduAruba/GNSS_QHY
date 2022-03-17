@@ -624,7 +624,6 @@ struct Sat_t
     unsigned char sys;          // navigation system 
     unsigned char vs;           // valid satellite flag single 
     double azel[2];             // azimuth/elevation angles {az,el} (rad)
-    double pcv[3];              // sat pcv (m)
     double resp[NFREQ];         // residuals of pseudorange (m) 
     double resc[NFREQ];         // residuals of carrier-phase (m) 
     double resp_pri[NFREQ];     // residuals of pseudorange (m) 
@@ -633,6 +632,9 @@ struct Sat_t
     double resc_pos[NFREQ];     // residuals of carrier-phase (m) 
     double PC, LC;              // ionosphere-free pseudorange and carrier phase observations 
     unsigned char vsat[NFREQ];  // valid satellite flag 
+
+    double pcv[3];              // sat pcv (m)
+    double phw;                 // phase windup (cycle) 
 
     //unsigned char snr[NFREQ];   // signal strength (0.25 dBHz) 
     //unsigned char fix[NFREQ];   // ambiguity fix flag (1:fix,2:float,3:hold) 
@@ -645,7 +647,6 @@ struct Sat_t
     //double  gf;                 // geometry-free phase L1-L2 (m) 
     //double  gf2;                // geometry-free phase L1-L5 (m) 
     //double  mw;                 // MW-LC (m) 
-    //double  phw;                // phase windup (cycle) 
     //GpsTime_t pt[2][NFREQ];     // previous carrier-phase time 
     //double  ph[2][NFREQ];       // previous carrier-phase observable (cycle) 
 };
@@ -1090,6 +1091,16 @@ extern int normv3(const double* a, double* b);
 extern int normv3(vector<double> a, double* b);
 
 /* multiply matrix */
+
+/* copy matrix -----------------------------------------------------------------
+* copy matrix
+* args   : double *A        O   destination matrix A (n x m)
+*          double *B        I   source matrix B (n x m)
+*          int    n,m       I   number of rows and columns of matrix
+* return : none
+*-----------------------------------------------------------------------------*/
+extern void matcpy(double* A, const double* B, int n, int m);
+
 extern void matmul(const char* tr, int n, int k, int m, double alpha, 
     const double* A, const double* B, double beta, double* C);
 /**
