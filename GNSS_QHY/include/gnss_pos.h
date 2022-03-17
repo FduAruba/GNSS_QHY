@@ -13,6 +13,14 @@ static vector<FILE*> fps = vector<FILE*>(50, NULL);	// file pointers
 
 /* functions -------------------------------------------------------*/
 
+/**
+* @brief repair clock jump of double carrier phase
+*
+* @param <ObsEphData_t> [*obs]    obs data in i-th epoch
+* @param <NavPack_t>    [*navall] nav package
+*
+* @return <int> always return 1
+*/
 static int clk_Repair(ObsEphData_t* obs, NavPack_t* navall);
 /**
 * @brief API of specific position processes (SPP, PPP...)

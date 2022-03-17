@@ -47,7 +47,7 @@ static int clk_Repair(ObsEphData_t* obs, NavPack_t* navall)
 		}
 	}
 
-	// 2.判断当前历元是否发生钟跳，并更新钟跳值
+	// 2.判断当前历元是否发生钟跳，并更新钟跳值 (仅当前全部obs都发生钟跳才修复)
 	if (n_cj != 0 && n_cj == n_vaild)
 	{
 		d1 = delta0 / n_cj;
@@ -75,6 +75,7 @@ static int clk_Repair(ObsEphData_t* obs, NavPack_t* navall)
 			pppglob.obs_past[sat][1] = 0.0;
 			pppglob.obs_past[sat][2] = 0.0;
 			pppglob.obs_past[sat][3] = 0.0;
+			continue;
 		}
 		else {
 			pppglob.obs_past[sat][0] = obs->obssat[sat].P[0];
@@ -126,13 +127,11 @@ static int position(ObsEphData_t* obs, int n, NavPack_t* navall, ProcOpt_t* popt
 	/* 3.clock jump repair */
 	clk_Repair(obs, navall);
 
-	///* 4.precise point positioning 执行PPP定位 */
-	//if (opt->mode >= PMODE_PPP_KINEMA) {
-	//	pppos(rtk, obs, nu, nav);
-	//}
-	//else {
-	//	return 1;
-	//}
+	/* 4.precise point positioning 执行PPP定位 */
+	if (popt->pos_mode >= PMODE_PPP_KINEMA) {
+		ppp(obs, n_ppp, navall, popt, sol, &sat_stat);
+	}
+	else { return 1; }
 
 	////calculate DOPs
 	//calDop(rtk, obs, nu);
@@ -179,6 +178,10 @@ static int obsScan_PPP(const  ProcOpt_t* popt, ObsEphData_t* obs)
 	for (it = obs->obssat.begin(); it != obs->obssat.end();) {
 		sat = it->first;
 		sys = satsys(sat, NULL);
+
+		if (sat = 14 && it->second.P[0] == 0.0) {
+			int tt = 1;
+		}
 
 		if (popt->pos_mode >= PMODE_PPP_KINEMA) {
 			// 判断obs L1,L2频率上是否相位均存在，且双频伪距差值较小 (粗差检测)
@@ -253,6 +256,7 @@ static void procpos(ProcOpt_t* popt, Solopt_t* sopt, int mode, Sol_t* sol)
 
 		if (k == 0) { popt->ts = obs.eph; }
 		k++;
+		time2epoch(obs.eph, pppglob.ep);
 		// 计算30min包含多少个历元
 		nep = (int)(30 * (60 / popt->ti));
 
@@ -265,7 +269,7 @@ static void procpos(ProcOpt_t* popt, Solopt_t* sopt, int mode, Sol_t* sol)
 		i = position(&obs, n_spp, &navall, popt, sol);
 
 		if		(i == -1) { (*sol).stat = SOLQ_NONE; }
-		else if (i == 0) { continue; }
+		else if (i == 0)  { continue; }
 
 		if (mode == 0) {  /* forward/backward */
 			//outResult(rtk, sopt, &navs);

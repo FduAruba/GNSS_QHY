@@ -475,7 +475,6 @@ extern int spp(ObsEphData_t* obs, int n, NavPack_t* navall, const ProcOpt_t* pop
 	/* 局部变量定义 ========================================================= */
 	int i;								// 循环遍历变量
 	int sat, stat = 1; 					// 卫星号/状态标识符
-	//int vsat[MAXOBS] = { 0 };			// 
 	map<int, vector<int>> vsat;			// 卫星状态标记(1:ok  0:error)
 	map<int, vector<int>> svh;			// 卫星健康标识符(0:ok -1:error)
 	map<int, vector<double>> rs;		// 卫星坐标&速度(Px,Py,Pz,Vx,Vy,Vz)
@@ -504,9 +503,9 @@ extern int spp(ObsEphData_t* obs, int n, NavPack_t* navall, const ProcOpt_t* pop
 		vsat.insert(pair<int, vector<int>>(it->first, vector<int>(1, 0)));
 	}
 
-	popt_spp.eph_opt = EPHOPT_BRDC;
+	popt_spp.eph_opt  = EPHOPT_BRDC;
 	popt_spp.iono_opt = IONOOPT_BRDC;
-	popt_spp.trop_opt  = TROPOPT_SAAS;
+	popt_spp.trop_opt = TROPOPT_SAAS;
 
 	/* 1.satellite positons, velocities and clocks 计算卫星位置、速度、钟差 */
 	cal_satpos(obs->eph, obs, n, navall, popt_spp.eph_opt, &rs, &dts, &var, &svh);

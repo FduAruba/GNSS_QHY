@@ -21,6 +21,7 @@ extern int rec_num;                     // receiver number
 #define PI          3.1415926535897932  // pi
 #define D2R         (PI/180.0)          // deg to rad
 #define R2D         (180.0/PI)          // rad to deg
+#define AU          149597870691.0      // 1 AU (m)
 #define AS2R        (D2R/3600.0)        // arc sec to radian
 #define CLIGHT      299792458.0         // speed of light (m/s)
 
@@ -651,8 +652,11 @@ struct Sat_t
 /* PPP global status ------------------------------------------------------------*/
 struct PPP_Glob_t
 {
+    double ep[6] = { 0 };
     double clk_jump = 0.0;
     map<int, vector<double>> obs_past;
+
+    map<int, double> ecli_f;
 };
 static PPP_Glob_t pppglob;
 
@@ -737,6 +741,13 @@ extern void time2epoch(const GpsTime_t t,double* ep);
 * @return <GpsTime_t> [t] time expressed in gps
 */
 extern GpsTime_t utc2gpst(GpsTime_t t);
+/*utc to gmst---------------------------------------------------------------- -
+*convert utc to gmst(Greenwich mean sidereal time)
+* args   : gtime_t t        I   time expressed in utc
+* double ut1_utc   I   UT1 - UTC(s)
+* return : gmst(rad)
+* ---------------------------------------------------------------------------- - */
+extern double utc2gmst(GpsTime_t t, double ut1_utc);
 /**
 * @brief convert gps time to utc time
 *
@@ -951,6 +962,7 @@ extern vector<vector<double>> rot_matrix(const vector<double> pos);
 * @return <vector> [e]  vector in local tangental coordinate {e,n,u}
 */
 extern vector<double> ecef2enu(const vector<double> pos, const vector<double> r);
+
 /**
 * @brief compute geometric distance and receiver-to-satellite unit vector
 *
@@ -973,6 +985,17 @@ extern double geodist(int sat, map<int, vector<double>>* rs, const vector<double
 * @return <double> [el] satellite elevation angle
 */
 extern double satazel(const int sat, const vector<double> pos, const vector<double> e, map<int, vector<double>>* azel);
+/* sun and moon position -------------------------------------------------------
+* get sun and moon position in ecef
+* args   : gtime_t tut      I   time in ut1
+*          double *erpv     I   erp value {xp,yp,ut1_utc,lod} (rad,rad,s,s/d)
+*          double *rsun     IO  sun position in ecef  (m) (NULL: not output)
+*          double *rmoon    IO  moon position in ecef (m) (NULL: not output)
+*          double *gmst     O   gmst (rad)
+* return : none
+*-----------------------------------------------------------------------------*/
+extern void sun_moon_pos(GpsTime_t tutc, const double* erpv, double* rsun, double* rmoon, double* gmst);
+
 
 /* code functions ---------------------------------------------*/
 
@@ -1007,6 +1030,7 @@ extern int getcodepri(const int sys, unsigned char code, const char* opt);
 * @return void
 */
 extern void setcodepri(int sys, int freq, const char* pri);
+
 /* math functions ---------------------------------------------*/
 
 /**
@@ -1035,6 +1059,8 @@ extern double dot(const double* a, const double* b, int n);
 * @return <double> [c] a'*b
 */
 extern double dot(const vector<double> a, const vector<double> b, int n);
+/* ??? */
+extern double dot(const vector<double> a, const double* b, int n);
 /**
 * @brief euclid norm of vector (double[] version)
 *
@@ -1053,6 +1079,18 @@ extern double norm(const double* a, int n);
 * @return <double> || a ||
 */
 extern double norm(const vector<double> a, int n);
+/* normalize 3d vector ---------------------------------------------------------
+* normalize 3d vector
+* args   : double *a        I   vector a (3 x 1)
+*          double *b        O   normlized vector (3 x 1) || b || = 1
+* return : status (1:ok,0:error)
+*-----------------------------------------------------------------------------*/
+extern int normv3(const double* a, double* b);
+extern int normv3(vector<double> a, double* b);
+
+/* multiply matrix */
+extern void matmul(const char* tr, int n, int k, int m, double alpha, 
+    const double* A, const double* B, double beta, double* C);
 /**
 * @brief matrix multiplication
 *
@@ -1190,6 +1228,18 @@ extern vector<double> cal_dops(int ns, map<int, vector<double>>* azel, double el
 */
 extern FILE* openfile(const char* outfile);
 
+
+/* outer product of 3d vectors -------------------------------------------------
+* outer product of 3d vectors
+* args   : double *a,*b     I   vector a,b (3 x 1)
+*          double *c        O   outer product (a x b) (3 x 1)
+* return : none
+*-----------------------------------------------------------------------------*/
+extern void cross3(const double* a, const double* b, double* c);
+/* ??? */
+extern int cal_Eclips(int prn, map<int, vector<double>>* rs, double* sunp, double TTAG,
+    double SANTXYZ[3], const NavPack_t* navall);
+
 /* readfile.cpp ----------------------------------------------------------------*/
 
 extern int read_obsnav(GpsTime_t ts, GpsTime_t te, double ti, vector<const char*> infile, vector<ObsRecData_t>* obsall, NavPack_t* navall, Station_t* sta);
@@ -1291,6 +1341,10 @@ extern int posFDU(GpsTime_t ts, GpsTime_t te, double ti, ProcOpt_t* popt, FileOp
 * @return 0: error 1: ok
 */
 extern int spp(ObsEphData_t* obs, int n, NavPack_t* navall, const ProcOpt_t* popt, Sol_t* sol, map<int, Sat_t>* sat_stat);
+
+/* spp.cpp --------------------------------------------------------------------*/
+
+extern int ppp(ObsEphData_t* obs, int n, NavPack_t* navall, const ProcOpt_t* popt, Sol_t* sol, map<int, Sat_t>* sat_stat);
 
 /* broad_eph.cpp --------------------------------------------------------------*/
 
