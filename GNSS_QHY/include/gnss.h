@@ -1363,6 +1363,11 @@ extern int ppp(ObsEphData_t* obs, int n, NavPack_t* navall, const ProcOpt_t* pop
 extern void cal_satpos(GpsTime_t teph, ObsEphData_t* obs, int n, NavPack_t* navall, int ephopt,
     map<int, vector<double>>* rs, map<int, vector<double>>* dts, map<int, vector<double>>* var, map<int, vector<int>>* svh);
 
+/* precise_eph.cpp ------------------------------------------------------------*/
+
+extern int peph_pos(GpsTime_t time, int sat, NavPack_t* navall, int opt,
+    map<int, vector<double>>* rs, map<int, vector<double>>* dts, map<int, vector<double>>* var);
+
 /* results.cpp ----------------------------------------------------------------*/
 
 extern void out_sol(FILE* fp, const Sol_t* sol, const ProcOpt_t* popt, const Solopt_t* sopt);

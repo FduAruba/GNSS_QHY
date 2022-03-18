@@ -30,6 +30,7 @@
     <ClCompile Include="src\gnss_pos.cpp" />
     <ClCompile Include="src\mainAPI.cpp" />
     <ClCompile Include="src\ppp.cpp" />
+    <ClCompile Include="src\precise_eph.cpp" />
     <ClCompile Include="src\readfile.cpp" />
     <ClCompile Include="src\results.cpp" />
     <ClCompile Include="src\spp.cpp" />

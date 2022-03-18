@@ -253,7 +253,7 @@ extern void geph2pos(GpsTime_t time, const NavDataGlo_t* geph, int sat,
 }
 
 /* satellite position and clock by broadcast ephemeris -----------------------*/
-static int ephpos(GpsTime_t time, GpsTime_t teph, int sat, NavPack_t* nav, int iode,
+static int eph_pos(GpsTime_t time, GpsTime_t teph, int sat, NavPack_t* navall, int iode,
 	map<int, vector<double>>* rs, map<int, vector<double>>* dts, map<int, vector<double>>* var, map<int, vector<int>>* svh)
 {
 	/* 局部变量定义 ========================================================= */
@@ -270,14 +270,14 @@ static int ephpos(GpsTime_t time, GpsTime_t teph, int sat, NavPack_t* nav, int i
 	(*svh)[sat][0] = -1;
 
 	if (sys == SYS_GPS || sys == SYS_GAL || sys == SYS_BDS) {
-		if (!(eph = sel_eph(teph, sat, iode, nav))) { return 0; }
+		if (!(eph = sel_eph(teph, sat, iode, navall))) { return 0; }
 		eph2pos(time, eph, sat, rs, dts, var);
 		time = timeadd(time, tt);
 		eph2pos(time, eph, sat, &rs_tmp, &dts_tmp, var);
 		(*svh)[sat][0] = eph->svh;
 	}
 	else if (sys == SYS_GLO) {
-		if (!(geph = sel_geph(teph, sat, iode, nav))) { return 0; }
+		if (!(geph = sel_geph(teph, sat, iode, navall))) { return 0; }
 		geph2pos(time, geph, sat, rs, dts, var);
 		time = timeadd(time, tt);
 		geph2pos(time, geph, sat, &rs_tmp, &dts_tmp, var);
@@ -294,20 +294,18 @@ static int ephpos(GpsTime_t time, GpsTime_t teph, int sat, NavPack_t* nav, int i
 	return 1;
 }
 
-extern int satpos(GpsTime_t time, GpsTime_t teph, int sat, int eph_opt, NavPack_t* nav,
+extern int satpos(GpsTime_t time, GpsTime_t teph, int sat, int eph_opt, NavPack_t* navall,
 	map<int, vector<double>>* rs, map<int, vector<double>>* dts, map<int, vector<double>>* var, map<int, vector<int>>* svh)
 {
 	(*svh)[sat][0] = 0;
 
 	switch (eph_opt)
 	{
-	case EPHOPT_BRDC: { return ephpos(time, teph, sat, nav, -1, rs, dts, var, svh); }
-	/*case EPHOPT_PREC: {
-		if (!peph2pos(time, sat, nav, 1, rs, dts, var)) {
-			break;
-		}
+	case EPHOPT_BRDC: { return eph_pos(time, teph, sat, navall, -1, rs, dts, var, svh); }
+	case EPHOPT_PREC: {
+		if (!peph_pos(time, sat, navall, 1, rs, dts, var)) { break; }
 		else { return 1; }
-	}*/
+	}
 	}
 	(*svh)[sat][0] = -1;
 	return 0;

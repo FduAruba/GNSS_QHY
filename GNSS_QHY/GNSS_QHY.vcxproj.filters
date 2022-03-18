@@ -53,5 +53,8 @@
     <ClCompile Include="src\ppp.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\precise_eph.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
