@@ -44,6 +44,7 @@ static int peph2pos(GpsTime_t time, int sat, NavPack_t* navall,
 
 	//GpsTime_t tk;
 	map<GpsTime_t, PrecNav_t>::iterator it, ib, ik, ikp;
+	vector<map<GpsTime_t, PrecNav_t>::iterator> its;
 	//map<GpsTime_t, PrecNav_t>::reverse_iterator ir;
 	double tt, t_tmp = 1000.0;
 	
@@ -73,6 +74,7 @@ static int peph2pos(GpsTime_t time, int sat, NavPack_t* navall,
 			pos = ib->second.pos;
 			if (norm(pos, 3) > 0.0) {
 				posWithEarhRotation(k, pos, p, t[k]);
+				its.push_back(ib);
 				k++;
 			}
 		}
@@ -82,6 +84,7 @@ static int peph2pos(GpsTime_t time, int sat, NavPack_t* navall,
 			pos = ib->second.pos;
 			if (norm(pos, 3) > 0.0) {
 				posWithEarhRotation(k, pos, p, t[k]);
+				its.push_back(ib);
 				k++;
 			}
 			break;
@@ -94,6 +97,7 @@ static int peph2pos(GpsTime_t time, int sat, NavPack_t* navall,
 			pos = it->second.pos;
 			if (norm(pos, 3) > 0.0) {
 				posWithEarhRotation(k, pos, p, t[k]);
+				its.push_back(it);
 				k++;
 			}
 		}
@@ -108,6 +112,7 @@ static int peph2pos(GpsTime_t time, int sat, NavPack_t* navall,
 
 			sinl = t[j];  t[j] = t[i];   t[i] = sinl;
 			k   = id[j]; id[j] = id[i]; id[i] = k;
+			it = its[j]; its[j] = its[i]; its[i] = it;
 			for (k = 0; k < 3; k++) {
 				sinl    = p[k][j];
 				p[k][j] = p[k][i];
@@ -115,6 +120,17 @@ static int peph2pos(GpsTime_t time, int sat, NavPack_t* navall,
 			}
 		}
 	}
+
+	kInd = 0;
+	ik = fabs(t[kInd]) >= fabs(t[NMAX]) ? its[kInd] : its[NMAX];
+	//for (i = 0; i <= NMAX; i++) {
+	//	printf("t[kind]=%f t[i]=%f\n", fabs(t[kInd]), fabs(t[i]));
+	//	if (fabs(t[kInd]) <= fabs(t[i])) {
+	//		ik = its[kInd];
+	//		//kInd = i;
+	//	}
+	//}
+
 	if (t[0] > 900.0 || t[NMAX] < -900.0) { return 0; }
 
 	/* Neville插值法，计算10阶多项式插值 */
