@@ -58,8 +58,8 @@ static int sat_yaw(GpsTime_t time, int sat, const char* type, int opt, map<int, 
 }
 
 /* phase windup model --------------------------------------------------------*/
-static int model_phw(GpsTime_t time, int sat, map<int, PCV_t>* pcv_s, int opt, 
-	map<int, vector<double>>* rs, const double* rr, map<int, Sat_t>* sat_stat)
+static int model_phw(GpsTime_t time, int sat, map<int, PCV_t>* pcv_s, int opt,
+	map<int, vector<double>>* rs, const double* rr, double* phw)
 {
 	double exs[3], eys[3], ek[3], exr[3], eyr[3], eks[3], ekr[3];
 	double dr[3], ds[3], drs[3], r[3], cosp, ph;
@@ -107,7 +107,7 @@ static int model_phw(GpsTime_t time, int sat, map<int, PCV_t>* pcv_s, int opt,
 	cross3(ds, dr, drs);
 	if (dot(ek, drs, 3) < 0.0) ph = -ph;
 
-	(*sat_stat)[sat].phw = ph + floor((*sat_stat)[sat].phw - ph + 0.5); /* in cycle */
+	(*phw) = ph + floor((*phw) - ph + 0.5); /* in cycle */
 
 	return 1;
 }
@@ -383,7 +383,7 @@ extern int ppp(ObsEphData_t* obs, int n, NavPack_t* navall, const ProcOpt_t* pop
 		/* 【未完成】接收机PCV计算，如果不是公开站，则不计算 */
 		//antmodel(sat, &opt->pcvr, opt->antdel, rtk->ssat[sat - 1].azel, 1, PPP_Glo.ssat_Ex[sat - 1].dantr);
 
-		if (!model_phw(sol->time, sat, &(navall->sat_pcv), 2, &rs, sol->rr, sat_stat)) {
+		if (!model_phw(sol->time, sat, &(navall->sat_pcv), 2, &rs, sol->rr, &(*sat_stat)[sat].phw)) {
 			continue;
 		}
 

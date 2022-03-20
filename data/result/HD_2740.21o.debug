@@ -1,0 +1,620 @@
+*** ERROR: blq file open error: file=
+01:10:30.0  G29 GF CS gf_new=       -0.985, gf_old=       -1.652, diff_abs=        0.666, thres=        0.150, elev= 0.0
+01:32:30.0  G17 GF CS gf_new=       11.441, gf_old=       11.287, diff_abs=        0.155, thres=        0.150, elev= 3.3
+02:12:00.0  G19 GF CS gf_new=       12.752, gf_old=       12.602, diff_abs=        0.150, thres=        0.150, elev= 7.9
+02:12:30.0  G19 GF CS gf_new=       12.902, gf_old=       12.752, diff_abs=        0.151, thres=        0.150, elev= 7.7
+02:13:00.0  G19 GF CS gf_new=       13.063, gf_old=       12.902, diff_abs=        0.161, thres=        0.150, elev= 7.5
+02:13:30.0  G19 GF CS gf_new=       13.228, gf_old=       13.063, diff_abs=        0.165, thres=        0.150, elev= 7.3
+02:14:00.0  G19 GF CS gf_new=       13.384, gf_old=       13.228, diff_abs=        0.155, thres=        0.150, elev= 7.1
+02:14:30.0  G19 GF CS gf_new=       13.552, gf_old=       13.384, diff_abs=        0.169, thres=        0.150, elev= 6.9
+02:15:00.0  G19 GF CS gf_new=       13.729, gf_old=       13.552, diff_abs=        0.176, thres=        0.150, elev= 6.7
+02:15:30.0  G19 GF CS gf_new=       13.912, gf_old=       13.729, diff_abs=        0.183, thres=        0.150, elev= 6.5
+02:16:00.0  G19 GF CS gf_new=       14.099, gf_old=       13.912, diff_abs=        0.187, thres=        0.150, elev= 6.3
+02:16:30.0  G19 GF CS gf_new=       14.296, gf_old=       14.099, diff_abs=        0.197, thres=        0.150, elev= 6.1
+02:17:00.0  G19 GF CS gf_new=       14.490, gf_old=       14.296, diff_abs=        0.194, thres=        0.150, elev= 5.9
+02:17:30.0  G19 GF CS gf_new=       14.689, gf_old=       14.490, diff_abs=        0.199, thres=        0.150, elev= 5.7
+02:18:00.0  G19 GF CS gf_new=       14.890, gf_old=       14.689, diff_abs=        0.201, thres=        0.150, elev= 5.5
+02:18:30.0  G19 GF CS gf_new=       15.103, gf_old=       14.890, diff_abs=        0.213, thres=        0.150, elev= 5.3
+02:19:00.0  G19 GF CS gf_new=       15.310, gf_old=       15.103, diff_abs=        0.207, thres=        0.150, elev= 5.1
+02:19:30.0  G19 GF CS gf_new=       15.538, gf_old=       15.310, diff_abs=        0.228, thres=        0.150, elev= 4.9
+02:20:00.0  G19 GF CS gf_new=       15.765, gf_old=       15.538, diff_abs=        0.227, thres=        0.150, elev= 4.7
+02:20:30.0  G19 GF CS gf_new=       15.985, gf_old=       15.765, diff_abs=        0.220, thres=        0.150, elev= 4.5
+02:21:00.0  G19 GF CS gf_new=       16.199, gf_old=       15.985, diff_abs=        0.214, thres=        0.150, elev= 4.3
+02:21:30.0  G19 GF CS gf_new=       16.413, gf_old=       16.199, diff_abs=        0.214, thres=        0.150, elev= 4.1
+02:22:00.0  G19 GF CS gf_new=       16.611, gf_old=       16.413, diff_abs=        0.198, thres=        0.150, elev= 3.9
+02:22:30.0  G19 GF CS gf_new=       16.823, gf_old=       16.611, diff_abs=        0.212, thres=        0.150, elev= 3.7
+02:23:00.0  G19 GF CS gf_new=       17.008, gf_old=       16.823, diff_abs=        0.186, thres=        0.150, elev= 3.5
+02:23:30.0  G19 GF CS gf_new=       17.231, gf_old=       17.008, diff_abs=        0.222, thres=        0.150, elev= 3.3
+02:24:00.0  G19 GF CS gf_new=       17.384, gf_old=       17.231, diff_abs=        0.153, thres=        0.150, elev= 3.1
+02:24:30.0  G19 GF CS gf_new=       17.572, gf_old=       17.384, diff_abs=        0.188, thres=        0.150, elev= 2.9
+02:24:30.0  G25 GF CS gf_new=       -7.758, gf_old=       -0.650, diff_abs=       -7.108, thres=        0.150, elev= 0.0
+03:27:00.0  G06 GF CS gf_new=        7.815, gf_old=        7.656, diff_abs=        0.159, thres=        0.150, elev=10.0
+03:27:30.0  G06 GF CS gf_new=        7.968, gf_old=        7.815, diff_abs=        0.153, thres=        0.150, elev= 9.9
+03:28:00.0  G06 GF CS gf_new=        8.137, gf_old=        7.968, diff_abs=        0.170, thres=        0.150, elev= 9.7
+03:28:30.0  G06 GF CS gf_new=        8.304, gf_old=        8.137, diff_abs=        0.167, thres=        0.150, elev= 9.5
+03:29:00.0  G06 GF CS gf_new=        8.471, gf_old=        8.304, diff_abs=        0.167, thres=        0.150, elev= 9.3
+03:29:30.0  G06 GF CS gf_new=        8.648, gf_old=        8.471, diff_abs=        0.177, thres=        0.150, elev= 9.2
+03:30:00.0  G06 GF CS gf_new=        8.829, gf_old=        8.648, diff_abs=        0.181, thres=        0.150, elev= 9.0
+03:30:30.0  G06 GF CS gf_new=        9.029, gf_old=        8.829, diff_abs=        0.200, thres=        0.150, elev= 8.8
+03:31:00.0  G06 GF CS gf_new=        9.227, gf_old=        9.029, diff_abs=        0.198, thres=        0.150, elev= 8.6
+03:31:30.0  G06 GF CS gf_new=        9.421, gf_old=        9.227, diff_abs=        0.194, thres=        0.150, elev= 8.5
+03:32:00.0  G06 GF CS gf_new=        9.644, gf_old=        9.421, diff_abs=        0.223, thres=        0.150, elev= 8.3
+03:32:30.0  G06 GF CS gf_new=        9.874, gf_old=        9.644, diff_abs=        0.230, thres=        0.150, elev= 8.1
+03:33:00.0  G06 GF CS gf_new=       10.103, gf_old=        9.874, diff_abs=        0.229, thres=        0.150, elev= 7.9
+03:33:30.0  G06 GF CS gf_new=       10.344, gf_old=       10.103, diff_abs=        0.241, thres=        0.150, elev= 7.8
+03:34:00.0  G06 GF CS gf_new=       10.611, gf_old=       10.344, diff_abs=        0.267, thres=        0.150, elev= 7.6
+03:34:30.0  G06 GF CS gf_new=       10.863, gf_old=       10.611, diff_abs=        0.252, thres=        0.150, elev= 7.4
+03:35:00.0  G06 GF CS gf_new=       11.136, gf_old=       10.863, diff_abs=        0.273, thres=        0.150, elev= 7.2
+03:35:30.0  G06 GF CS gf_new=       11.416, gf_old=       11.136, diff_abs=        0.280, thres=        0.150, elev= 7.1
+03:36:00.0  G06 GF CS gf_new=       11.701, gf_old=       11.416, diff_abs=        0.286, thres=        0.150, elev= 6.9
+03:36:30.0  G06 GF CS gf_new=       11.999, gf_old=       11.701, diff_abs=        0.297, thres=        0.150, elev= 6.7
+03:37:00.0  G06 GF CS gf_new=       12.295, gf_old=       11.999, diff_abs=        0.296, thres=        0.150, elev= 6.5
+03:37:30.0  G06 GF CS gf_new=       12.611, gf_old=       12.295, diff_abs=        0.317, thres=        0.150, elev= 6.3
+03:38:00.0  G06 GF CS gf_new=       12.921, gf_old=       12.611, diff_abs=        0.310, thres=        0.150, elev= 6.2
+03:38:30.0  G06 GF CS gf_new=       13.256, gf_old=       12.921, diff_abs=        0.335, thres=        0.150, elev= 6.0
+03:39:00.0  G06 GF CS gf_new=       13.571, gf_old=       13.256, diff_abs=        0.314, thres=        0.150, elev= 5.8
+03:39:30.0  G06 GF CS gf_new=       13.913, gf_old=       13.571, diff_abs=        0.342, thres=        0.150, elev= 5.6
+03:40:00.0  G06 GF CS gf_new=       14.247, gf_old=       13.913, diff_abs=        0.334, thres=        0.150, elev= 5.5
+03:40:30.0  G06 GF CS gf_new=       14.597, gf_old=       14.247, diff_abs=        0.350, thres=        0.150, elev= 5.3
+03:41:00.0  G06 GF CS gf_new=       14.937, gf_old=       14.597, diff_abs=        0.340, thres=        0.150, elev= 5.1
+03:41:30.0  G06 GF CS gf_new=       15.280, gf_old=       14.937, diff_abs=        0.343, thres=        0.150, elev= 4.9
+03:42:00.0  G06 GF CS gf_new=       15.608, gf_old=       15.280, diff_abs=        0.328, thres=        0.150, elev= 4.8
+03:42:30.0  G06 GF CS gf_new=       15.904, gf_old=       15.608, diff_abs=        0.296, thres=        0.150, elev= 4.6
+03:43:00.0  G06 GF CS gf_new=       16.184, gf_old=       15.904, diff_abs=        0.280, thres=        0.150, elev= 4.4
+03:43:30.0  G06 GF CS gf_new=       16.440, gf_old=       16.184, diff_abs=        0.256, thres=        0.150, elev= 4.2
+03:44:00.0  G06 GF CS gf_new=       16.641, gf_old=       16.440, diff_abs=        0.201, thres=        0.150, elev= 4.1
+03:47:30.0  G06 GF CS gf_new=       16.446, gf_old=       16.672, diff_abs=       -0.227, thres=        0.150, elev= 2.8
+03:48:00.0  G06 GF CS gf_new=       16.178, gf_old=       16.446, diff_abs=       -0.268, thres=        0.150, elev= 2.6
+03:48:30.0  G06 GF CS gf_new=       15.865, gf_old=       16.178, diff_abs=       -0.313, thres=        0.150, elev= 2.5
+03:49:00.0  G06 GF CS gf_new=       15.541, gf_old=       15.865, diff_abs=       -0.324, thres=        0.150, elev= 2.3
+03:49:30.0  G06 GF CS gf_new=       15.212, gf_old=       15.541, diff_abs=       -0.328, thres=        0.150, elev= 2.1
+03:50:00.0  G06 GF CS gf_new=       14.898, gf_old=       15.212, diff_abs=       -0.314, thres=        0.150, elev= 1.9
+03:50:30.0  G06 GF CS gf_new=      -74.048, gf_old=       14.898, diff_abs=      -88.946, thres=        0.150, elev= 1.8
+04:56:00.0  G02 GF CS gf_new=       14.085, gf_old=       13.930, diff_abs=        0.156, thres=        0.150, elev=14.2
+04:56:30.0  G02 GF CS gf_new=       14.249, gf_old=       14.085, diff_abs=        0.164, thres=        0.150, elev=14.0
+04:57:00.0  G02 GF CS gf_new=       14.413, gf_old=       14.249, diff_abs=        0.164, thres=        0.150, elev=13.8
+04:57:30.0  G02 GF CS gf_new=       14.592, gf_old=       14.413, diff_abs=        0.179, thres=        0.150, elev=13.6
+04:58:00.0  G02 GF CS gf_new=       14.775, gf_old=       14.592, diff_abs=        0.183, thres=        0.150, elev=13.4
+04:58:30.0  G02 GF CS gf_new=       14.967, gf_old=       14.775, diff_abs=        0.192, thres=        0.150, elev=13.2
+04:59:00.0  G02 GF CS gf_new=       15.178, gf_old=       14.967, diff_abs=        0.211, thres=        0.150, elev=12.9
+04:59:30.0  G02 GF CS gf_new=       15.390, gf_old=       15.178, diff_abs=        0.212, thres=        0.150, elev=12.7
+05:00:00.0  G02 GF CS gf_new=       15.618, gf_old=       15.390, diff_abs=        0.228, thres=        0.150, elev=12.5
+05:00:30.0  G02 GF CS gf_new=       15.854, gf_old=       15.618, diff_abs=        0.236, thres=        0.150, elev=12.3
+05:01:00.0  G02 GF CS gf_new=       16.102, gf_old=       15.854, diff_abs=        0.248, thres=        0.150, elev=12.1
+05:01:30.0  G02 GF CS gf_new=       16.354, gf_old=       16.102, diff_abs=        0.252, thres=        0.150, elev=11.9
+05:02:00.0  G02 GF CS gf_new=       16.620, gf_old=       16.354, diff_abs=        0.266, thres=        0.150, elev=11.7
+05:02:30.0  G02 GF CS gf_new=       16.911, gf_old=       16.620, diff_abs=        0.290, thres=        0.150, elev=11.5
+05:03:00.0  G02 GF CS gf_new=       17.209, gf_old=       16.911, diff_abs=        0.298, thres=        0.150, elev=11.3
+05:03:30.0  G02 GF CS gf_new=       17.520, gf_old=       17.209, diff_abs=        0.312, thres=        0.150, elev=11.0
+05:04:00.0  G02 GF CS gf_new=       17.847, gf_old=       17.520, diff_abs=        0.327, thres=        0.150, elev=10.8
+05:04:30.0  G02 GF CS gf_new=       18.205, gf_old=       17.847, diff_abs=        0.358, thres=        0.150, elev=10.6
+05:05:00.0  G02 GF CS gf_new=       18.566, gf_old=       18.205, diff_abs=        0.361, thres=        0.150, elev=10.4
+05:05:30.0  G02 GF CS gf_new=       18.939, gf_old=       18.566, diff_abs=        0.373, thres=        0.150, elev=10.2
+05:06:00.0  G02 GF CS gf_new=       19.338, gf_old=       18.939, diff_abs=        0.399, thres=        0.150, elev=10.0
+05:06:30.0  G02 GF CS gf_new=       19.755, gf_old=       19.338, diff_abs=        0.417, thres=        0.150, elev= 9.8
+05:07:00.0  G02 GF CS gf_new=       20.179, gf_old=       19.755, diff_abs=        0.424, thres=        0.150, elev= 9.6
+05:07:30.0  G02 GF CS gf_new=       20.599, gf_old=       20.179, diff_abs=        0.419, thres=        0.150, elev= 9.4
+05:08:00.0  G02 GF CS gf_new=       21.020, gf_old=       20.599, diff_abs=        0.421, thres=        0.150, elev= 9.2
+05:08:30.0  G02 GF CS gf_new=       21.435, gf_old=       21.020, diff_abs=        0.414, thres=        0.150, elev= 8.9
+05:09:00.0  G02 GF CS gf_new=       21.828, gf_old=       21.435, diff_abs=        0.394, thres=        0.150, elev= 8.7
+05:09:30.0  G02 GF CS gf_new=       22.186, gf_old=       21.828, diff_abs=        0.358, thres=        0.150, elev= 8.5
+05:10:00.0  G02 GF CS gf_new=       22.507, gf_old=       22.186, diff_abs=        0.320, thres=        0.150, elev= 8.3
+05:10:30.0  G02 GF CS gf_new=       22.763, gf_old=       22.507, diff_abs=        0.256, thres=        0.150, elev= 8.1
+05:11:00.0  G02 GF CS gf_new=       22.934, gf_old=       22.763, diff_abs=        0.171, thres=        0.150, elev= 7.9
+05:13:00.0  G02 GF CS gf_new=       22.802, gf_old=       22.966, diff_abs=       -0.164, thres=        0.150, elev= 7.1
+05:13:30.0  G02 GF CS gf_new=       22.602, gf_old=       22.802, diff_abs=       -0.200, thres=        0.150, elev= 6.9
+05:14:00.0  G02 GF CS gf_new=       22.354, gf_old=       22.602, diff_abs=       -0.248, thres=        0.150, elev= 6.7
+05:14:30.0  G02 GF CS gf_new=       22.092, gf_old=       22.354, diff_abs=       -0.262, thres=        0.150, elev= 6.4
+05:15:00.0  G02 GF CS gf_new=       21.820, gf_old=       22.092, diff_abs=       -0.271, thres=        0.150, elev= 6.2
+05:15:30.0  G02 GF CS gf_new=       21.545, gf_old=       21.820, diff_abs=       -0.276, thres=        0.150, elev= 6.0
+05:16:00.0  G02 GF CS gf_new=       21.279, gf_old=       21.545, diff_abs=       -0.266, thres=        0.150, elev= 5.8
+05:16:30.0  G02 GF CS gf_new=       21.029, gf_old=       21.279, diff_abs=       -0.250, thres=        0.150, elev= 5.6
+05:17:00.0  G02 GF CS gf_new=       20.779, gf_old=       21.029, diff_abs=       -0.250, thres=        0.150, elev= 5.4
+05:17:30.0  G02 GF CS gf_new=       20.517, gf_old=       20.779, diff_abs=       -0.262, thres=        0.150, elev= 5.2
+05:18:00.0  G02 GF CS gf_new=       20.286, gf_old=       20.517, diff_abs=       -0.231, thres=        0.150, elev= 5.0
+05:18:30.0  G02 GF CS gf_new=       20.055, gf_old=       20.286, diff_abs=       -0.232, thres=        0.150, elev= 4.8
+05:19:00.0  G02 GF CS gf_new=       19.839, gf_old=       20.055, diff_abs=       -0.216, thres=        0.150, elev= 4.6
+05:19:30.0  G02 GF CS gf_new=       19.625, gf_old=       19.839, diff_abs=       -0.214, thres=        0.150, elev= 4.4
+05:20:00.0  G02 GF CS gf_new=       19.420, gf_old=       19.625, diff_abs=       -0.204, thres=        0.150, elev= 4.2
+05:20:30.0  G02 GF CS gf_new=       19.253, gf_old=       19.420, diff_abs=       -0.168, thres=        0.150, elev= 4.0
+05:21:00.0  G02 GF CS gf_new=       19.095, gf_old=       19.253, diff_abs=       -0.158, thres=        0.150, elev= 3.8
+05:21:30.0  G02 GF CS gf_new=       18.926, gf_old=       19.095, diff_abs=       -0.169, thres=        0.150, elev= 3.6
+05:22:00.0  G02 GF CS gf_new=       18.759, gf_old=       18.926, diff_abs=       -0.167, thres=        0.150, elev= 3.4
+05:22:30.0  G02 GF CS gf_new=       18.585, gf_old=       18.759, diff_abs=       -0.174, thres=        0.150, elev= 3.2
+05:23:00.0  G02 GF CS gf_new=       18.419, gf_old=       18.585, diff_abs=       -0.167, thres=        0.150, elev= 3.0
+05:23:30.0  G02 GF CS gf_new=       18.262, gf_old=       18.419, diff_abs=       -0.157, thres=        0.150, elev= 2.8
+05:24:00.0  G02 GF CS gf_new=       18.097, gf_old=       18.262, diff_abs=       -0.165, thres=        0.150, elev= 2.6
+05:24:30.0  G02 GF CS gf_new=       17.940, gf_old=       18.097, diff_abs=       -0.157, thres=        0.150, elev= 2.4
+05:25:00.0  G02 GF CS gf_new=       17.784, gf_old=       17.940, diff_abs=       -0.156, thres=        0.150, elev= 2.2
+05:52:30.0  G29 GF CS gf_new=        6.077, gf_old=        5.924, diff_abs=        0.152, thres=        0.150, elev= 0.0
+05:53:00.0  G29 GF CS gf_new=        6.229, gf_old=        6.077, diff_abs=        0.153, thres=        0.150, elev= 0.0
+05:53:30.0  G29 GF CS gf_new=        6.383, gf_old=        6.229, diff_abs=        0.153, thres=        0.150, elev= 0.0
+05:54:00.0  G29 GF CS gf_new=        6.549, gf_old=        6.383, diff_abs=        0.167, thres=        0.150, elev= 0.0
+05:54:30.0  G29 GF CS gf_new=        6.719, gf_old=        6.549, diff_abs=        0.170, thres=        0.150, elev= 0.0
+05:55:00.0  G29 GF CS gf_new=        6.888, gf_old=        6.719, diff_abs=        0.169, thres=        0.150, elev= 0.0
+05:55:30.0  G29 GF CS gf_new=        7.065, gf_old=        6.888, diff_abs=        0.177, thres=        0.150, elev= 0.0
+05:56:00.0  G29 GF CS gf_new=        7.249, gf_old=        7.065, diff_abs=        0.184, thres=        0.150, elev= 0.0
+05:56:30.0  G29 GF CS gf_new=        7.442, gf_old=        7.249, diff_abs=        0.193, thres=        0.150, elev= 0.0
+05:57:00.0  G29 GF CS gf_new=        7.622, gf_old=        7.442, diff_abs=        0.180, thres=        0.150, elev= 0.0
+05:57:30.0  G29 GF CS gf_new=        7.821, gf_old=        7.622, diff_abs=        0.199, thres=        0.150, elev= 0.0
+05:58:00.0  G29 GF CS gf_new=        8.036, gf_old=        7.821, diff_abs=        0.215, thres=        0.150, elev= 0.0
+05:58:30.0  G29 GF CS gf_new=        8.244, gf_old=        8.036, diff_abs=        0.208, thres=        0.150, elev= 0.0
+05:59:00.0  G20 GF CS gf_new=        8.031, gf_old=        7.880, diff_abs=        0.151, thres=        0.150, elev= 6.3
+05:59:00.0  G29 GF CS gf_new=        8.458, gf_old=        8.244, diff_abs=        0.214, thres=        0.150, elev= 0.0
+05:59:30.0  G20 GF CS gf_new=        8.187, gf_old=        8.031, diff_abs=        0.156, thres=        0.150, elev= 6.2
+05:59:30.0  G29 GF CS gf_new=        8.678, gf_old=        8.458, diff_abs=        0.221, thres=        0.150, elev= 0.0
+06:00:00.0  G20 GF CS gf_new=        8.338, gf_old=        8.187, diff_abs=        0.152, thres=        0.150, elev= 6.0
+06:00:00.0  G29 GF CS gf_new=        8.904, gf_old=        8.678, diff_abs=        0.226, thres=        0.150, elev= 0.0
+06:00:30.0  G20 GF CS gf_new=        8.501, gf_old=        8.338, diff_abs=        0.162, thres=        0.150, elev= 5.8
+06:00:30.0  G29 GF CS gf_new=        9.143, gf_old=        8.904, diff_abs=        0.239, thres=        0.150, elev= 0.0
+06:01:00.0  G20 GF CS gf_new=        8.655, gf_old=        8.501, diff_abs=        0.154, thres=        0.150, elev= 5.7
+06:01:00.0  G29 GF CS gf_new=        9.361, gf_old=        9.143, diff_abs=        0.218, thres=        0.150, elev= 0.0
+06:01:30.0  G20 GF CS gf_new=        8.813, gf_old=        8.655, diff_abs=        0.158, thres=        0.150, elev= 5.5
+06:01:30.0  G29 GF CS gf_new=        9.596, gf_old=        9.361, diff_abs=        0.235, thres=        0.150, elev= 0.0
+06:02:00.0  G20 GF CS gf_new=        8.977, gf_old=        8.813, diff_abs=        0.164, thres=        0.150, elev= 5.4
+06:02:00.0  G29 GF CS gf_new=        9.839, gf_old=        9.596, diff_abs=        0.244, thres=        0.150, elev= 0.0
+06:02:30.0  G20 GF CS gf_new=        9.150, gf_old=        8.977, diff_abs=        0.174, thres=        0.150, elev= 5.2
+06:02:30.0  G29 GF CS gf_new=       10.067, gf_old=        9.839, diff_abs=        0.228, thres=        0.150, elev= 0.0
+06:03:00.0  G20 GF CS gf_new=        9.319, gf_old=        9.150, diff_abs=        0.168, thres=        0.150, elev= 5.0
+06:03:00.0  G29 GF CS gf_new=       10.303, gf_old=       10.067, diff_abs=        0.236, thres=        0.150, elev= 0.0
+06:03:30.0  G20 GF CS gf_new=        9.513, gf_old=        9.319, diff_abs=        0.195, thres=        0.150, elev= 4.9
+06:03:30.0  G29 GF CS gf_new=       10.536, gf_old=       10.303, diff_abs=        0.233, thres=        0.150, elev= 0.0
+06:04:00.0  G20 GF CS gf_new=        9.711, gf_old=        9.513, diff_abs=        0.198, thres=        0.150, elev= 4.7
+06:04:00.0  G29 GF CS gf_new=       10.751, gf_old=       10.536, diff_abs=        0.215, thres=        0.150, elev= 0.0
+06:04:30.0  G20 GF CS gf_new=        9.922, gf_old=        9.711, diff_abs=        0.211, thres=        0.150, elev= 4.6
+06:04:30.0  G29 GF CS gf_new=       10.964, gf_old=       10.751, diff_abs=        0.213, thres=        0.150, elev= 0.0
+06:05:00.0  G20 GF CS gf_new=       10.108, gf_old=        9.922, diff_abs=        0.186, thres=        0.150, elev= 4.4
+06:05:00.0  G29 GF CS gf_new=       11.139, gf_old=       10.964, diff_abs=        0.175, thres=        0.150, elev= 0.0
+06:05:30.0  G20 GF CS gf_new=       10.348, gf_old=       10.108, diff_abs=        0.239, thres=        0.150, elev= 4.3
+06:05:30.0  G29 GF CS gf_new=       11.321, gf_old=       11.139, diff_abs=        0.182, thres=        0.150, elev= 0.0
+06:06:00.0  G20 GF CS gf_new=       10.584, gf_old=       10.348, diff_abs=        0.236, thres=        0.150, elev= 4.1
+06:06:00.0  G29 GF CS gf_new=       11.479, gf_old=       11.321, diff_abs=        0.158, thres=        0.150, elev= 0.0
+06:06:30.0  G20 GF CS gf_new=       10.855, gf_old=       10.584, diff_abs=        0.272, thres=        0.150, elev= 3.9
+06:07:00.0  G20 GF CS gf_new=       11.100, gf_old=       10.855, diff_abs=        0.245, thres=        0.150, elev= 3.8
+06:07:30.0  G20 GF CS gf_new=       11.371, gf_old=       11.100, diff_abs=        0.271, thres=        0.150, elev= 3.6
+06:08:00.0  G20 GF CS gf_new=       11.665, gf_old=       11.371, diff_abs=        0.294, thres=        0.150, elev= 3.5
+06:08:30.0  G20 GF CS gf_new=       11.987, gf_old=       11.665, diff_abs=        0.322, thres=        0.150, elev= 3.3
+06:09:00.0  G20 GF CS gf_new=       12.337, gf_old=       11.987, diff_abs=        0.350, thres=        0.150, elev= 3.1
+06:09:30.0  G20 GF CS gf_new=       12.657, gf_old=       12.337, diff_abs=        0.320, thres=        0.150, elev= 3.0
+06:10:00.0  G20 GF CS gf_new=       13.084, gf_old=       12.657, diff_abs=        0.427, thres=        0.150, elev= 2.8
+06:13:00.0  G12 GF CS gf_new=      -13.520, gf_old=      -13.671, diff_abs=        0.150, thres=        0.150, elev= 4.4
+06:13:30.0  G12 GF CS gf_new=      -13.365, gf_old=      -13.520, diff_abs=        0.155, thres=        0.150, elev= 4.6
+06:14:00.0  G12 GF CS gf_new=      -13.208, gf_old=      -13.365, diff_abs=        0.157, thres=        0.150, elev= 4.7
+06:14:30.0  G12 GF CS gf_new=      -13.039, gf_old=      -13.208, diff_abs=        0.169, thres=        0.150, elev= 4.9
+06:15:00.0  G12 GF CS gf_new=      -12.872, gf_old=      -13.039, diff_abs=        0.167, thres=        0.150, elev= 5.0
+06:15:30.0  G12 GF CS gf_new=      -12.704, gf_old=      -12.872, diff_abs=        0.168, thres=        0.150, elev= 5.1
+06:16:00.0  G12 GF CS gf_new=      -12.517, gf_old=      -12.704, diff_abs=        0.186, thres=        0.150, elev= 5.3
+06:16:30.0  G12 GF CS gf_new=      -12.330, gf_old=      -12.517, diff_abs=        0.187, thres=        0.150, elev= 5.4
+06:17:00.0  G12 GF CS gf_new=      -12.127, gf_old=      -12.330, diff_abs=        0.203, thres=        0.150, elev= 5.5
+06:17:30.0  G12 GF CS gf_new=      -11.918, gf_old=      -12.127, diff_abs=        0.209, thres=        0.150, elev= 5.7
+06:18:00.0  G12 GF CS gf_new=      -11.720, gf_old=      -11.918, diff_abs=        0.198, thres=        0.150, elev= 5.8
+06:18:30.0  G12 GF CS gf_new=      -11.507, gf_old=      -11.720, diff_abs=        0.213, thres=        0.150, elev= 6.0
+06:19:00.0  G12 GF CS gf_new=      -11.290, gf_old=      -11.507, diff_abs=        0.217, thres=        0.150, elev= 6.1
+06:19:30.0  G12 GF CS gf_new=      -11.078, gf_old=      -11.290, diff_abs=        0.212, thres=        0.150, elev= 6.2
+06:20:00.0  G12 GF CS gf_new=      -10.868, gf_old=      -11.078, diff_abs=        0.210, thres=        0.150, elev= 6.4
+06:20:30.0  G12 GF CS gf_new=      -10.665, gf_old=      -10.868, diff_abs=        0.203, thres=        0.150, elev= 6.5
+06:21:00.0  G12 GF CS gf_new=      -10.485, gf_old=      -10.665, diff_abs=        0.180, thres=        0.150, elev= 6.7
+06:21:30.0  G12 GF CS gf_new=      -10.335, gf_old=      -10.485, diff_abs=        0.150, thres=        0.150, elev= 6.8
+06:24:30.0  G12 GF CS gf_new=      -10.429, gf_old=      -10.266, diff_abs=       -0.163, thres=        0.150, elev= 7.7
+06:25:00.0  G12 GF CS gf_new=      -10.662, gf_old=      -10.429, diff_abs=       -0.232, thres=        0.150, elev= 7.8
+06:25:30.0  G12 GF CS gf_new=      -10.937, gf_old=      -10.662, diff_abs=       -0.275, thres=        0.150, elev= 8.0
+06:26:00.0  G12 GF CS gf_new=      -11.266, gf_old=      -10.937, diff_abs=       -0.329, thres=        0.150, elev= 8.1
+06:26:30.0  G12 GF CS gf_new=      -11.632, gf_old=      -11.266, diff_abs=       -0.366, thres=        0.150, elev= 8.2
+06:27:00.0  G12 GF CS gf_new=      -12.024, gf_old=      -11.632, diff_abs=       -0.392, thres=        0.150, elev= 8.4
+06:27:30.0  G12 GF CS gf_new=      -12.440, gf_old=      -12.024, diff_abs=       -0.416, thres=        0.150, elev= 8.5
+06:28:00.0  G12 GF CS gf_new=      -12.876, gf_old=      -12.440, diff_abs=       -0.436, thres=        0.150, elev= 8.7
+06:28:30.0  G12 GF CS gf_new=      -13.318, gf_old=      -12.876, diff_abs=       -0.442, thres=        0.150, elev= 8.8
+06:29:00.0  G12 GF CS gf_new=      -13.758, gf_old=      -13.318, diff_abs=       -0.440, thres=        0.150, elev= 9.0
+06:29:30.0  G12 GF CS gf_new=      -14.180, gf_old=      -13.758, diff_abs=       -0.423, thres=        0.150, elev= 9.1
+06:30:00.0  G12 GF CS gf_new=      -14.602, gf_old=      -14.180, diff_abs=       -0.422, thres=        0.150, elev= 9.3
+06:30:30.0  G12 GF CS gf_new=      -15.006, gf_old=      -14.602, diff_abs=       -0.403, thres=        0.150, elev= 9.4
+06:31:00.0  G12 GF CS gf_new=      -15.400, gf_old=      -15.006, diff_abs=       -0.394, thres=        0.150, elev= 9.6
+06:31:30.0  G12 GF CS gf_new=      -15.780, gf_old=      -15.400, diff_abs=       -0.381, thres=        0.150, elev= 9.7
+06:32:00.0  G12 GF CS gf_new=      -16.149, gf_old=      -15.780, diff_abs=       -0.369, thres=        0.150, elev= 9.9
+06:32:30.0  G12 GF CS gf_new=      -16.515, gf_old=      -16.149, diff_abs=       -0.365, thres=        0.150, elev=10.0
+06:33:00.0  G12 GF CS gf_new=      -16.862, gf_old=      -16.515, diff_abs=       -0.348, thres=        0.150, elev=10.2
+06:33:30.0  G12 GF CS gf_new=      -17.196, gf_old=      -16.862, diff_abs=       -0.334, thres=        0.150, elev=10.3
+06:34:00.0  G12 GF CS gf_new=      -17.518, gf_old=      -17.196, diff_abs=       -0.322, thres=        0.150, elev=10.5
+06:34:30.0  G12 GF CS gf_new=      -17.822, gf_old=      -17.518, diff_abs=       -0.305, thres=        0.150, elev=10.6
+06:35:00.0  G12 GF CS gf_new=      -18.119, gf_old=      -17.822, diff_abs=       -0.297, thres=        0.150, elev=10.8
+06:35:30.0  G12 GF CS gf_new=      -18.405, gf_old=      -18.119, diff_abs=       -0.286, thres=        0.150, elev=10.9
+06:36:00.0  G12 GF CS gf_new=      -18.676, gf_old=      -18.405, diff_abs=       -0.271, thres=        0.150, elev=11.1
+06:36:30.0  G12 GF CS gf_new=      -18.943, gf_old=      -18.676, diff_abs=       -0.267, thres=        0.150, elev=11.2
+06:37:00.0  G12 GF CS gf_new=      -19.188, gf_old=      -18.943, diff_abs=       -0.245, thres=        0.150, elev=11.4
+06:37:30.0  G12 GF CS gf_new=      -19.428, gf_old=      -19.188, diff_abs=       -0.240, thres=        0.150, elev=11.5
+06:38:00.0  G12 GF CS gf_new=      -19.657, gf_old=      -19.428, diff_abs=       -0.230, thres=        0.150, elev=11.7
+06:38:30.0  G12 GF CS gf_new=      -19.878, gf_old=      -19.657, diff_abs=       -0.221, thres=        0.150, elev=11.9
+06:39:00.0  G12 GF CS gf_new=      -20.098, gf_old=      -19.878, diff_abs=       -0.221, thres=        0.150, elev=12.0
+06:39:30.0  G12 GF CS gf_new=      -20.302, gf_old=      -20.098, diff_abs=       -0.203, thres=        0.150, elev=12.2
+06:40:00.0  G12 GF CS gf_new=      -20.504, gf_old=      -20.302, diff_abs=       -0.202, thres=        0.150, elev=12.3
+06:40:30.0  G12 GF CS gf_new=      -20.699, gf_old=      -20.504, diff_abs=       -0.195, thres=        0.150, elev=12.5
+06:41:00.0  G12 GF CS gf_new=      -20.876, gf_old=      -20.699, diff_abs=       -0.178, thres=        0.150, elev=12.6
+06:41:30.0  G12 GF CS gf_new=      -21.061, gf_old=      -20.876, diff_abs=       -0.184, thres=        0.150, elev=12.8
+06:42:00.0  G12 GF CS gf_new=      -21.235, gf_old=      -21.061, diff_abs=       -0.174, thres=        0.150, elev=12.9
+06:42:30.0  G12 GF CS gf_new=      -21.399, gf_old=      -21.235, diff_abs=       -0.164, thres=        0.150, elev=13.1
+06:43:00.0  G12 GF CS gf_new=      -21.566, gf_old=      -21.399, diff_abs=       -0.168, thres=        0.150, elev=13.3
+06:43:30.0  G12 GF CS gf_new=      -21.719, gf_old=      -21.566, diff_abs=       -0.152, thres=        0.150, elev=13.4
+06:44:00.0  G12 GF CS gf_new=      -21.869, gf_old=      -21.719, diff_abs=       -0.151, thres=        0.150, elev=13.6
+06:45:00.0  G25 GF CS gf_new=      -14.647, gf_old=      -14.802, diff_abs=        0.155, thres=        0.150, elev= 0.0
+06:48:00.0  G25 GF CS gf_new=      -13.781, gf_old=      -13.938, diff_abs=        0.157, thres=        0.150, elev= 0.0
+06:48:30.0  G25 GF CS gf_new=      -13.618, gf_old=      -13.781, diff_abs=        0.163, thres=        0.150, elev= 0.0
+06:49:00.0  G25 GF CS gf_new=      -13.444, gf_old=      -13.618, diff_abs=        0.174, thres=        0.150, elev= 0.0
+06:49:30.0  G25 GF CS gf_new=      -13.272, gf_old=      -13.444, diff_abs=        0.172, thres=        0.150, elev= 0.0
+06:50:00.0  G25 GF CS gf_new=      -13.095, gf_old=      -13.272, diff_abs=        0.176, thres=        0.150, elev= 0.0
+06:50:30.0  G25 GF CS gf_new=      -12.913, gf_old=      -13.095, diff_abs=        0.182, thres=        0.150, elev= 0.0
+06:51:00.0  G25 GF CS gf_new=      -12.736, gf_old=      -12.913, diff_abs=        0.177, thres=        0.150, elev= 0.0
+06:51:30.0  G25 GF CS gf_new=      -12.553, gf_old=      -12.736, diff_abs=        0.183, thres=        0.150, elev= 0.0
+06:52:00.0  G25 GF CS gf_new=      -12.369, gf_old=      -12.553, diff_abs=        0.184, thres=        0.150, elev= 0.0
+06:52:30.0  G25 GF CS gf_new=      -12.199, gf_old=      -12.369, diff_abs=        0.170, thres=        0.150, elev= 0.0
+06:53:00.0  G25 GF CS gf_new=      -12.031, gf_old=      -12.199, diff_abs=        0.168, thres=        0.150, elev= 0.0
+06:57:30.0  G25 GF CS gf_new=      -11.996, gf_old=      -11.818, diff_abs=       -0.179, thres=        0.150, elev= 0.0
+06:58:00.0  G25 GF CS gf_new=      -12.223, gf_old=      -11.996, diff_abs=       -0.227, thres=        0.150, elev= 0.0
+06:58:30.0  G25 GF CS gf_new=      -12.464, gf_old=      -12.223, diff_abs=       -0.241, thres=        0.150, elev= 0.0
+06:59:00.0  G25 GF CS gf_new=      -12.732, gf_old=      -12.464, diff_abs=       -0.268, thres=        0.150, elev= 0.0
+06:59:30.0  G25 GF CS gf_new=      -13.022, gf_old=      -12.732, diff_abs=       -0.290, thres=        0.150, elev= 0.0
+07:00:00.0  G25 GF CS gf_new=      -13.331, gf_old=      -13.022, diff_abs=       -0.309, thres=        0.150, elev= 0.0
+07:00:30.0  G25 GF CS gf_new=      -13.640, gf_old=      -13.331, diff_abs=       -0.308, thres=        0.150, elev= 0.0
+07:01:00.0  G25 GF CS gf_new=      -13.966, gf_old=      -13.640, diff_abs=       -0.327, thres=        0.150, elev= 0.0
+07:01:30.0  G25 GF CS gf_new=      -14.302, gf_old=      -13.966, diff_abs=       -0.335, thres=        0.150, elev= 0.0
+07:02:00.0  G25 GF CS gf_new=      -14.653, gf_old=      -14.302, diff_abs=       -0.351, thres=        0.150, elev= 0.0
+07:02:30.0  G25 GF CS gf_new=      -15.002, gf_old=      -14.653, diff_abs=       -0.349, thres=        0.150, elev= 0.0
+07:03:00.0  G25 GF CS gf_new=      -15.326, gf_old=      -15.002, diff_abs=       -0.325, thres=        0.150, elev= 0.0
+07:03:30.0  G25 GF CS gf_new=      -15.656, gf_old=      -15.326, diff_abs=       -0.329, thres=        0.150, elev= 0.0
+07:04:00.0  G25 GF CS gf_new=      -15.984, gf_old=      -15.656, diff_abs=       -0.328, thres=        0.150, elev= 0.0
+07:04:30.0  G25 GF CS gf_new=      -16.316, gf_old=      -15.984, diff_abs=       -0.332, thres=        0.150, elev= 0.0
+07:05:00.0  G25 GF CS gf_new=      -16.647, gf_old=      -16.316, diff_abs=       -0.331, thres=        0.150, elev= 0.0
+07:05:30.0  G25 GF CS gf_new=      -16.969, gf_old=      -16.647, diff_abs=       -0.322, thres=        0.150, elev= 0.0
+07:06:00.0  G25 GF CS gf_new=      -17.274, gf_old=      -16.969, diff_abs=       -0.306, thres=        0.150, elev= 0.0
+07:06:30.0  G25 GF CS gf_new=      -17.583, gf_old=      -17.274, diff_abs=       -0.309, thres=        0.150, elev= 0.0
+07:07:00.0  G25 GF CS gf_new=      -17.895, gf_old=      -17.583, diff_abs=       -0.311, thres=        0.150, elev= 0.0
+07:07:30.0  G25 GF CS gf_new=      -18.197, gf_old=      -17.895, diff_abs=       -0.302, thres=        0.150, elev= 0.0
+07:08:00.0  G25 GF CS gf_new=      -18.482, gf_old=      -18.197, diff_abs=       -0.284, thres=        0.150, elev= 0.0
+07:08:30.0  G25 GF CS gf_new=      -18.760, gf_old=      -18.482, diff_abs=       -0.279, thres=        0.150, elev= 0.0
+07:09:00.0  G25 GF CS gf_new=      -19.033, gf_old=      -18.760, diff_abs=       -0.273, thres=        0.150, elev= 0.0
+07:09:30.0  G25 GF CS gf_new=      -19.293, gf_old=      -19.033, diff_abs=       -0.260, thres=        0.150, elev= 0.0
+07:10:00.0  G25 GF CS gf_new=      -19.544, gf_old=      -19.293, diff_abs=       -0.251, thres=        0.150, elev= 0.0
+07:10:30.0  G25 GF CS gf_new=      -19.788, gf_old=      -19.544, diff_abs=       -0.244, thres=        0.150, elev= 0.0
+07:11:00.0  G25 GF CS gf_new=      -20.018, gf_old=      -19.788, diff_abs=       -0.230, thres=        0.150, elev= 0.0
+07:11:30.0  G25 GF CS gf_new=      -20.248, gf_old=      -20.018, diff_abs=       -0.230, thres=        0.150, elev= 0.0
+07:12:00.0  G25 GF CS gf_new=      -20.466, gf_old=      -20.248, diff_abs=       -0.217, thres=        0.150, elev= 0.0
+07:12:30.0  G25 GF CS gf_new=      -20.676, gf_old=      -20.466, diff_abs=       -0.210, thres=        0.150, elev= 0.0
+07:13:00.0  G25 GF CS gf_new=      -20.871, gf_old=      -20.676, diff_abs=       -0.195, thres=        0.150, elev= 0.0
+07:13:30.0  G25 GF CS gf_new=      -21.056, gf_old=      -20.871, diff_abs=       -0.186, thres=        0.150, elev= 0.0
+07:14:00.0  G25 GF CS gf_new=      -21.234, gf_old=      -21.056, diff_abs=       -0.177, thres=        0.150, elev= 0.0
+07:14:30.0  G25 GF CS gf_new=      -21.406, gf_old=      -21.234, diff_abs=       -0.173, thres=        0.150, elev= 0.0
+07:15:00.0  G25 GF CS gf_new=      -21.578, gf_old=      -21.406, diff_abs=       -0.172, thres=        0.150, elev= 0.0
+07:15:30.0  G25 GF CS gf_new=      -21.746, gf_old=      -21.578, diff_abs=       -0.168, thres=        0.150, elev= 0.0
+07:16:00.0  G25 GF CS gf_new=      -21.896, gf_old=      -21.746, diff_abs=       -0.150, thres=        0.150, elev= 0.0
+07:17:30.0  G05 GF CS gf_new=        4.027, gf_old=        3.866, diff_abs=        0.161, thres=        0.150, elev= 8.4
+07:18:00.0  G05 GF CS gf_new=        4.197, gf_old=        4.027, diff_abs=        0.170, thres=        0.150, elev= 8.2
+07:18:30.0  G05 GF CS gf_new=        4.368, gf_old=        4.197, diff_abs=        0.171, thres=        0.150, elev= 8.1
+07:19:00.0  G05 GF CS gf_new=        4.541, gf_old=        4.368, diff_abs=        0.172, thres=        0.150, elev= 7.9
+07:19:30.0  G05 GF CS gf_new=        4.720, gf_old=        4.541, diff_abs=        0.179, thres=        0.150, elev= 7.7
+07:20:00.0  G05 GF CS gf_new=        4.914, gf_old=        4.720, diff_abs=        0.194, thres=        0.150, elev= 7.5
+07:20:30.0  G05 GF CS gf_new=        5.120, gf_old=        4.914, diff_abs=        0.206, thres=        0.150, elev= 7.4
+07:21:00.0  G05 GF CS gf_new=        5.334, gf_old=        5.120, diff_abs=        0.214, thres=        0.150, elev= 7.2
+07:21:30.0  G05 GF CS gf_new=        5.568, gf_old=        5.334, diff_abs=        0.234, thres=        0.150, elev= 7.0
+07:22:00.0  G05 GF CS gf_new=        5.804, gf_old=        5.568, diff_abs=        0.237, thres=        0.150, elev= 6.9
+07:22:30.0  G05 GF CS gf_new=        6.061, gf_old=        5.804, diff_abs=        0.257, thres=        0.150, elev= 6.7
+07:23:00.0  G05 GF CS gf_new=        6.322, gf_old=        6.061, diff_abs=        0.261, thres=        0.150, elev= 6.5
+07:23:30.0  G05 GF CS gf_new=        6.616, gf_old=        6.322, diff_abs=        0.294, thres=        0.150, elev= 6.3
+07:24:00.0  G05 GF CS gf_new=        6.917, gf_old=        6.616, diff_abs=        0.300, thres=        0.150, elev= 6.2
+07:24:30.0  G05 GF CS gf_new=        7.249, gf_old=        6.917, diff_abs=        0.333, thres=        0.150, elev= 6.0
+07:25:00.0  G05 GF CS gf_new=        7.587, gf_old=        7.249, diff_abs=        0.337, thres=        0.150, elev= 5.8
+07:25:30.0  G05 GF CS gf_new=        7.945, gf_old=        7.587, diff_abs=        0.359, thres=        0.150, elev= 5.7
+07:26:00.0  G05 GF CS gf_new=        8.342, gf_old=        7.945, diff_abs=        0.397, thres=        0.150, elev= 5.5
+07:26:30.0  G05 GF CS gf_new=        8.756, gf_old=        8.342, diff_abs=        0.414, thres=        0.150, elev= 5.3
+07:27:00.0  G05 GF CS gf_new=        9.184, gf_old=        8.756, diff_abs=        0.429, thres=        0.150, elev= 5.1
+07:27:30.0  G05 GF CS gf_new=        9.640, gf_old=        9.184, diff_abs=        0.455, thres=        0.150, elev= 5.0
+07:28:00.0  G05 GF CS gf_new=       10.120, gf_old=        9.640, diff_abs=        0.481, thres=        0.150, elev= 4.8
+07:28:30.0  G05 GF CS gf_new=       10.607, gf_old=       10.120, diff_abs=        0.487, thres=        0.150, elev= 4.6
+07:29:00.0  G05 GF CS gf_new=       11.111, gf_old=       10.607, diff_abs=        0.504, thres=        0.150, elev= 4.5
+07:29:30.0  G05 GF CS gf_new=       11.620, gf_old=       11.111, diff_abs=        0.510, thres=        0.150, elev= 4.3
+07:30:00.0  G05 GF CS gf_new=       12.142, gf_old=       11.620, diff_abs=        0.522, thres=        0.150, elev= 4.1
+07:30:30.0  G05 GF CS gf_new=       12.674, gf_old=       12.142, diff_abs=        0.532, thres=        0.150, elev= 3.9
+07:31:00.0  G05 GF CS gf_new=       13.196, gf_old=       12.674, diff_abs=        0.522, thres=        0.150, elev= 3.8
+07:31:30.0  G05 GF CS gf_new=       13.671, gf_old=       13.196, diff_abs=        0.476, thres=        0.150, elev= 3.6
+07:32:00.0  G05 GF CS gf_new=       14.149, gf_old=       13.671, diff_abs=        0.478, thres=        0.150, elev= 3.4
+07:32:30.0  G05 GF CS gf_new=       14.552, gf_old=       14.149, diff_abs=        0.404, thres=        0.150, elev= 3.3
+07:33:00.0  G05 GF CS gf_new=       14.904, gf_old=       14.552, diff_abs=        0.352, thres=        0.150, elev= 3.1
+07:33:30.0  G05 GF CS gf_new=       15.148, gf_old=       14.904, diff_abs=        0.244, thres=        0.150, elev= 2.9
+07:35:30.0  G05 GF CS gf_new=       14.943, gf_old=       15.139, diff_abs=       -0.196, thres=        0.150, elev= 2.2
+07:37:30.0  G05 GF CS gf_new=      -23.606, gf_old=      -23.379, diff_abs=       -0.227, thres=        0.150, elev= 1.5
+07:38:00.0  G05 GF CS gf_new=      -23.818, gf_old=      -23.606, diff_abs=       -0.213, thres=        0.150, elev= 1.4
+07:38:30.0  G05 GF CS gf_new=      -24.041, gf_old=      -23.818, diff_abs=       -0.222, thres=        0.150, elev= 1.2
+07:39:00.0  G05 GF CS gf_new=      -24.231, gf_old=      -24.041, diff_abs=       -0.190, thres=        0.150, elev= 1.0
+07:39:30.0  G05 GF CS gf_new=      -24.479, gf_old=      -24.231, diff_abs=       -0.249, thres=        0.150, elev= 0.8
+08:06:00.0  G31 GF CS gf_new=       -3.450, gf_old=       -3.290, diff_abs=       -0.161, thres=        0.150, elev= 0.0
+08:07:00.0  G31 GF CS gf_new=       -3.757, gf_old=       -3.594, diff_abs=       -0.163, thres=        0.150, elev= 0.0
+08:25:30.0  G18 GF CS gf_new=        1.015, gf_old=        0.864, diff_abs=        0.150, thres=        0.150, elev=13.8
+08:26:00.0  G18 GF CS gf_new=        1.177, gf_old=        1.015, diff_abs=        0.162, thres=        0.150, elev=13.6
+08:26:30.0  G18 GF CS gf_new=        1.344, gf_old=        1.177, diff_abs=        0.168, thres=        0.150, elev=13.4
+08:27:00.0  G18 GF CS gf_new=        1.520, gf_old=        1.344, diff_abs=        0.176, thres=        0.150, elev=13.2
+08:27:30.0  G18 GF CS gf_new=        1.701, gf_old=        1.520, diff_abs=        0.180, thres=        0.150, elev=13.1
+08:28:00.0  G18 GF CS gf_new=        1.895, gf_old=        1.701, diff_abs=        0.194, thres=        0.150, elev=12.9
+08:28:30.0  G18 GF CS gf_new=        2.104, gf_old=        1.895, diff_abs=        0.209, thres=        0.150, elev=12.7
+08:29:00.0  G18 GF CS gf_new=        2.321, gf_old=        2.104, diff_abs=        0.217, thres=        0.150, elev=12.5
+08:29:30.0  G18 GF CS gf_new=        2.548, gf_old=        2.321, diff_abs=        0.227, thres=        0.150, elev=12.3
+08:30:00.0  G18 GF CS gf_new=        2.774, gf_old=        2.548, diff_abs=        0.226, thres=        0.150, elev=12.2
+08:30:30.0  G18 GF CS gf_new=        3.004, gf_old=        2.774, diff_abs=        0.230, thres=        0.150, elev=12.0
+08:31:00.0  G18 GF CS gf_new=        3.236, gf_old=        3.004, diff_abs=        0.232, thres=        0.150, elev=11.8
+08:31:30.0  G18 GF CS gf_new=        3.471, gf_old=        3.236, diff_abs=        0.235, thres=        0.150, elev=11.6
+08:32:00.0  G18 GF CS gf_new=        3.711, gf_old=        3.471, diff_abs=        0.240, thres=        0.150, elev=11.5
+08:32:30.0  G18 GF CS gf_new=        3.945, gf_old=        3.711, diff_abs=        0.234, thres=        0.150, elev=11.3
+08:33:00.0  G18 GF CS gf_new=        4.189, gf_old=        3.945, diff_abs=        0.245, thres=        0.150, elev=11.1
+08:33:30.0  G18 GF CS gf_new=        4.439, gf_old=        4.189, diff_abs=        0.250, thres=        0.150, elev=10.9
+08:34:00.0  G18 GF CS gf_new=        4.710, gf_old=        4.439, diff_abs=        0.271, thres=        0.150, elev=10.8
+08:34:30.0  G18 GF CS gf_new=        4.997, gf_old=        4.710, diff_abs=        0.287, thres=        0.150, elev=10.6
+08:35:00.0  G18 GF CS gf_new=        5.292, gf_old=        4.997, diff_abs=        0.295, thres=        0.150, elev=10.4
+08:35:30.0  G18 GF CS gf_new=        5.618, gf_old=        5.292, diff_abs=        0.326, thres=        0.150, elev=10.2
+08:36:00.0  G18 GF CS gf_new=        5.959, gf_old=        5.618, diff_abs=        0.341, thres=        0.150, elev=10.1
+08:36:30.0  G18 GF CS gf_new=        6.320, gf_old=        5.959, diff_abs=        0.361, thres=        0.150, elev= 9.9
+08:37:00.0  G18 GF CS gf_new=        6.703, gf_old=        6.320, diff_abs=        0.383, thres=        0.150, elev= 9.7
+08:37:30.0  G18 GF CS gf_new=        7.106, gf_old=        6.703, diff_abs=        0.403, thres=        0.150, elev= 9.6
+08:38:00.0  G18 GF CS gf_new=        7.521, gf_old=        7.106, diff_abs=        0.414, thres=        0.150, elev= 9.4
+08:38:30.0  G18 GF CS gf_new=        7.958, gf_old=        7.521, diff_abs=        0.438, thres=        0.150, elev= 9.2
+08:39:00.0  G18 GF CS gf_new=        8.387, gf_old=        7.958, diff_abs=        0.429, thres=        0.150, elev= 9.0
+08:39:30.0  G18 GF CS gf_new=        8.817, gf_old=        8.387, diff_abs=        0.430, thres=        0.150, elev= 8.9
+08:40:00.0  G18 GF CS gf_new=        9.248, gf_old=        8.817, diff_abs=        0.430, thres=        0.150, elev= 8.7
+08:40:30.0  G18 GF CS gf_new=        9.635, gf_old=        9.248, diff_abs=        0.388, thres=        0.150, elev= 8.5
+08:41:00.0  G18 GF CS gf_new=        9.976, gf_old=        9.635, diff_abs=        0.341, thres=        0.150, elev= 8.4
+08:41:30.0  G18 GF CS gf_new=       10.281, gf_old=        9.976, diff_abs=        0.304, thres=        0.150, elev= 8.2
+08:42:00.0  G18 GF CS gf_new=       10.556, gf_old=       10.281, diff_abs=        0.275, thres=        0.150, elev= 8.0
+08:42:30.0  G18 GF CS gf_new=       10.774, gf_old=       10.556, diff_abs=        0.219, thres=        0.150, elev= 7.9
+08:43:00.0  G18 GF CS gf_new=       10.939, gf_old=       10.774, diff_abs=        0.164, thres=        0.150, elev= 7.7
+09:29:30.0  G21 GF CS gf_new=       -4.565, gf_old=       -2.141, diff_abs=       -2.424, thres=        0.150, elev= 3.6
+09:36:00.0  G26 GF CS gf_new=      -14.663, gf_old=      -14.498, diff_abs=       -0.165, thres=        0.150, elev= 0.0
+09:36:30.0  G26 GF CS gf_new=      -14.886, gf_old=      -14.663, diff_abs=       -0.223, thres=        0.150, elev= 0.0
+09:37:00.0  G26 GF CS gf_new=      -15.181, gf_old=      -14.886, diff_abs=       -0.295, thres=        0.150, elev= 0.0
+09:37:30.0  G26 GF CS gf_new=      -15.547, gf_old=      -15.181, diff_abs=       -0.366, thres=        0.150, elev= 0.0
+09:38:00.0  G26 GF CS gf_new=      -15.973, gf_old=      -15.547, diff_abs=       -0.426, thres=        0.150, elev= 0.0
+09:38:00.0  G29 GF CS gf_new=      -11.706, gf_old=      -11.546, diff_abs=       -0.159, thres=        0.150, elev= 0.0
+09:38:30.0  G26 GF CS gf_new=      -16.432, gf_old=      -15.973, diff_abs=       -0.459, thres=        0.150, elev= 0.0
+09:38:30.0  G29 GF CS gf_new=      -11.887, gf_old=      -11.706, diff_abs=       -0.182, thres=        0.150, elev= 0.0
+09:39:00.0  G26 GF CS gf_new=      -16.940, gf_old=      -16.432, diff_abs=       -0.507, thres=        0.150, elev= 0.0
+09:39:00.0  G29 GF CS gf_new=      -12.107, gf_old=      -11.887, diff_abs=       -0.219, thres=        0.150, elev= 0.0
+09:39:30.0  G26 GF CS gf_new=      -17.466, gf_old=      -16.940, diff_abs=       -0.526, thres=        0.150, elev= 0.0
+09:39:30.0  G29 GF CS gf_new=      -12.347, gf_old=      -12.107, diff_abs=       -0.241, thres=        0.150, elev= 0.0
+09:40:00.0  G26 GF CS gf_new=      -18.007, gf_old=      -17.466, diff_abs=       -0.541, thres=        0.150, elev= 0.0
+09:40:00.0  G29 GF CS gf_new=      -12.616, gf_old=      -12.347, diff_abs=       -0.268, thres=        0.150, elev= 0.0
+09:40:30.0  G26 GF CS gf_new=      -18.548, gf_old=      -18.007, diff_abs=       -0.541, thres=        0.150, elev= 0.0
+09:40:30.0  G29 GF CS gf_new=      -12.924, gf_old=      -12.616, diff_abs=       -0.308, thres=        0.150, elev= 0.0
+09:41:00.0  G26 GF CS gf_new=      -19.078, gf_old=      -18.548, diff_abs=       -0.530, thres=        0.150, elev= 0.0
+09:41:30.0  G26 GF CS gf_new=      -19.606, gf_old=      -19.078, diff_abs=       -0.529, thres=        0.150, elev= 0.0
+09:42:00.0  G26 GF CS gf_new=      -20.110, gf_old=      -19.606, diff_abs=       -0.504, thres=        0.150, elev= 0.0
+09:42:30.0  G26 GF CS gf_new=      -20.596, gf_old=      -20.110, diff_abs=       -0.486, thres=        0.150, elev= 0.0
+09:42:30.0  G29 GF CS gf_new=        0.677, gf_old=        1.064, diff_abs=       -0.387, thres=        0.150, elev= 0.0
+09:43:00.0  G26 GF CS gf_new=      -21.067, gf_old=      -20.596, diff_abs=       -0.471, thres=        0.150, elev= 0.0
+09:43:00.0  G29 GF CS gf_new=        0.290, gf_old=        0.677, diff_abs=       -0.386, thres=        0.150, elev= 0.0
+09:43:30.0  G26 GF CS gf_new=      -21.516, gf_old=      -21.067, diff_abs=       -0.450, thres=        0.150, elev= 0.0
+09:43:30.0  G29 GF CS gf_new=       -0.097, gf_old=        0.290, diff_abs=       -0.387, thres=        0.150, elev= 0.0
+09:44:00.0  G26 GF CS gf_new=      -21.917, gf_old=      -21.516, diff_abs=       -0.400, thres=        0.150, elev= 0.0
+09:44:00.0  G29 GF CS gf_new=       -0.483, gf_old=       -0.097, diff_abs=       -0.386, thres=        0.150, elev= 0.0
+09:44:30.0  G26 GF CS gf_new=      -22.295, gf_old=      -21.917, diff_abs=       -0.379, thres=        0.150, elev= 0.0
+09:44:30.0  G29 GF CS gf_new=       -0.849, gf_old=       -0.483, diff_abs=       -0.367, thres=        0.150, elev= 0.0
+09:45:00.0  G26 GF CS gf_new=      -22.655, gf_old=      -22.295, diff_abs=       -0.360, thres=        0.150, elev= 0.0
+09:45:00.0  G29 GF CS gf_new=       -1.176, gf_old=       -0.849, diff_abs=       -0.327, thres=        0.150, elev= 0.0
+09:45:30.0  G26 GF CS gf_new=      -22.986, gf_old=      -22.655, diff_abs=       -0.331, thres=        0.150, elev= 0.0
+09:45:30.0  G29 GF CS gf_new=       -1.487, gf_old=       -1.176, diff_abs=       -0.311, thres=        0.150, elev= 0.0
+09:46:00.0  G26 GF CS gf_new=      -23.281, gf_old=      -22.986, diff_abs=       -0.295, thres=        0.150, elev= 0.0
+09:46:00.0  G29 GF CS gf_new=       -1.783, gf_old=       -1.487, diff_abs=       -0.296, thres=        0.150, elev= 0.0
+09:46:30.0  G26 GF CS gf_new=      -23.567, gf_old=      -23.281, diff_abs=       -0.285, thres=        0.150, elev= 0.0
+09:46:30.0  G29 GF CS gf_new=       -2.064, gf_old=       -1.783, diff_abs=       -0.280, thres=        0.150, elev= 0.0
+09:47:00.0  G26 GF CS gf_new=      -23.826, gf_old=      -23.567, diff_abs=       -0.259, thres=        0.150, elev= 0.0
+09:47:00.0  G29 GF CS gf_new=       -2.317, gf_old=       -2.064, diff_abs=       -0.254, thres=        0.150, elev= 0.0
+09:47:30.0  G26 GF CS gf_new=      -24.074, gf_old=      -23.826, diff_abs=       -0.248, thres=        0.150, elev= 0.0
+09:47:30.0  G29 GF CS gf_new=       -2.545, gf_old=       -2.317, diff_abs=       -0.228, thres=        0.150, elev= 0.0
+09:48:00.0  G26 GF CS gf_new=      -24.300, gf_old=      -24.074, diff_abs=       -0.226, thres=        0.150, elev= 0.0
+09:48:00.0  G29 GF CS gf_new=       -2.775, gf_old=       -2.545, diff_abs=       -0.230, thres=        0.150, elev= 0.0
+09:48:30.0  G26 GF CS gf_new=      -24.522, gf_old=      -24.300, diff_abs=       -0.222, thres=        0.150, elev= 0.0
+09:48:30.0  G29 GF CS gf_new=       -2.974, gf_old=       -2.775, diff_abs=       -0.199, thres=        0.150, elev= 0.0
+09:49:00.0  G26 GF CS gf_new=      -24.732, gf_old=      -24.522, diff_abs=       -0.210, thres=        0.150, elev= 0.0
+09:49:00.0  G29 GF CS gf_new=       -3.156, gf_old=       -2.974, diff_abs=       -0.182, thres=        0.150, elev= 0.0
+09:49:30.0  G26 GF CS gf_new=      -24.928, gf_old=      -24.732, diff_abs=       -0.196, thres=        0.150, elev= 0.0
+09:49:30.0  G29 GF CS gf_new=       -3.339, gf_old=       -3.156, diff_abs=       -0.183, thres=        0.150, elev= 0.0
+09:50:00.0  G26 GF CS gf_new=      -25.110, gf_old=      -24.928, diff_abs=       -0.183, thres=        0.150, elev= 0.0
+09:50:00.0  G29 GF CS gf_new=       -3.494, gf_old=       -3.339, diff_abs=       -0.154, thres=        0.150, elev= 0.0
+09:50:30.0  G26 GF CS gf_new=      -25.287, gf_old=      -25.110, diff_abs=       -0.176, thres=        0.150, elev= 0.0
+09:51:00.0  G26 GF CS gf_new=      -25.459, gf_old=      -25.287, diff_abs=       -0.172, thres=        0.150, elev= 0.0
+09:51:30.0  G26 GF CS gf_new=      -25.617, gf_old=      -25.459, diff_abs=       -0.158, thres=        0.150, elev= 0.0
+10:19:30.0  G23 GF CS gf_new=       -5.609, gf_old=       -5.768, diff_abs=        0.159, thres=        0.150, elev= 0.0
+10:20:00.0  G23 GF CS gf_new=       -5.444, gf_old=       -5.609, diff_abs=        0.165, thres=        0.150, elev= 0.0
+10:20:30.0  G23 GF CS gf_new=       -5.258, gf_old=       -5.444, diff_abs=        0.186, thres=        0.150, elev= 0.0
+10:21:00.0  G23 GF CS gf_new=       -5.071, gf_old=       -5.258, diff_abs=        0.187, thres=        0.150, elev= 0.0
+10:21:30.0  G23 GF CS gf_new=       -4.857, gf_old=       -5.071, diff_abs=        0.213, thres=        0.150, elev= 0.0
+10:22:00.0  G23 GF CS gf_new=       -4.641, gf_old=       -4.857, diff_abs=        0.216, thres=        0.150, elev= 0.0
+10:22:30.0  G23 GF CS gf_new=       -4.403, gf_old=       -4.641, diff_abs=        0.238, thres=        0.150, elev= 0.0
+10:23:00.0  G23 GF CS gf_new=       -4.161, gf_old=       -4.403, diff_abs=        0.242, thres=        0.150, elev= 0.0
+10:23:30.0  G23 GF CS gf_new=       -3.892, gf_old=       -4.161, diff_abs=        0.269, thres=        0.150, elev= 0.0
+10:24:00.0  G23 GF CS gf_new=       -3.613, gf_old=       -3.892, diff_abs=        0.279, thres=        0.150, elev= 0.0
+10:24:30.0  G23 GF CS gf_new=       -3.323, gf_old=       -3.613, diff_abs=        0.289, thres=        0.150, elev= 0.0
+10:25:00.0  G23 GF CS gf_new=       -3.018, gf_old=       -3.323, diff_abs=        0.305, thres=        0.150, elev= 0.0
+10:25:30.0  G23 GF CS gf_new=       -2.708, gf_old=       -3.018, diff_abs=        0.310, thres=        0.150, elev= 0.0
+10:26:00.0  G23 GF CS gf_new=       -2.389, gf_old=       -2.708, diff_abs=        0.319, thres=        0.150, elev= 0.0
+10:26:30.0  G23 GF CS gf_new=       -2.071, gf_old=       -2.389, diff_abs=        0.318, thres=        0.150, elev= 0.0
+10:27:00.0  G23 GF CS gf_new=       -1.750, gf_old=       -2.071, diff_abs=        0.321, thres=        0.150, elev= 0.0
+10:27:30.0  G23 GF CS gf_new=       -1.426, gf_old=       -1.750, diff_abs=        0.324, thres=        0.150, elev= 0.0
+10:28:00.0  G23 GF CS gf_new=       -1.122, gf_old=       -1.426, diff_abs=        0.303, thres=        0.150, elev= 0.0
+10:28:30.0  G23 GF CS gf_new=       -0.828, gf_old=       -1.122, diff_abs=        0.295, thres=        0.150, elev= 0.0
+10:29:00.0  G23 GF CS gf_new=       -0.545, gf_old=       -0.828, diff_abs=        0.283, thres=        0.150, elev= 0.0
+10:29:30.0  G23 GF CS gf_new=       -0.295, gf_old=       -0.545, diff_abs=        0.250, thres=        0.150, elev= 0.0
+10:30:00.0  G23 GF CS gf_new=       -0.064, gf_old=       -0.295, diff_abs=        0.231, thres=        0.150, elev= 0.0
+10:30:30.0  G23 GF CS gf_new=        0.137, gf_old=       -0.064, diff_abs=        0.201, thres=        0.150, elev= 0.0
+10:31:00.0  G23 GF CS gf_new=        0.311, gf_old=        0.137, diff_abs=        0.174, thres=        0.150, elev= 0.0
+10:31:30.0  G23 GF CS gf_new=        0.476, gf_old=        0.311, diff_abs=        0.165, thres=        0.150, elev= 0.0
+10:47:30.0  G23 GF CS gf_new=      -10.277, gf_old=        0.844, diff_abs=      -11.121, thres=        0.150, elev= 0.0
+11:01:00.0  G16 GF CS gf_new=      -15.991, gf_old=      -15.751, diff_abs=       -0.240, thres=        0.150, elev= 5.6
+11:01:30.0  G16 GF CS gf_new=      -16.298, gf_old=      -15.991, diff_abs=       -0.307, thres=        0.150, elev= 5.8
+11:02:00.0  G16 GF CS gf_new=      -16.713, gf_old=      -16.298, diff_abs=       -0.415, thres=        0.150, elev= 6.0
+11:02:30.0  G16 GF CS gf_new=      -17.157, gf_old=      -16.713, diff_abs=       -0.444, thres=        0.150, elev= 6.2
+11:03:00.0  G16 GF CS gf_new=      -17.663, gf_old=      -17.157, diff_abs=       -0.506, thres=        0.150, elev= 6.4
+11:03:30.0  G16 GF CS gf_new=      -18.159, gf_old=      -17.663, diff_abs=       -0.495, thres=        0.150, elev= 6.6
+11:04:00.0  G16 GF CS gf_new=      -18.661, gf_old=      -18.159, diff_abs=       -0.502, thres=        0.150, elev= 6.8
+11:04:30.0  G16 GF CS gf_new=      -19.132, gf_old=      -18.661, diff_abs=       -0.472, thres=        0.150, elev= 7.0
+11:05:00.0  G16 GF CS gf_new=      -19.617, gf_old=      -19.132, diff_abs=       -0.485, thres=        0.150, elev= 7.2
+11:05:30.0  G16 GF CS gf_new=      -20.072, gf_old=      -19.617, diff_abs=       -0.455, thres=        0.150, elev= 7.4
+11:06:00.0  G16 GF CS gf_new=      -20.490, gf_old=      -20.072, diff_abs=       -0.418, thres=        0.150, elev= 7.5
+11:06:30.0  G16 GF CS gf_new=      -20.869, gf_old=      -20.490, diff_abs=       -0.378, thres=        0.150, elev= 7.7
+11:07:00.0  G16 GF CS gf_new=      -21.227, gf_old=      -20.869, diff_abs=       -0.358, thres=        0.150, elev= 7.9
+11:07:30.0  G16 GF CS gf_new=      -21.550, gf_old=      -21.227, diff_abs=       -0.324, thres=        0.150, elev= 8.1
+11:08:00.0  G16 GF CS gf_new=      -21.861, gf_old=      -21.550, diff_abs=       -0.311, thres=        0.150, elev= 8.3
+11:08:30.0  G16 GF CS gf_new=      -22.134, gf_old=      -21.861, diff_abs=       -0.272, thres=        0.150, elev= 8.5
+11:09:00.0  G16 GF CS gf_new=      -22.380, gf_old=      -22.134, diff_abs=       -0.246, thres=        0.150, elev= 8.7
+11:09:30.0  G16 GF CS gf_new=      -22.595, gf_old=      -22.380, diff_abs=       -0.215, thres=        0.150, elev= 8.9
+11:10:00.0  G16 GF CS gf_new=      -22.829, gf_old=      -22.595, diff_abs=       -0.234, thres=        0.150, elev= 9.1
+11:10:30.0  G16 GF CS gf_new=      -23.017, gf_old=      -22.829, diff_abs=       -0.188, thres=        0.150, elev= 9.3
+11:11:00.0  G16 GF CS gf_new=      -23.201, gf_old=      -23.017, diff_abs=       -0.184, thres=        0.150, elev= 9.5
+11:11:30.0  G16 GF CS gf_new=      -23.369, gf_old=      -23.201, diff_abs=       -0.169, thres=        0.150, elev= 9.7
+11:12:00.0  G16 GF CS gf_new=      -23.547, gf_old=      -23.369, diff_abs=       -0.177, thres=        0.150, elev= 9.9
+11:13:30.0  G16 GF CS gf_new=      -23.989, gf_old=      -23.838, diff_abs=       -0.152, thres=        0.150, elev=10.5
+11:20:00.0  G10 GF CS gf_new=       -8.233, gf_old=       -8.384, diff_abs=        0.150, thres=        0.150, elev=15.9
+11:20:30.0  G10 GF CS gf_new=       -8.073, gf_old=       -8.233, diff_abs=        0.161, thres=        0.150, elev=15.7
+11:21:00.0  G10 GF CS gf_new=       -7.906, gf_old=       -8.073, diff_abs=        0.167, thres=        0.150, elev=15.5
+11:21:30.0  G10 GF CS gf_new=       -7.726, gf_old=       -7.906, diff_abs=        0.180, thres=        0.150, elev=15.3
+11:22:00.0  G10 GF CS gf_new=       -7.536, gf_old=       -7.726, diff_abs=        0.190, thres=        0.150, elev=15.1
+11:22:30.0  G10 GF CS gf_new=       -7.333, gf_old=       -7.536, diff_abs=        0.204, thres=        0.150, elev=14.9
+11:23:00.0  G10 GF CS gf_new=       -7.119, gf_old=       -7.333, diff_abs=        0.213, thres=        0.150, elev=14.6
+11:23:30.0  G10 GF CS gf_new=       -6.893, gf_old=       -7.119, diff_abs=        0.226, thres=        0.150, elev=14.4
+11:24:00.0  G10 GF CS gf_new=       -6.656, gf_old=       -6.893, diff_abs=        0.237, thres=        0.150, elev=14.2
+11:24:30.0  G10 GF CS gf_new=       -6.403, gf_old=       -6.656, diff_abs=        0.253, thres=        0.150, elev=14.0
+11:25:00.0  G10 GF CS gf_new=       -6.135, gf_old=       -6.403, diff_abs=        0.268, thres=        0.150, elev=13.8
+11:25:30.0  G10 GF CS gf_new=       -5.853, gf_old=       -6.135, diff_abs=        0.282, thres=        0.150, elev=13.6
+11:26:00.0  G10 GF CS gf_new=       -5.561, gf_old=       -5.853, diff_abs=        0.292, thres=        0.150, elev=13.4
+11:26:30.0  G10 GF CS gf_new=       -5.251, gf_old=       -5.561, diff_abs=        0.310, thres=        0.150, elev=13.2
+11:27:00.0  G10 GF CS gf_new=       -4.937, gf_old=       -5.251, diff_abs=        0.314, thres=        0.150, elev=13.0
+11:27:30.0  G10 GF CS gf_new=       -4.610, gf_old=       -4.937, diff_abs=        0.328, thres=        0.150, elev=12.8
+11:28:00.0  G10 GF CS gf_new=       -4.274, gf_old=       -4.610, diff_abs=        0.336, thres=        0.150, elev=12.6
+11:28:30.0  G10 GF CS gf_new=       -3.926, gf_old=       -4.274, diff_abs=        0.348, thres=        0.150, elev=12.4
+11:29:00.0  G10 GF CS gf_new=       -3.575, gf_old=       -3.926, diff_abs=        0.350, thres=        0.150, elev=12.2
+11:29:30.0  G10 GF CS gf_new=       -3.218, gf_old=       -3.575, diff_abs=        0.357, thres=        0.150, elev=12.0
+11:30:00.0  G10 GF CS gf_new=       -2.863, gf_old=       -3.218, diff_abs=        0.355, thres=        0.150, elev=11.8
+11:30:30.0  G10 GF CS gf_new=       -2.504, gf_old=       -2.863, diff_abs=        0.359, thres=        0.150, elev=11.6
+11:31:00.0  G10 GF CS gf_new=       -2.156, gf_old=       -2.504, diff_abs=        0.348, thres=        0.150, elev=11.4
+11:31:30.0  G10 GF CS gf_new=       -1.825, gf_old=       -2.156, diff_abs=        0.331, thres=        0.150, elev=11.2
+11:32:00.0  G10 GF CS gf_new=       -1.520, gf_old=       -1.825, diff_abs=        0.306, thres=        0.150, elev=11.0
+11:32:30.0  G10 GF CS gf_new=       -1.247, gf_old=       -1.520, diff_abs=        0.273, thres=        0.150, elev=10.9
+11:33:00.0  G10 GF CS gf_new=       -0.993, gf_old=       -1.247, diff_abs=        0.253, thres=        0.150, elev=10.7
+11:33:30.0  G10 GF CS gf_new=       -0.772, gf_old=       -0.993, diff_abs=        0.221, thres=        0.150, elev=10.5
+11:34:00.0  G10 GF CS gf_new=       -0.573, gf_old=       -0.772, diff_abs=        0.199, thres=        0.150, elev=10.3
+11:34:30.0  G10 GF CS gf_new=       -0.385, gf_old=       -0.573, diff_abs=        0.189, thres=        0.150, elev=10.1
+11:35:00.0  G10 GF CS gf_new=       -0.212, gf_old=       -0.385, diff_abs=        0.173, thres=        0.150, elev= 9.9
+11:35:30.0  G10 GF CS gf_new=       -0.052, gf_old=       -0.212, diff_abs=        0.160, thres=        0.150, elev= 9.7
+11:36:00.0  G10 GF CS gf_new=        0.107, gf_old=       -0.052, diff_abs=        0.158, thres=        0.150, elev= 9.5
+11:49:00.0  G10 GF CS gf_new=        0.481, gf_old=        0.654, diff_abs=       -0.173, thres=        0.150, elev= 4.6
+11:49:30.0  G10 GF CS gf_new=        0.304, gf_old=        0.481, diff_abs=       -0.177, thres=        0.150, elev= 4.5
+11:50:00.0  G10 GF CS gf_new=        0.088, gf_old=        0.304, diff_abs=       -0.216, thres=        0.150, elev= 4.3
+11:50:30.0  G10 GF CS gf_new=       -0.171, gf_old=        0.088, diff_abs=       -0.258, thres=        0.150, elev= 4.1
+11:51:00.0  G10 GF CS gf_new=       -0.421, gf_old=       -0.171, diff_abs=       -0.250, thres=        0.150, elev= 3.9
+11:51:30.0  G10 GF CS gf_new=       -0.720, gf_old=       -0.421, diff_abs=       -0.299, thres=        0.150, elev= 3.7
+11:52:00.0  G10 GF CS gf_new=       -1.067, gf_old=       -0.720, diff_abs=       -0.347, thres=        0.150, elev= 3.6
+11:52:30.0  G10 GF CS gf_new=       -1.455, gf_old=       -1.067, diff_abs=       -0.388, thres=        0.150, elev= 3.4
+11:53:00.0  G10 GF CS gf_new=       -1.871, gf_old=       -1.455, diff_abs=       -0.417, thres=        0.150, elev= 3.2
+11:53:30.0  G10 GF CS gf_new=       -2.306, gf_old=       -1.871, diff_abs=       -0.435, thres=        0.150, elev= 3.0
+11:54:00.0  G10 GF CS gf_new=       -2.762, gf_old=       -2.306, diff_abs=       -0.455, thres=        0.150, elev= 2.9
+11:54:30.0  G10 GF CS gf_new=       -3.215, gf_old=       -2.762, diff_abs=       -0.454, thres=        0.150, elev= 2.7
+11:55:00.0  G10 GF CS gf_new=       -3.660, gf_old=       -3.215, diff_abs=       -0.445, thres=        0.150, elev= 2.5
+11:55:30.0  G10 GF CS gf_new=       -4.042, gf_old=       -3.660, diff_abs=       -0.382, thres=        0.150, elev= 2.3
+11:56:00.0  G10 GF CS gf_new=       -4.348, gf_old=       -4.042, diff_abs=       -0.306, thres=        0.150, elev= 2.2
+11:56:30.0  G10 GF CS gf_new=       -4.619, gf_old=       -4.348, diff_abs=       -0.271, thres=        0.150, elev= 2.0
+12:18:30.0  G27 GF CS gf_new=      -12.080, gf_old=      -12.443, diff_abs=        0.363, thres=        0.150, elev= 0.0
+12:19:00.0  G27 GF CS gf_new=      -11.680, gf_old=      -12.080, diff_abs=        0.399, thres=        0.150, elev= 0.0
+12:19:30.0  G27 GF CS gf_new=      -11.278, gf_old=      -11.680, diff_abs=        0.402, thres=        0.150, elev= 0.0
+12:34:30.0  G27 GF CS gf_new=      -15.198, gf_old=      -15.033, diff_abs=       -0.165, thres=        0.150, elev= 0.0
+12:35:00.0  G27 GF CS gf_new=      -15.349, gf_old=      -15.198, diff_abs=       -0.151, thres=        0.150, elev= 0.0
+12:36:00.0  G27 GF CS gf_new=      -15.684, gf_old=      -15.497, diff_abs=       -0.187, thres=        0.150, elev= 0.0
+12:36:30.0  G27 GF CS gf_new=      -15.863, gf_old=      -15.684, diff_abs=       -0.180, thres=        0.150, elev= 0.0
+12:37:00.0  G27 GF CS gf_new=      -16.064, gf_old=      -15.863, diff_abs=       -0.201, thres=        0.150, elev= 0.0
+12:37:30.0  G27 GF CS gf_new=      -16.273, gf_old=      -16.064, diff_abs=       -0.209, thres=        0.150, elev= 0.0
+12:38:00.0  G27 GF CS gf_new=      -16.506, gf_old=      -16.273, diff_abs=       -0.233, thres=        0.150, elev= 0.0
+12:38:30.0  G27 GF CS gf_new=      -16.755, gf_old=      -16.506, diff_abs=       -0.249, thres=        0.150, elev= 0.0
+12:39:00.0  G27 GF CS gf_new=      -17.041, gf_old=      -16.755, diff_abs=       -0.286, thres=        0.150, elev= 0.0
+12:39:30.0  G27 GF CS gf_new=      -17.346, gf_old=      -17.041, diff_abs=       -0.305, thres=        0.150, elev= 0.0
+12:40:00.0  G27 GF CS gf_new=      -17.692, gf_old=      -17.346, diff_abs=       -0.346, thres=        0.150, elev= 0.0
+12:40:30.0  G27 GF CS gf_new=      -18.059, gf_old=      -17.692, diff_abs=       -0.367, thres=        0.150, elev= 0.0
+12:41:00.0  G27 GF CS gf_new=      -18.444, gf_old=      -18.059, diff_abs=       -0.385, thres=        0.150, elev= 0.0
+12:41:30.0  G27 GF CS gf_new=      -18.844, gf_old=      -18.444, diff_abs=       -0.400, thres=        0.150, elev= 0.0
+12:42:00.0  G27 GF CS gf_new=      -19.240, gf_old=      -18.844, diff_abs=       -0.397, thres=        0.150, elev= 0.0
+12:42:30.0  G27 GF CS gf_new=      -19.631, gf_old=      -19.240, diff_abs=       -0.391, thres=        0.150, elev= 0.0
+12:43:00.0  G27 GF CS gf_new=      -20.008, gf_old=      -19.631, diff_abs=       -0.377, thres=        0.150, elev= 0.0
+12:43:30.0  G27 GF CS gf_new=      -20.361, gf_old=      -20.008, diff_abs=       -0.353, thres=        0.150, elev= 0.0
+12:44:00.0  G27 GF CS gf_new=      -20.711, gf_old=      -20.361, diff_abs=       -0.349, thres=        0.150, elev= 0.0
+12:44:30.0  G27 GF CS gf_new=      -21.037, gf_old=      -20.711, diff_abs=       -0.326, thres=        0.150, elev= 0.0
+12:45:00.0  G27 GF CS gf_new=      -21.353, gf_old=      -21.037, diff_abs=       -0.316, thres=        0.150, elev= 0.0
+12:45:30.0  G27 GF CS gf_new=      -21.653, gf_old=      -21.353, diff_abs=       -0.300, thres=        0.150, elev= 0.0
+12:46:00.0  G27 GF CS gf_new=      -21.925, gf_old=      -21.653, diff_abs=       -0.272, thres=        0.150, elev= 0.0
+12:46:30.0  G27 GF CS gf_new=      -22.168, gf_old=      -21.925, diff_abs=       -0.243, thres=        0.150, elev= 0.0
+12:47:00.0  G27 GF CS gf_new=      -22.399, gf_old=      -22.168, diff_abs=       -0.230, thres=        0.150, elev= 0.0
+12:47:30.0  G27 GF CS gf_new=      -22.610, gf_old=      -22.399, diff_abs=       -0.211, thres=        0.150, elev= 0.0
+12:48:00.0  G27 GF CS gf_new=      -22.813, gf_old=      -22.610, diff_abs=       -0.203, thres=        0.150, elev= 0.0
+12:48:30.0  G27 GF CS gf_new=      -23.000, gf_old=      -22.813, diff_abs=       -0.187, thres=        0.150, elev= 0.0
+12:49:00.0  G27 GF CS gf_new=      -23.171, gf_old=      -23.000, diff_abs=       -0.171, thres=        0.150, elev= 0.0
+12:49:30.0  G27 GF CS gf_new=      -23.334, gf_old=      -23.171, diff_abs=       -0.163, thres=        0.150, elev= 0.0
+12:50:00.0  G27 GF CS gf_new=      -23.489, gf_old=      -23.334, diff_abs=       -0.155, thres=        0.150, elev= 0.0
+13:26:00.0  G08 GF CS gf_new=      -13.132, gf_old=      -12.978, diff_abs=       -0.154, thres=        0.150, elev= 5.9
+13:26:30.0  G08 GF CS gf_new=      -13.382, gf_old=      -13.132, diff_abs=       -0.250, thres=        0.150, elev= 6.1
+13:27:00.0  G08 GF CS gf_new=      -13.714, gf_old=      -13.382, diff_abs=       -0.333, thres=        0.150, elev= 6.3
+13:27:30.0  G08 GF CS gf_new=      -14.109, gf_old=      -13.714, diff_abs=       -0.395, thres=        0.150, elev= 6.5
+13:28:00.0  G08 GF CS gf_new=      -14.543, gf_old=      -14.109, diff_abs=       -0.434, thres=        0.150, elev= 6.7
+13:28:30.0  G08 GF CS gf_new=      -14.966, gf_old=      -14.543, diff_abs=       -0.423, thres=        0.150, elev= 6.9
+13:28:30.0  G32 GF CS gf_new=       -9.267, gf_old=       -9.427, diff_abs=        0.161, thres=        0.150, elev= 0.0
+13:29:00.0  G08 GF CS gf_new=      -15.384, gf_old=      -14.966, diff_abs=       -0.418, thres=        0.150, elev= 7.1
+13:29:30.0  G08 GF CS gf_new=      -15.764, gf_old=      -15.384, diff_abs=       -0.380, thres=        0.150, elev= 7.3
+13:30:00.0  G08 GF CS gf_new=      -16.125, gf_old=      -15.764, diff_abs=       -0.361, thres=        0.150, elev= 7.5
+13:30:30.0  G08 GF CS gf_new=      -16.453, gf_old=      -16.125, diff_abs=       -0.328, thres=        0.150, elev= 7.7
+13:30:30.0  G32 GF CS gf_new=        4.084, gf_old=       -9.261, diff_abs=       13.344, thres=        0.150, elev= 0.0
+13:31:00.0  G08 GF CS gf_new=      -16.752, gf_old=      -16.453, diff_abs=       -0.299, thres=        0.150, elev= 7.9
+13:31:00.0  G32 GF CS gf_new=        4.841, gf_old=        4.084, diff_abs=        0.757, thres=        0.150, elev= 0.0
+13:31:30.0  G08 GF CS gf_new=      -17.015, gf_old=      -16.752, diff_abs=       -0.263, thres=        0.150, elev= 8.1
+13:31:30.0  G32 GF CS gf_new=        5.245, gf_old=        4.841, diff_abs=        0.404, thres=        0.150, elev= 0.0
+13:32:00.0  G08 GF CS gf_new=      -17.261, gf_old=      -17.015, diff_abs=       -0.246, thres=        0.150, elev= 8.3
+13:32:00.0  G32 GF CS gf_new=        0.973, gf_old=        5.245, diff_abs=       -4.272, thres=        0.150, elev= 0.0
+13:32:30.0  G08 GF CS gf_new=      -17.482, gf_old=      -17.261, diff_abs=       -0.221, thres=        0.150, elev= 8.5
+13:33:00.0  G08 GF CS gf_new=      -17.689, gf_old=      -17.482, diff_abs=       -0.208, thres=        0.150, elev= 8.7
+13:33:00.0  G32 GF CS gf_new=        1.525, gf_old=        1.071, diff_abs=        0.454, thres=        0.150, elev= 0.0
+13:33:30.0  G08 GF CS gf_new=      -17.889, gf_old=      -17.689, diff_abs=       -0.200, thres=        0.150, elev= 8.9
+13:34:00.0  G08 GF CS gf_new=      -18.056, gf_old=      -17.889, diff_abs=       -0.167, thres=        0.150, elev= 9.2
+13:34:30.0  G08 GF CS gf_new=      -18.222, gf_old=      -18.056, diff_abs=       -0.166, thres=        0.150, elev= 9.4
+13:34:30.0  G32 GF CS gf_new=        1.850, gf_old=        1.527, diff_abs=        0.323, thres=        0.150, elev= 0.0
+13:35:00.0  G08 GF CS gf_new=      -18.377, gf_old=      -18.222, diff_abs=       -0.156, thres=        0.150, elev= 9.6
+13:35:00.0  G32 GF CS gf_new=        2.287, gf_old=        1.850, diff_abs=        0.437, thres=        0.150, elev= 0.0
+13:35:30.0  G32 GF CS gf_new=        2.578, gf_old=        2.287, diff_abs=        0.290, thres=        0.150, elev= 0.0
+13:37:00.0  G32 GF CS gf_new=       -5.230, gf_old=        2.733, diff_abs=       -7.963, thres=        0.150, elev= 0.0
+13:37:30.0  G32 GF CS gf_new=       -7.271, gf_old=       -5.230, diff_abs=       -2.041, thres=        0.150, elev= 0.0
+13:38:00.0  G32 GF CS gf_new=       -6.684, gf_old=       -7.271, diff_abs=        0.587, thres=        0.150, elev= 0.0
+13:38:30.0  G32 GF CS gf_new=       -5.053, gf_old=       -6.684, diff_abs=        1.632, thres=        0.150, elev= 0.0
+13:39:00.0  G32 GF CS gf_new=       -7.746, gf_old=       -5.053, diff_abs=       -2.694, thres=        0.150, elev= 0.0
+13:39:30.0  G32 GF CS gf_new=       -7.496, gf_old=       -7.746, diff_abs=        0.250, thres=        0.150, elev= 0.0
+13:40:30.0  G32 GF CS gf_new=       -7.214, gf_old=       -7.391, diff_abs=        0.177, thres=        0.150, elev= 0.0
+13:41:00.0  G32 GF CS gf_new=       -6.958, gf_old=       -7.214, diff_abs=        0.256, thres=        0.150, elev= 0.0
+13:41:30.0  G32 GF CS gf_new=       -6.791, gf_old=       -6.958, diff_abs=        0.166, thres=        0.150, elev= 0.0
+13:42:00.0  G32 GF CS gf_new=       -6.609, gf_old=       -6.791, diff_abs=        0.183, thres=        0.150, elev= 0.0
+13:44:30.0  G32 GF CS gf_new=      -16.168, gf_old=       -6.332, diff_abs=       -9.837, thres=        0.150, elev= 0.0
+13:45:00.0  G32 GF CS gf_new=      -14.562, gf_old=      -16.168, diff_abs=        1.606, thres=        0.150, elev= 0.0
+13:46:00.0  G32 GF CS gf_new=      -11.701, gf_old=      -14.547, diff_abs=        2.846, thres=        0.150, elev= 0.0
+13:46:30.0  G32 GF CS gf_new=       -8.387, gf_old=      -11.701, diff_abs=        3.314, thres=        0.150, elev= 0.0
+13:47:00.0  G32 GF CS gf_new=       -6.965, gf_old=       -8.387, diff_abs=        1.422, thres=        0.150, elev= 0.0
+13:54:30.0  G32 GF CS gf_new=       -7.858, gf_old=       -9.437, diff_abs=        1.579, thres=        0.150, elev= 0.0
+15:15:30.0  G21 GF CS gf_new=       -1.202, gf_old=       -1.011, diff_abs=       -0.190, thres=        0.150, elev= 5.2
+15:16:00.0  G21 GF CS gf_new=       -1.430, gf_old=       -1.202, diff_abs=       -0.228, thres=        0.150, elev= 5.3
+15:16:30.0  G21 GF CS gf_new=       -1.702, gf_old=       -1.430, diff_abs=       -0.273, thres=        0.150, elev= 5.5
+15:17:00.0  G21 GF CS gf_new=       -1.979, gf_old=       -1.702, diff_abs=       -0.277, thres=        0.150, elev= 5.7
+15:17:30.0  G21 GF CS gf_new=       -2.277, gf_old=       -1.979, diff_abs=       -0.297, thres=        0.150, elev= 5.9
+15:18:00.0  G21 GF CS gf_new=       -2.546, gf_old=       -2.277, diff_abs=       -0.269, thres=        0.150, elev= 6.1
+15:18:30.0  G21 GF CS gf_new=       -2.836, gf_old=       -2.546, diff_abs=       -0.290, thres=        0.150, elev= 6.3
+15:19:00.0  G21 GF CS gf_new=       -3.091, gf_old=       -2.836, diff_abs=       -0.255, thres=        0.150, elev= 6.5
+15:19:30.0  G21 GF CS gf_new=       -3.333, gf_old=       -3.091, diff_abs=       -0.243, thres=        0.150, elev= 6.6
+15:20:00.0  G21 GF CS gf_new=       -3.558, gf_old=       -3.333, diff_abs=       -0.225, thres=        0.150, elev= 6.8
+15:20:30.0  G21 GF CS gf_new=       -3.758, gf_old=       -3.558, diff_abs=       -0.200, thres=        0.150, elev= 7.0
+15:21:00.0  G21 GF CS gf_new=       -3.953, gf_old=       -3.758, diff_abs=       -0.195, thres=        0.150, elev= 7.2
+15:21:30.0  G21 GF CS gf_new=       -4.132, gf_old=       -3.953, diff_abs=       -0.180, thres=        0.150, elev= 7.4
+15:22:00.0  G21 GF CS gf_new=       -4.299, gf_old=       -4.132, diff_abs=       -0.167, thres=        0.150, elev= 7.6
+15:55:30.0  G31 GF CS gf_new=      -10.437, gf_old=      -10.612, diff_abs=        0.174, thres=        0.150, elev= 0.0
+15:56:00.0  G31 GF CS gf_new=      -10.265, gf_old=      -10.437, diff_abs=        0.173, thres=        0.150, elev= 0.0
+15:56:30.0  G31 GF CS gf_new=      -10.101, gf_old=      -10.265, diff_abs=        0.163, thres=        0.150, elev= 0.0
+17:31:00.0  G04 GF CS gf_new=        1.806, gf_old=       -2.680, diff_abs=        4.486, thres=        0.150, elev= 3.8
+20:06:30.0  G08 GF CS gf_new=        0.919, gf_old=       -1.081, diff_abs=        2.000, thres=        0.150, elev=12.5
+20:37:30.0  G07 GF CS gf_new=        5.479, gf_old=        0.086, diff_abs=        5.394, thres=        0.150, elev= 6.5
+20:38:00.0  G07 GF CS gf_new=        0.828, gf_old=        5.479, diff_abs=       -4.651, thres=        0.150, elev= 6.3
+20:38:30.0  G07 GF CS gf_new=        3.785, gf_old=        0.828, diff_abs=        2.958, thres=        0.150, elev= 6.1
+21:47:00.0  G30 GF CS gf_new=        6.846, gf_old=       -3.679, diff_abs=       10.525, thres=        0.150, elev= 0.0
+ * The program runs for 39.303 seconds

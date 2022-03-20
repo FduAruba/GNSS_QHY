@@ -1488,6 +1488,8 @@ extern FILE* openfile(const char* outfile)
 	return !*outfile ? stdout : fopen(outfile, "w");
 }
 
+
+
 static double sign(double d, double d1)
 {
 	if		(d1 > 0) { return fabs(d); }
@@ -1959,4 +1961,73 @@ extern int cal_Eclips(int sat, map<int, vector<double>>* rs, double* sunp, doubl
 	for (int i = 0; i < 3; i++) { rs_p[i] = (*rs)[sat][i]; }
 
 	return eclips_(sat, SVBCOS, ANIGHT, BETA, TTAG, rs_p, SANTXYZ, satv_, IBLK);
+}
+
+/* satellite antenna phase center offset ---------------------------------------
+* compute satellite antenna phase center offset in ecef
+* args   : gtime_t time       I   time (gpst)
+*          double *rs         I   satellite position and velocity (ecef)
+*                                 {x,y,z,vx,vy,vz} (m|m/s)
+*          int    sat         I   satellite number
+*          nav_t  *nav        I   navigation data
+*          double *dant       I   satellite antenna phase center offset (ecef)
+*                                 {dx,dy,dz} (m) (iono-free LC value)
+* return : none
+*-----------------------------------------------------------------------------*/
+extern void sat_pco(GpsTime_t time, int sat, map<int, vector<double>>* rs, const NavPack_t* navall, double* dant)
+{
+	const vector<double> lam = navall->lam.at(sat);
+	const PCV_t* pcv = &(navall->sat_pcv.at(sat));
+	//const pcv_t* pcv = nav->pcvs + sat - 1;
+	double ex[3], ey[3], ez[3], es[3], r[3], rsun[3], gmst, erpv[5] = { 0 };
+	double gamma, C1, C2, dant1, dant2;
+	int i, j = 0, k = 1, sys;
+
+	/* sun position in ecef */
+	sun_moon_pos(gpst2utc(time), erpv, rsun, NULL, &gmst);
+
+	/* unit vectors of satellite fixed coordinates */
+	for (i = 0; i < 3; i++) { r[i] = -(*rs)[sat][i]; }
+	if (!normv3(r, ez)) { return; }
+	for (i = 0; i < 3; i++) { r[i] = rsun[i] - (*rs)[sat][i]; }
+	if (!normv3(r, es)) { return; }
+	cross3(ez, es, r);
+	if (!normv3(r, ey)) { return; }
+	cross3(ey, ez, ex);
+
+	sys = satsys(sat, NULL);
+	//if (NFREQ>=3&&(sys&(SYS_GAL|SYS_SBS))) k=2;
+	if (NFREQ < 2 || lam[j] == 0.0 || lam[k] == 0.0) { return; }
+
+	gamma = SQR(lam[k]) / SQR(lam[j]);
+	C1 = gamma / (gamma - 1.0);
+	C2 = -1.0 / (gamma - 1.0);
+
+	if (sys == SYS_GPS) {
+		j = 0;
+		k = 1;
+	}
+	else if (sys == SYS_GLO) {
+		j = 0 + NFREQ;
+		k = 1 + NFREQ;
+	}
+	else if (sys == SYS_BDS) {
+		j = 0 + 2 * NFREQ;
+		k = 1 + 2 * NFREQ;
+	}
+	else if (sys == SYS_GAL) {
+		j = 0 + 3 * NFREQ;
+		k = 1 + 3 * NFREQ;
+	}
+	/*else if (sys == SYS_QZS) {
+		j = 0 + 4 * NFREQ;
+		k = 1 + 4 * NFREQ;
+	}*/
+	/* iono-free LC */
+	for (i = 0; i < 3; i++) {
+		dant1 = pcv->off[j][0] * ex[i] + pcv->off[j][1] * ey[i] + pcv->off[j][2] * ez[i];
+		dant1 = pcv->off[j][0] * ex[i] + pcv->off[j][1] * ey[i] + pcv->off[j][2] * ez[i];
+		dant2 = pcv->off[k][0] * ex[i] + pcv->off[k][1] * ey[i] + pcv->off[k][2] * ez[i];
+		dant[i] = C1 * dant1 + C2 * dant2;
+	}
 }

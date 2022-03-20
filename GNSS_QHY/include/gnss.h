@@ -1252,6 +1252,8 @@ extern void cross3(const double* a, const double* b, double* c);
 extern int cal_Eclips(int prn, map<int, vector<double>>* rs, double* sunp, double TTAG,
     double SANTXYZ[3], const NavPack_t* navall);
 
+extern void sat_pco(GpsTime_t time, int sat, map<int, vector<double>>* rs, const NavPack_t* navall, double* dant);
+
 /* readfile.cpp ----------------------------------------------------------------*/
 
 extern int read_obsnav(GpsTime_t ts, GpsTime_t te, double ti, vector<const char*> infile, vector<ObsRecData_t>* obsall, NavPack_t* navall, Station_t* sta);
