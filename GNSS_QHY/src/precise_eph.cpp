@@ -178,7 +178,7 @@ static int peph2pos(GpsTime_t time, int sat, NavPack_t* navall,
 	if (navall->peph.find(sat) == navall->peph.end()) {	
 		return 0;
 	}
-	// 判断当前星历是能进行插值
+	// 判断当前星历是否满足插值数量/时间要求
 	if (navall->peph[sat].size() < NMAX + 1 ||
 		timediff(time, navall->peph[sat].begin()->first) < -MAXDTE ||
 		timediff(time, navall->peph[sat].rbegin()->first) > MAXDTE) {
@@ -314,8 +314,11 @@ static int peph2pos(GpsTime_t time, int sat, NavPack_t* navall,
 		*vare = SQR(std);
 	}
 	/* 6.计算卫星钟差插值误差 */
-	ikp = ik; ikp++;
-
+	ib = navall->peph[sat].end();
+	ib--;
+	if (ik == ib) { ikp = ik; ik--; }
+	else		  { ikp = ik; ikp++; }
+	
 	t[0] = timediff(time, ik->first);
 	t[1] = timediff(time, ikp->first);
 	c[0] = ik->second.pos[3];
@@ -391,8 +394,8 @@ extern int peph_pos(GpsTime_t time, int sat, NavPack_t* navall, int opt,
 	if (opt) { sat_pco(time, sat, rs, navall, dant); }
 
 	for (i = 0; i < 3; i++) {
-		(*rs)[sat][i] += dant[i];
 		(*rs)[sat][i + 3] = (rs_tmp[sat][i] - (*rs)[sat][i]) / tt;
+		(*rs)[sat][i] += dant[i];
 	}
 	/* relativistic effect correction */
 	if ((*dts)[sat][0] != 0.0) {

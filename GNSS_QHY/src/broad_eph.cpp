@@ -307,6 +307,7 @@ extern int satpos(GpsTime_t time, GpsTime_t teph, int sat, int eph_opt, NavPack_
 		else { return 1; }
 	}
 	}
+	
 	(*svh)[sat][0] = -1;
 	return 0;
 }

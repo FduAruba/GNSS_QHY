@@ -311,12 +311,16 @@ static int execses(ProcOpt_t* popt, FileOpt_t* fopt, Solopt_t* sopt)
 			else if (strstr(*it, "iter")) {
 				sol.fp_itr = fopen(*it, "w");
 			}
+			else if (strstr(*it, "ppp")) {
+				sol.fp_sat_ppp = fopen(*it, "w");
+			}
 		}
 		
 		procpos(popt, sopt, 0, &sol);
 
 		if (sol.fp_sat) { fclose(sol.fp_sat); sol.fp_sat = NULL; }
 		if (sol.fp_itr) { fclose(sol.fp_itr); sol.fp_sat = NULL; }
+		if (sol.fp_sat_ppp) { fclose(sol.fp_sat_ppp); sol.fp_sat_ppp = NULL; }
 	}
 	else if (popt->sol_mode == 1) { 
 		popt->ieph = obsall[0].neph - 1;

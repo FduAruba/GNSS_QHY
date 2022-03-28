@@ -99,6 +99,8 @@ int main()
 	popt.elmin = 15.0 * D2R;
 	for (int i = 0; i < 5; i++) { popt.err[i] = err[i]; }
 	for (int i = 0; i < MAXSAT; i++) { popt.exsats[i] = 0; }
+	popt.flagMW = 1;
+	popt.flagGF = 1;
 
 	fopt.infile.push_back("E:\\CppCode\\GNSS_QHY\\data\\HD_2740.21p");
 	fopt.infile.push_back("E:\\CppCode\\GNSS_QHY\\data\\HD_2740.21o");
@@ -110,15 +112,17 @@ int main()
 	fopt.precfile.push_back("E:\\CppCode\\GNSS_QHY\\data\\wum21774.sp3");
 	fopt.precfile.push_back("E:\\CppCode\\GNSS_QHY\\data\\wum21775.sp3");
 	fopt.precfile.push_back("E:\\CppCode\\GNSS_QHY\\data\\wum21776.sp3");
-	fopt.precfile.push_back("E:\\CppCode\\GNSS_QHY\\data\\wum21775.clk");
 	fopt.precfile.push_back("E:\\CppCode\\GNSS_QHY\\data\\wum21774.clk");
+	fopt.precfile.push_back("E:\\CppCode\\GNSS_QHY\\data\\wum21775.clk");
 	fopt.precfile.push_back("E:\\CppCode\\GNSS_QHY\\data\\wum21776.clk");
 	fopt.erpfile.push_back("E:\\CppCode\\GNSS_QHY\\data\\igs21777.erp");
 	fopt.blqfile.push_back("E:\\CppCode\\GNSS_QHY\\data\\FD_Station.blq");
 
 	fopt.outfile.push_back("E:\\CppCode\\GNSS_QHY\\result\\solution.txt");
+
 	fopt.dbgfile.push_back("E:\\CppCode\\GNSS_QHY\\result\\sele_sat.txt");
 	fopt.dbgfile.push_back("E:\\CppCode\\GNSS_QHY\\result\\iteration.txt");
+	fopt.dbgfile.push_back("E:\\CppCode\\GNSS_QHY\\result\\sat_ppp.txt");
 
 	sopt.time_dig = 3;
 	sopt.time_sys = TIMES_GPST;

@@ -6,14 +6,12 @@ static double yaw_nominal(double beta, double mu)
 	if (fabs(beta) < 1E-12 && fabs(mu) < 1E-12) { return PI; }
 	return atan2(-tan(beta), sin(mu)) + PI;
 }
-
 /* yaw-angle of satellite ----------------------------------------------------*/
 extern int yaw_angle(int sat, const char* type, int opt, double beta, double mu, double* yaw)
 {
 	*yaw = yaw_nominal(beta, mu);
 	return 1;
 }
-
 /* satellite attitude model --------------------------------------------------*/
 static int sat_yaw(GpsTime_t time, int sat, const char* type, int opt, map<int, vector<double>>* rs, double* exs, double* eys)
 {
@@ -56,7 +54,6 @@ static int sat_yaw(GpsTime_t time, int sat, const char* type, int opt, map<int, 
 
 	return 1;
 }
-
 /* phase windup model --------------------------------------------------------*/
 static int model_phw(GpsTime_t time, int sat, map<int, PCV_t>* pcv_s, int opt,
 	map<int, vector<double>>* rs, const double* rr, double* phw)
@@ -84,9 +81,7 @@ static int model_phw(GpsTime_t time, int sat, map<int, PCV_t>* pcv_s, int opt,
 
 	/* unit vectors of receiver antenna */
 	pos = ecef2pos(rr_tmp);
-	//ecef2pos(rr, pos);
 	E = rot_matrix(rr_tmp);
-	//xyz2enu(pos, E);
 	exr[0] = E[1][0];  exr[1] =  E[1][1]; exr[2] =  E[1][2]; /* x = north */
 	eyr[0] = -E[0][0]; eyr[1] = -E[0][1]; eyr[2] = -E[0][2]; /* y = west  */
 
@@ -105,7 +100,7 @@ static int model_phw(GpsTime_t time, int sat, map<int, PCV_t>* pcv_s, int opt,
 
 	ph = acos(cosp) / 2.0 / PI;
 	cross3(ds, dr, drs);
-	if (dot(ek, drs, 3) < 0.0) ph = -ph;
+	if (dot(ek, drs, 3) < 0.0) { ph = -ph; }
 
 	(*phw) = ph + floor((*phw) - ph + 0.5); /* in cycle */
 
@@ -153,6 +148,32 @@ static double interpvar0(int sat, double ang, const double* var, int bsat)
 		}
 		return var[i] * (1.0 - a + i) + var[i + 1] * (a - i);
 	}
+}
+/* interpolate antenna phase center variation --------------------------------*/
+static double interpvar1(double azim, double zeni, const PCV_t* pcv, int f)
+{
+	double p, q, pcvr = 0.0;
+	int izeni, iazim;
+	int i = (int)((pcv->zen2 - pcv->zen1) / pcv->dzen) + 1;
+
+	if (i != 19) { printf("i!=19\n"); }
+
+	izeni = (int)((zeni - pcv->zen1) / pcv->dzen);
+	iazim = (int)(azim / pcv->dazi);
+
+	p = zeni / pcv->dzen - izeni;
+	q = azim / pcv->dazi - iazim;
+
+	if (p >= 1 || p < 0 || q >= 1 || q < 0) {
+		printf("interpvar %f\t%f\n", p, q);
+	}
+
+	pcvr = (1.0 - p) * (1.0 - q) * pcv->var[f][(iazim + 0) * i + (izeni + 0)]
+		+ p * (1.0 - q) * pcv->var[f][(iazim + 0) * i + (izeni + 1)]
+		+ q * (1.0 - p) * pcv->var[f][(iazim + 1) * i + (izeni + 0)]
+		+ p * q * pcv->var[f][(iazim + 1) * i + (izeni + 1)];
+
+	return pcvr;
 }
 /* satellite antenna model ------------------------------------------------------
 * compute satellite antenna phase center parameters
@@ -204,7 +225,71 @@ extern void antmodel_s(int sat, map<int, PCV_t>* pcvs, double nadir, double* pcv
 		}*/
 	}
 }
+/* receiver antenna model ------------------------------------------------------
+* compute antenna offset by antenna phase center parameters
+* args   : pcv_t *pcv       I   antenna phase center parameters
+*          double *azel     I   azimuth/elevation for receiver {az,el} (rad)
+*          int     opt      I   option (0:only offset,1:offset+pcv)
+*          double *dant     O   range offsets for each frequency (m)
+* return : none
+* notes  : current version does not support azimuth dependent terms
+*-----------------------------------------------------------------------------*/
+extern void antmodel_r(int sat, const PCV_t* pcv, const double* del, const double* azel, int opt, double* pco)
+{
+	double e[3], off[3], cosel = cos(azel[1]);
+	int i, j, ii = 0, sys;
 
+	e[0] = sin(azel[0]) * cosel;
+	e[1] = cos(azel[0]) * cosel;
+	e[2] = sin(azel[1]);
+
+	sys = satsys(sat, NULL);
+
+	// 1.如果没有天线类型，不考虑算方位角影响
+	if (strlen(pcv->type) == 0) {
+		for (i = 0; i < NFREQ; i++) {
+			if (sys == SYS_GPS || sys == SYS_BDS || sys == SYS_GAL) {
+				ii = i;
+				if (i == 2) { ii = 1; }
+			}
+			else if (sys == SYS_GLO) {
+				ii = i + NFREQ;
+				if (i == 2) { ii = 1 + NFREQ; }
+			}
+
+			for (j = 0; j < 3; j++) { off[j] = pcv->off[ii][j] + del[j]; }
+
+			/*if (norm(pcv->off[ii], 3) > 0.0) {
+				sprintf(PPP_Glo.chMsg, "norm(pcv->off[ii],3)>0.0\n");
+				outDebug(OUTWIN, OUTFIL, 0);
+			}*/
+
+			pco[i] = -dot(off, e, 3) + (opt ? interpvar0(0, 90.0 - azel[1] * R2D, pcv->var[ii], 0) : 0.0);
+		}
+		return;
+	}
+
+	// 2.考虑方位角因素
+	for (i = 0; i < NFREQ; i++) {
+		if (sys == SYS_GPS || sys == SYS_BDS || sys == SYS_GAL) {
+			ii = i;
+			if (i == 2) { ii = 1; }
+		}
+		else if (sys == SYS_GLO) {
+			ii = i + NFREQ;
+			if (i == 2) { ii = 1 + NFREQ; }
+		}
+
+		for (j = 0; j < 3; j++) { off[j] = pcv->off[ii][j] + del[j]; }
+
+		if (pcv->dazi != 0.0) {
+			pco[i] = -dot(off, e, 3) + interpvar1(azel[0] * R2D, 90 - azel[1] * R2D, pcv, ii);
+		}
+		else {
+			pco[i] = -dot(off, e, 3) + interpvar0(0, 90.0 - azel[1] * R2D, pcv->var[ii], 0);
+		}
+	}
+}
 /* satellite antenna phase center variation ----------------------------------*/
 static void cal_sat_PCV(int sat, map<int, vector<double>>* rs, const double* rr, map<int, PCV_t>* pcvs, double* pcv)
 {
@@ -223,7 +308,6 @@ static void cal_sat_PCV(int sat, map<int, vector<double>>* rs, const double* rr,
 
 	antmodel_s(sat, pcvs, nadir, pcv);
 }
-
 //calculate satellite elevation
 extern void calElev(Sol_t* sol, const ObsEphData_t* obs, int n, map<int, vector<double>>* rs, map<int, Sat_t>* sat_stat)
 {
@@ -278,7 +362,6 @@ extern void calElev(Sol_t* sol, const ObsEphData_t* obs, int n, map<int, vector<
 		}
 	}
 }
-
 /* exclude meas of eclipsing satellite (block IIA) ---------------------------*/
 static void test_eclipse(const ObsEphData_t* obs, int n, const NavPack_t* navall, map<int, vector<double>>* rs)
 {
@@ -328,8 +411,9 @@ static void test_eclipse(const ObsEphData_t* obs, int n, const NavPack_t* navall
 	}
 }
 
+
 /* precise point positioning -------------------------------------------------*/
-extern int ppp(ObsEphData_t* obs, int n, NavPack_t* navall, const ProcOpt_t* popt, Sol_t* sol, map<int, Sat_t>* sat_stat)
+extern int ppp(ObsEphData_t* obs, int n, NavPack_t* navall, ProcOpt_t* popt, Sol_t* sol, map<int, Sat_t>* sat_stat)
 {
 	/* 局部变量定义 ========================================================= */
 	//const prcopt_t* opt = &rtk->opt;
@@ -369,105 +453,41 @@ extern int ppp(ObsEphData_t* obs, int n, NavPack_t* navall, const ProcOpt_t* pop
 	// 1.satellite positions and clocks
 	cal_satpos(obs->eph, obs, n, navall, popt->eph_opt, &rs, &dts, &var, &svh);
 
-	// 2.exclude measurements of eclipsing satellite (block IIA) 没搞懂
+	// [Debug] 输出各历元精密星历计算出的卫星位置/钟差
+	if (sol->fp_sat_ppp) {
+		fprintf(sol->fp_sat_ppp, "%s ns=%d\n", time_str(obs->eph, 0), n);
+		for (auto it = rs.begin(); it != rs.end(); it++) {
+			sat = it->first;
+			if (svh[sat][0] == -1) { continue; }
+			fprintf(sol->fp_sat_ppp, "%03d", sat);
+			for (int t = 0; t < 3; t++) {
+				fprintf(sol->fp_sat_ppp, "%18.4f", rs[sat][t]);
+			}
+			fprintf(sol->fp_sat_ppp, "%18.4f\n", CLIGHT * dts[sat][0]);
+		}
+		fprintf(sol->fp_sat_ppp, "\n");
+	}
+
+	// 2.exclude measurements of eclipsing satellite (block IIA) 【没搞懂】
 	test_eclipse(obs, n, navall, &rs);
 
 	// 3.calculate satellite elevation
 	calElev(sol, obs, n, &rs, sat_stat);
 
+	// 4.calculate sat pcv/receiver pco/phase windup
 	for (auto it = obs->obssat.begin(); it != obs->obssat.end(); it++) {
 		sat = it->first;
-
-		cal_sat_PCV(sat, &rs, sol->rr, &(navall->sat_pcv), (*sat_stat)[sat].pcv);
-
-		/* 【未完成】接收机PCV计算，如果不是公开站，则不计算 */
-		//antmodel(sat, &opt->pcvr, opt->antdel, rtk->ssat[sat - 1].azel, 1, PPP_Glo.ssat_Ex[sat - 1].dantr);
-
+		// 4.1 sat pcv
+		cal_sat_PCV(sat, &rs, sol->rr, &(navall->sat_pcv), (*sat_stat)[sat].pcv_s);
+		// 4.2 rec pco
+		antmodel_r(sat, &navall->rec_pcv, navall->rec_del, (*sat_stat)[sat].azel, 1, sat_stat->at(sat).pco_r);
+		// 4.3 phase windup
 		if (!model_phw(sol->time, sat, &(navall->sat_pcv), 2, &rs, sol->rr, &(*sat_stat)[sat].phw)) {
 			continue;
 		}
-
 	}
 
-	//for (i = 0; i < n; i++) {
-	//	sat = obs[i].sat;
-	//	for (j = 0; j < 3; j++) PPP_Glo.ssat_Ex[sat - 1].rs[j] = rs[j + i * 6];
-
-	//	/* satellite and receiver antenna model */
-	//	satantpcv(sat, rs + i * 6, PPP_Glo.rr, nav->pcvs + sat - 1, PPP_Glo.ssat_Ex[sat - 1].dants);
-	//	antmodel(sat, &opt->pcvr, opt->antdel, rtk->ssat[sat - 1].azel, 1, PPP_Glo.ssat_Ex[sat - 1].dantr);
-
-	//	/* phase windup model */
-	//	if (!model_phw(rtk->sol.time, sat, nav->pcvs[sat - 1].type, 2, rs + i * 6, PPP_Glo.rr, &PPP_Glo.ssat_Ex[sat - 1].phw)) {
-	//		continue;
-	//	}
-	//}
-
-	////to compute the elements of initialized PPP files
-	//if (PPP_Glo.outFp[OFILE_IPPP]) {
-	//	//epoch time
-	//	PPP_Info.t = obs[0].time;
-
-	//	for (i = 0; i < 3; i++) rr[i] = PPP_Glo.crdTrue[i];
-	//	if (norm(rr, 3) == 0.0) rr[i] = rtk->sol.rr[i];
-	//	ecef2pos(rr, pos);
-
-	//	//the displacements by earth tides
-	//	tidedisp(gpst2utc(obs[0].time), rr, 7, &nav->erp, opt->odisp[0], dr);
-
-	//	for (i = 0; i < MAXSAT; i++) PPP_Info.ssat[i].vs = 0;
-	//	for (i = 0; i < n && i < MAXOBS; i++) {
-	//		sat = obs[i].sat;
-	//		PPP_Info.ssat[sat - 1].vs = 1;
-
-	//		//satellite position and clock offsets
-	//		matcpy(PPP_Info.ssat[sat - 1].satpos, rs + i * 6, 6, 1);
-	//		PPP_Info.ssat[sat - 1].satclk = dts[i * 2] * CLIGHT;
-
-	//		//the eclipse satellites
-	//		PPP_Info.ssat[sat - 1].flag = 0;
-	//		if (norm(PPP_Info.ssat[sat - 1].satpos, 3) == 0.0) PPP_Info.ssat[sat - 1].flag = 1;
-
-	//		//sagnac effect
-	//		PPP_Info.ssat[sat - 1].dsag = sagnac(rs + i * 6, rr);
-
-	//		//satellite azimuth and elevation
-	//		PPP_Info.ssat[sat - 1].azel[0] = rtk->ssat[sat - 1].azel[0];
-	//		PPP_Info.ssat[sat - 1].azel[1] = rtk->ssat[sat - 1].azel[1];
-
-	//		//line-of-sight (LOS) unit vector
-	//		cosel = cos(PPP_Info.ssat[sat - 1].azel[1]); sinel = sin(PPP_Info.ssat[sat - 1].azel[1]);
-	//		cosaz = cos(PPP_Info.ssat[sat - 1].azel[0]); sinaz = sin(PPP_Info.ssat[sat - 1].azel[0]);
-
-	//		//convert 3D tidal displacements to LOS range
-	//		ecef2enu(pos, dr, enu);
-	//		PPP_Info.ssat[sat - 1].dtid = enu[1] * cosel * cosaz + enu[0] * cosel * sinaz + enu[2] * sinel;
-
-	//		//tropospheric zenith total delays (ZTDs)
-	//		if (!model_trop(obs[i].time, pos, PPP_Info.ssat[sat - 1].azel, opt,
-	//			rtk->x, dtdx, nav, &dtrp, &shd, &vart)) continue;
-	//		PPP_Info.ssat[sat - 1].dtrp = dtrp;
-	//		PPP_Info.ssat[sat - 1].shd = shd;
-	//		PPP_Info.ssat[sat - 1].wmap = dtdx[0];
-
-	//		//satellite and receiver antenna model
-	//		satantpcv(sat, rs + i * 6, rr, nav->pcvs + sat - 1, dants);
-	//		antmodel(sat, &opt->pcvr, opt->antdel, PPP_Info.ssat[sat - 1].azel, 1, dantr);
-	//		for (j = 0; j < NFREQ; j++) PPP_Info.ssat[sat - 1].dant[j] = dants[j] + dantr[j];
-
-	//		/* phase windup model */
-	//		if (!model_phw(rtk->sol.time, sat, nav->pcvs[sat - 1].type, 2, rs + i * 6, rr,
-	//			&PPP_Info.ssat[sat - 1].phw)) continue;
-
-	//		for (j = 0; j < NFREQ; j++) {
-	//			PPP_Info.ssat[sat - 1].L[j] = PPP_Info.ssat[sat - 1].P[j] = 0.0;
-	//			PPP_Info.ssat[sat - 1].L[j] = obs[i].L[j];
-	//			PPP_Info.ssat[sat - 1].P[j] = obs[i].P[j];
-	//		}
-	//	}
-	//}
-
-	//detecs(rtk, obs, n, nav);
+	dete_CS(obs, navall, popt, sol, sat_stat);
 
 	///* temporal update of ekf states */
 	//udstate_ppp(rtk, obs, n, nav);

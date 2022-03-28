@@ -1131,41 +1131,58 @@ static int search_pcv(int sat, const char* type, GpsTime_t time, vector<PCV_t>* 
 				pcvs->at(i).te.time == 0.0) { 
 				break; 
 			}
-			if (pcvs->at(i).sat != sat) { continue; }
+			if (pcvs->at(i).sat != sat)											  { continue; }
 			if (pcvs->at(i).ts.time != 0 && timediff(pcvs->at(i).ts, time) > 0.0) { continue; }
 			if (pcvs->at(i).te.time != 0 && timediff(pcvs->at(i).te, time) < 0.0) { continue; }
 			
 			*pcv = pcvs->at(i);
 
-			/*pcv = pcvs->pcv + i;
-			if (pcv->sat != sat) { continue; }
-			if (pcv->ts.time != 0 && timediff(pcv->ts, time) > 0.0) continue;
-			if (pcv->te.time != 0 && timediff(pcv->te, time) < 0.0) continue;
-			return pcv;*/
+			return 1;
 		}
 	}
-	//else {
-	//	strcpy(buff, type);
-	//	for (p = strtok(buff, " "); p && n < 2; p = strtok(NULL, " ")) types[n++] = p;
-	//	if (n <= 0) return NULL;
+	/* 2.search receiver antenna */
+	else {
+		strcpy(buff, type);
+		for (p = strtok(buff, " "); p && n < 2; p = strtok(NULL, " ")) {
+			types[n++] = p;
+		}
+		if (n <= 0) { return 0; }
 
-	//	/* search receiver antenna with radome at first */
-	//	for (i = 0; i < pcvs->n; i++) {
-	//		pcv = pcvs->pcv + i;
-	//		for (j = 0; j < n; j++) if (!strstr(pcv->type, types[j])) break;
-	//		if (j >= n) return pcv;
-	//	}
-	//	/* search receiver antenna without radome */
-	//	for (i = 0; i < pcvs->n; i++) {
-	//		pcv = pcvs->pcv + i;
-	//		if (strstr(pcv->type, types[0]) != pcv->type) continue;
+		/* search receiver antenna with radome at first */
+		for (i = 0; i < pcvs->size(); i++) {
+			if (pcvs->at(i).sat > 0 ||
+				pcvs->at(i).ts.time != 0.0 ||
+				pcvs->at(i).te.time != 0.0) {
+				continue;
+			}
 
-	//		sprintf(PPP_Glo.chMsg, "*** WARNING: pcv without radome is used type=%s\n", type);
-	//		outDebug(OUTWIN, OUTFIL, 0);
+			for (j = 0; j < n; j++) {
+				if (!strstr((*pcvs)[i].type, types[j])) {
+					break;
+				}
+			}
+			if (j >= n) { 
+				(*pcv) = (*pcvs)[i]; 
+				return 1;
+			}
+		}
 
-	//		return pcv;
-	//	}
-	//}
+		/* search receiver antenna without radome */
+		for (i = 0; i < pcvs->size(); i++) {
+			if (pcvs->at(i).sat > 0 ||
+				pcvs->at(i).ts.time != 0.0 ||
+				pcvs->at(i).te.time != 0.0) {
+				continue;
+			}
+			
+			if (strstr((*pcvs)[i].type, types[0]) != (*pcvs)[i].type) { continue; }
+			
+			(*pcv) = (*pcvs)[i];
+
+			return 1;
+		}
+	}
+
 	return 0;
 }
 
@@ -1240,19 +1257,19 @@ extern int read_pcv(vector<const char*> atxfile, vector<PCV_t>* pcvs)
 				if (sscanf(buff + 3, "%c", &csys) < 1) { continue; }	// 读系统
 
 				// 根据系统csys设置频率freq(G/R/C/E/J)
-				if (csys == 'G') { freq = f; }
+				if		(csys == 'G') { freq = f; }
 				else if (csys == 'R') { freq = f + NFREQ; }
 				else if (csys == 'C') { freq = f + 2 * NFREQ; }
 				else if (csys == 'E') {
-					if (f == 1) { freq = 1 + 3 * NFREQ; } // E1
-					else if (f == 5) { freq = 2 + 3 * NFREQ; } // E5
-					else if (f == 6) { freq = 3 + 3 * NFREQ; } // E6	
-					else { freq = 0; }
+					if		(f == 1)  { freq = 1 + 3 * NFREQ; } // E1
+					else if (f == 5)  { freq = 2 + 3 * NFREQ; } // E5
+					else if (f == 6)  { freq = 3 + 3 * NFREQ; } // E6	
+					else			  { freq = 0; }
 				}
 				else if (csys == 'J') {
-					if (f < 5) { freq = f + 4 * NFREQ; }
+					if		 (f < 5) { freq = f + 4 * NFREQ; }
 					else if (f == 5) { freq = 3 + 4 * NFREQ; }
-					else { freq = 0; }
+					else			 { freq = 0; }
 				}
 				else { freq = 0; }
 			}
@@ -1318,22 +1335,24 @@ extern int read_pcv(vector<const char*> atxfile, vector<PCV_t>* pcvs)
 extern void set_pcv(GpsTime_t time, ProcOpt_t* popt, NavPack_t* navall, vector<PCV_t> *pcvs, const Station_t* sta)
 {
 	PCV_t pcv;
-	double pos[3], del[3], dt;
+	double dt;
 	int i, j, k = 0, sys;
 	char id[8];
 	int ret = 0;
+	vector<double> pos = vector<double>(3, 0.0);
+	vector<double> xyz = vector<double>(3, 0.0);
+	vector<double> del = vector<double>(3, 0.0);
+	vector<double> enu = vector<double>(3, 0.0);
 
-	/* set satellite antenna parameters */
+	/* 1.set satellite antenna parameters */
 	for (i = 0; i < MAXSAT; i++) {
-		// 系统筛选
 		sys = satsys(i + 1, NULL);
-		if (!(sys & popt->nav_sys)) { continue; }
-		// pcv卫星，时间筛选
+		if (!(sys & popt->nav_sys))   { continue; }
 		ret = search_pcv(i + 1, "", time, pcvs, &pcv);
 		if (pcv.ts.time == (time_t)0) { continue; }
 		satno2id(i + 1, id);
-		// 保存到navall
 		navall->sat_pcv.insert(pair<int, PCV_t>(i + 1, pcv));
+
 		// pcv列元素
 		if (pcv.dzen == 0.0) { j = 10; }
 		else { j = myRound((pcv.zen2 - pcv.zen1) / pcv.dzen); }
@@ -1342,58 +1361,41 @@ extern void set_pcv(GpsTime_t time, ProcOpt_t* popt, NavPack_t* navall, vector<P
 		else if (sys == SYS_GLO) { k = 0 + 1 * NFREQ; }
 		else if (sys == SYS_BDS) { k = 0 + 2 * NFREQ; }
 		else if (sys == SYS_GAL) { k = 0 + 3 * NFREQ; }
+
 		// 计算pcv是否正常
 		dt = norm(pcv.var[k], j);
 		/*if (dt <= 0.0001) {
 			printf("%s ATTENTION! PRELIMINARY PHASE CENTER CORRECTIONS!\n", id);
 		}*/
 	}
-	
-	//for (i = 0; i < MAXSAT; i++) {
-	//	sys = PPP_Glo.sFlag[i].sys;
-	//	if (!(sys & popt->navsys)) continue;
-	//	if (!(pcv = searchpcv(i + 1, "", time, pcvs))) {
-	//		satno2id(i + 1, id);
-	//		continue;
-	//	}
-	//	nav->pcvs[i] = *pcv;
-
-	//	if (pcv->dzen == 0.0) j = 10;
-	//	else j = myRound((pcv->zen2 - pcv->zen1) / pcv->dzen);
-
-	//	if (sys == SYS_GPS) k = 0;
-	//	else if (sys == SYS_GLO) k = 0 + 1 * NFREQ;
-	//	else if (sys == SYS_CMP) k = 0 + 2 * NFREQ;
-	//	else if (sys == SYS_GAL) k = 0 + 3 * NFREQ;
-	//	//double dt=norm(pcv->var[0],j);
-	//	dt = norm(pcv->var[k], j);
-	//	if (dt <= 0.0001) {
-	//		sprintf(PPP_Glo.chMsg, "%s ATTENTION! PRELIMINARY PHASE CENTER CORRECTIONS!\n",
-	//			PPP_Glo.sFlag[pcv->sat - 1].id);
-	//		outDebug(OUTWIN, OUTFIL, 0);
-	//	}
-	//}
-	//for (i = 0; i < 1; i++) {
-	//	if (!strcmp(popt->anttype, "*")) { /* set by station parameters */
-	//		strcpy(popt->anttype, sta[i].antdes);
-	//		if (sta[i].deltype == 1) { /* xyz */
-	//			if (norm(sta[i].pos, 3) > 0.0) {
-	//				ecef2pos(sta[i].pos, pos);
-	//				ecef2enu(pos, sta[i].del, del);
-	//				for (j = 0; j < 3; j++) popt->antdel[j] = del[j];
-	//			}
-	//		}
-	//		else { /* enu */
-	//			for (j = 0; j < 3; j++) popt->antdel[j] = stas[i].del[j];
-	//		}
-	//	}
-	//	if (!(pcv = searchpcv(0, popt->anttype, time, pcvr))) {
-	//		*popt->anttype = '\0';
-	//		continue;
-	//	}
-	//	strcpy(popt->anttype, pcv->type);
-	//	popt->pcvr = *pcv;
-	//}
+	/* 2.set receiver antenna parameters */
+	for (i = 0; i < 1; i++) {
+		if (!strcmp(navall->rec_ant, "")) { /* set by station parameters */
+			strcpy(navall->rec_ant, sta[i].antdes);
+			/* xyz */
+			if (sta[i].deltype == 1) { 
+				if (norm(sta[i].pos, 3) > 0.0) {
+					for (j = 0; j < 3; j++) { 
+						xyz[j] = sta[i].pos[j]; 
+						del[j] = sta[i].del[j];
+					}
+					pos = ecef2pos(xyz);
+					enu = ecef2enu(pos, del);
+					for (j = 0; j < 3; j++) { navall->rec_del[j] = enu[j]; }
+				}
+			}
+			/* enu */
+			else {
+				for (j = 0; j < 3; j++) { navall->rec_del[j] = sta[i].del[j]; }
+			}
+		}
+		if (!(ret = search_pcv(0, navall->rec_ant, time, pcvs, &pcv))) {
+			*navall->rec_ant = '\0';
+			continue;
+		}
+		strcpy(navall->rec_ant, pcv.type);
+		navall->rec_pcv = pcv;
+	}
 }
 
 /* read DCB files -------------------------------------------------------------------------------------------------------*/

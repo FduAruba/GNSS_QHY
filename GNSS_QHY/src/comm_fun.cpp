@@ -2,6 +2,7 @@
 #include<exception>
 
 #define SQRT(x)     ((x)<0.0||(x)!=(x)?0.0:sqrt(x))
+#define MIN(x,y)    ((x)<(y)?(x):(y))
 #define MAX_VAR_EPH SQR(300.0)  /* max variance eph to reject satellite (m^2) */
 
 static const double gpst0[] = { 1980,1, 6,0,0,0 }; /* gps time reference */
@@ -1407,19 +1408,19 @@ extern int cal_CS_thres(ProcOpt_t* popt, const double sample)
 	// 根据采样率sample设置GF和MW的阈值
 	if (sample > 0.0) {
 		if (popt->flagGF == 1 && fabs(popt->thresGF) < 0.01) {
-			if (sample <= 1.0) { popt->thresGF = 0.05; }
-			else if (sample <= 20.0) { popt->thresGF = (0.10) / (20.0 - 0.0) * sample + 0.05; }
-			else if (sample <= 60.0) { popt->thresGF = 0.15; }
+			if		(sample <= 1.0)   { popt->thresGF = 0.05; }
+			else if (sample <= 20.0)  { popt->thresGF = (0.10) / (20.0 - 0.0) * sample + 0.05; }
+			else if (sample <= 60.0)  { popt->thresGF = 0.15; }
 			else if (sample <= 100.0) { popt->thresGF = 0.25; }
-			else { popt->thresGF = 0.35; }
+			else					  { popt->thresGF = 0.35; }
 
 			stat = 1;
 		}
 		if (popt->flagMW == 1 && fabs(popt->thresMW) < 0.01) {
-			if (sample <= 1.0) { popt->thresMW = 2.5; }
-			else if (sample <= 20.0) { popt->thresMW = (2.5) / (20.0 - 0.0) * sample + 2.5; }
-			else if (sample <= 60.0) { popt->thresMW = 5.0; }
-			else { popt->thresMW = 7.5; }
+			if		(sample <= 1.0)   { popt->thresMW = 2.5; }
+			else if (sample <= 20.0)  { popt->thresMW = (2.5) / (20.0 - 0.0) * sample + 2.5; }
+			else if (sample <= 60.0)  { popt->thresMW = 5.0; }
+			else					  { popt->thresMW = 7.5; }
 
 			stat = 1;
 		}
@@ -2026,8 +2027,192 @@ extern void sat_pco(GpsTime_t time, int sat, map<int, vector<double>>* rs, const
 	/* iono-free LC */
 	for (i = 0; i < 3; i++) {
 		dant1 = pcv->off[j][0] * ex[i] + pcv->off[j][1] * ey[i] + pcv->off[j][2] * ez[i];
-		dant1 = pcv->off[j][0] * ex[i] + pcv->off[j][1] * ey[i] + pcv->off[j][2] * ez[i];
 		dant2 = pcv->off[k][0] * ex[i] + pcv->off[k][1] * ey[i] + pcv->off[k][2] * ez[i];
 		dant[i] = C1 * dant1 + C2 * dant2;
 	}
+}
+
+/* L1/L2 geometry - free phase measurement-------------------------------------*/
+extern double meas_gf(int sat, const ObsData_t* obsd, NavPack_t* navall)
+{
+	vector<double> lam = navall->lam.at(sat);
+
+	if (lam[0] == 0.0 || lam[1] == 0.0 || 
+		obsd->L[0] == 0.0 || obsd->L[1] == 0.0) { 
+		return 0.0; 
+	}
+
+	return lam[0] * obsd->L[0] - lam[1] * obsd->L[1];
+}
+
+/* detect cycle slip by geometry free phase jump -----------------------------*/
+static void detslp_gf(const ObsEphData_t* obs, NavPack_t* navall, ProcOpt_t* popt, Sol_t* sol, map<int, Sat_t>* sat_stat)
+{
+	double g0, g1, el, thres = 0.0, deltaEpoch = 1.0;
+	double elev0, thres0;
+	int i, j, sat;
+	char prn[4];
+
+	deltaEpoch = fabs(sol->tt / popt->ti);
+
+	for (auto it = obs->obssat.begin(); it != obs->obssat.end(); it++) {
+		sat = it->first;
+		if (sat_stat->find(sat) == sat_stat->end()) { continue; }
+
+		if ((g1 = meas_gf(sat, &(obs->obssat.at(sat)), navall)) == 0.0) { continue; }
+
+		g0 = (*sat_stat)[sat].gf;
+		(*sat_stat)[sat].gf = g1;
+		el = (*sat_stat)[sat].azel[1] * R2D;
+		if (el < popt->elmin * R2D) { 
+			continue;
+			//el = popt->elmin * R2D; 
+		}
+
+		if (el >= 15.0) { 
+			thres = popt->thresGF; 
+		}
+		else { 
+			thres = popt->thresGF * (-1.0 / 15.0 * el + 2.0); 
+		}
+	
+		if (g0 != 0.0 && fabs(g1 - g0) > MIN(deltaEpoch * thres, 1.5)) {
+			for (j = 0; j < popt->nf; j++) {
+				(*sat_stat)[sat].slip[j] |= 1;
+			}
+
+			satno2id(sat, prn);
+			printf("%s GF CS gf_new=%13.3f, gf_old=%13.3f, diff_abs=%13.3f, thres=%13.3f, elev=%4.1f\n",
+				prn, g1, g0, g1 - g0, thres, el);
+		}
+	}
+}
+
+/* Melbourne-Wubbena linear combination --------------------------------------*/
+static double meas_MW(int sat, const ObsData_t* obsd, NavPack_t* navall)
+{
+	int i = 0, j = 1;
+	double P1, P2, P1_C1, P2_C2, lam1, lam2, res;
+	vector<double> lam = navall->lam.at(sat);
+
+	if (obsd->L[i] == 0.0) { return 0.0; }
+	if (obsd->L[j] == 0.0) { return 0.0; }
+	if (obsd->P[i] == 0.0) { return 0.0; }
+	if (obsd->P[j] == 0.0) { return 0.0; }
+	if (lam[i] * lam[j] == 0.0) { return 0.0; }
+
+	P1 = obsd->P[i];
+	P2 = obsd->P[j];
+	if (navall->dcb.at(sat).find("P1-C1") != navall->dcb.at(sat).end()) {
+		P1_C1 = navall->dcb.at(sat).at("P1-C1");
+	}
+	else {
+		P1_C1 = 0;
+	}
+	if (navall->dcb.at(sat).find("P2-C2") != navall->dcb.at(sat).end()) {
+		P2_C2 = navall->dcb.at(sat).at("P2-C2");
+	}
+	else {
+		P2_C2 = 0;
+	}
+
+	if (obsd->code[0] == CODE_L1C) { P1 += P1_C1; } /* C1->P1 */
+	if (obsd->code[1] == CODE_L2C) { P2 += P2_C2; } /* C2->P2 */
+
+	lam1 = lam[i];
+	lam2 = lam[j];
+
+	// 返回宽巷模糊度 N2-N1 (cycle)
+	res = (obsd->L[i] - obsd->L[j]) - (lam2 - lam1) / (lam1 + lam2) * (P1 / lam1 + P2 / lam2);
+
+	return res;
+}
+
+/* detect cycle slip by widelane jump -----------------------------*/
+static void detslp_mw(const ObsEphData_t* obs, NavPack_t* navall, ProcOpt_t* popt, map<int, Sat_t>* sat_stat)
+{
+	int i, j, nd = 0, sat;
+	double wl0, wl1, elev, el, thres, dtmp, fact;
+	double std_ex, ave_ex;
+	const double rad_20 = 20.0 * D2R;
+
+	// 计算MW阈值的比例因子
+	fact = 1.0;
+	if (popt->ti >= 29.5) {
+		if		(popt->deleph <= 2) { fact = 1.0;  }
+		else if (popt->deleph <= 4) { fact = 1.25; }
+		else if (popt->deleph <= 6) { fact = 1.5;  }
+		else						{ fact = 2.0; }
+	}
+	// 遍历obs对当前卫星做周跳检测
+	for (auto it = obs->obssat.begin(); it != obs->obssat.end(); it++) {
+		sat = it->first;
+		if (sat_stat->find(sat) == sat_stat->end()) { continue; }
+
+		if ((wl1 = meas_MW(sat, &(obs->obssat.at(sat)), navall)) == 0.0) { continue; }
+
+		wl0 = (*sat_stat)[sat].mw;
+		(*sat_stat)[sat].mw = wl1;
+
+		el = (*sat_stat)[sat].azel[1];
+
+		if (el < popt->elmin) { 
+			continue;
+			//el = popt->elmin; 
+		}
+		dtmp = el * R2D;
+
+		if (el > rad_20) {
+			thres = popt->thresMW;
+		}
+		else {
+			thres = popt->thresMW * (-0.1 * dtmp + 3);
+		}
+
+		if (fabs(wl1 - wl0) > MIN(fact * thres, 6.0)) {
+			for (j = 0; j < popt->nf; j++) {
+				(*sat_stat)[sat].slip[j] |= 1;
+			}
+		}
+	}
+}
+
+extern void dete_CS(const ObsEphData_t* obs, NavPack_t* navall, ProcOpt_t* popt,
+	Sol_t* sol, map<int, Sat_t>* sat_stat)
+{
+	int i, j, b1, b2;
+	double dt;
+
+	/* 所有卫星各个频率的周跳指示符置0 */
+	for (i = 0; i < sat_stat->size(); i++) {
+		for (j = 0; j < popt->nf; j++) {
+			(*sat_stat)[i].slip[j] = 0;
+		}
+	}
+
+	/* 根据采样率设置探测历元个数deleph */
+	dt = 1.0;
+	if (popt->ti > 0.0) { dt = fabs(sol->tt / popt->ti); }
+	popt->deleph = myRound(dt);
+	if (popt->ti <= 1.5) {
+		if		(fabs(sol->tt) <= 10.0) { popt->deleph = 1; }
+		else if (fabs(sol->tt) <= 15.0) { popt->deleph = 2; }
+		else if (fabs(sol->tt) <= 22.0) { popt->deleph = 3; }
+	}
+
+	if (popt->deleph <= 0) {
+		b1 = (popt->ieph == 1) && (popt->sol_mode == 0);
+		b2 = (navall->n - 1 == popt->ieph) && (popt->sol_mode == 1);
+
+		if (!b1 && !b2) {
+			printf("** deltaEpoch=%d\n", popt->deleph);
+		}
+		popt->deleph = 1;
+	}
+
+	/* detect slip by Melbourne-Wubbena linear combination jump */
+	if (popt->flagMW) { detslp_mw(obs, navall, popt, sat_stat); }
+
+	/* detect cycle slip by geometry-free phase jump */
+	if (popt->flagGF) { detslp_gf(obs, navall, popt, sol, sat_stat); }
 }

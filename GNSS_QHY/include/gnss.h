@@ -396,6 +396,10 @@ struct NavPack_t
     vector<Erp_t>                           erp;    // earth rotation parameters
     vector<vector<double>>                  otl;    // ocean tide parameters
     map<int, PCV_t>                     sat_pcv;    // satellite PCO/PCV 
+    
+    PCV_t                               rec_pcv;    // receiver  PCO/PCV 
+    char                        rec_ant[MAXANT];    // antenna type
+    double                           rec_del[3];    // antenna delta {{rov_e,rov_n,rov_u},{ref_e,ref_n,ref_u}}
 
     map<int, vector<double>>                lam;    // wave-length of sat
     
@@ -485,6 +489,7 @@ struct ProcOpt_t
     GpsTime_t te;           // end time
     double ti = 30.0;       // time interval
     int ieph;               // index of epoch
+    int deleph;
 
     int pos_mode;           // mode: positioning mode (PMODE_???)
     int sol_mode;           // mode: solution mode (0:forward,1:backward,2:combined)
@@ -546,9 +551,6 @@ struct ProcOpt_t
     //double maxtdiff;    /* max difference of time (sec) */
     //double maxinno;     /* reject threshold of innovation (m) */
     //double baseline[2]; /* baseline length constraint {const,sigma} (m) */
-    //char anttype[MAXANT]; /* antenna types {rover,base} */
-    //double antdel[3];   /* antenna delta {{rov_e,rov_n,rov_u},{ref_e,ref_n,ref_u}} */
-    //PCV_t pcvr;         /* receiver antenna parameters {rov,base} */
     //int  maxaveep;      /* max averaging epoches */
     //int  initrst;       /* initialize by restart */
     //int  outsingle;     /* output single by dgps/float/fix/ppp outage */
@@ -614,8 +616,9 @@ struct Sol_t
     /* QHY add debug */
     int n_ite = 0;              // bad epoch: epoch not iterated
     int n_les = 0;              // bad epoch: epoch satellite number not enough
-    FILE* fp_sat;               // Debug file pointer: satellite select position/clock file
+    FILE* fp_sat;               // Debug file pointer: satellite select position/clock file(SPP)
     FILE* fp_itr;               // Debug file pointer: resduial value file
+    FILE* fp_sat_ppp;           // Debug file pointer: satellite select position/clock file(PPP)
 };
 
 /* satellite status type ---------------------------------------------------------*/
@@ -633,20 +636,22 @@ struct Sat_t
     double PC, LC;              // ionosphere-free pseudorange and carrier phase observations 
     unsigned char vsat[NFREQ];  // valid satellite flag 
 
-    double pcv[3];              // sat pcv (m)
+    double pcv_s[3];            // sat pcv (m)
+    double pco_r[3];            // rec pco (m)
     double phw;                 // phase windup (cycle) 
+
+    unsigned char slip[NFREQ];  // cycle-slip flag 
+    double  mw;                 // MW wide-lane amb (cycle) 
+    double  gf;                 // geometry-free phase L1-L2 (m) 
 
     //unsigned char snr[NFREQ];   // signal strength (0.25 dBHz) 
     //unsigned char fix[NFREQ];   // ambiguity fix flag (1:fix,2:float,3:hold) 
-    //unsigned char slip[NFREQ];  // cycle-slip flag 
     //unsigned char half[NFREQ];  // half-cycle valid flag 
     //int lock[NFREQ];            // lock counter of phase 
     //unsigned int outc[NFREQ];   // obs outage counter of phase 
     //unsigned int slipc[NFREQ];  // cycle-slip counter 
-    //unsigned int rejc[NFREQ];   // reject counter 
-    //double  gf;                 // geometry-free phase L1-L2 (m) 
+    //unsigned int rejc[NFREQ];   // reject counter
     //double  gf2;                // geometry-free phase L1-L5 (m) 
-    //double  mw;                 // MW-LC (m) 
     //GpsTime_t pt[2][NFREQ];     // previous carrier-phase time 
     //double  ph[2][NFREQ];       // previous carrier-phase observable (cycle) 
 };
@@ -1254,6 +1259,8 @@ extern int cal_Eclips(int prn, map<int, vector<double>>* rs, double* sunp, doubl
 
 extern void sat_pco(GpsTime_t time, int sat, map<int, vector<double>>* rs, const NavPack_t* navall, double* dant);
 
+extern void dete_CS(const ObsEphData_t* obs, NavPack_t* navall, ProcOpt_t* popt, Sol_t* sol, map<int, Sat_t>* sat_stat);
+
 /* readfile.cpp ----------------------------------------------------------------*/
 
 extern int read_obsnav(GpsTime_t ts, GpsTime_t te, double ti, vector<const char*> infile, vector<ObsRecData_t>* obsall, NavPack_t* navall, Station_t* sta);
@@ -1358,7 +1365,7 @@ extern int spp(ObsEphData_t* obs, int n, NavPack_t* navall, const ProcOpt_t* pop
 
 /* spp.cpp --------------------------------------------------------------------*/
 
-extern int ppp(ObsEphData_t* obs, int n, NavPack_t* navall, const ProcOpt_t* popt, Sol_t* sol, map<int, Sat_t>* sat_stat);
+extern int ppp(ObsEphData_t* obs, int n, NavPack_t* navall, ProcOpt_t* popt, Sol_t* sol, map<int, Sat_t>* sat_stat);
 
 /* broad_eph.cpp --------------------------------------------------------------*/
 
