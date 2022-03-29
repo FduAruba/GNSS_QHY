@@ -91,7 +91,7 @@ int main()
 	int ret;
 	double err[5] = { 100.0,0.003,0.003,0.0,1.0 };
 
-	popt.nav_sys = SYS_GPS;
+	popt.nav_sys = SYS_GPS | SYS_BDS | SYS_GLO;
 	popt.pos_mode = PMODE_PPP_STATIC;
 	popt.eph_opt = EPHOPT_PREC;
 	popt.thres_GDOP = 30.0;
@@ -99,8 +99,6 @@ int main()
 	popt.elmin = 15.0 * D2R;
 	for (int i = 0; i < 5; i++) { popt.err[i] = err[i]; }
 	for (int i = 0; i < MAXSAT; i++) { popt.exsats[i] = 0; }
-	popt.flagMW = 1;
-	popt.flagGF = 1;
 
 	fopt.infile.push_back("E:\\CppCode\\GNSS_QHY\\data\\HD_2740.21p");
 	fopt.infile.push_back("E:\\CppCode\\GNSS_QHY\\data\\HD_2740.21o");

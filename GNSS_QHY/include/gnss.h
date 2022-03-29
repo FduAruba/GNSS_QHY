@@ -660,12 +660,19 @@ struct Sat_t
 struct PPP_Glob_t
 {
     double ep[6] = { 0 };
+    double rr[3];
     double clk_jump = 0.0;
-    map<int, vector<double>> obs_past;
+    map<int, vector<double>> obs_past;      // 上个历元的obs双频数据
+
+    int sG, sR, sE, sC;
+    int nP, nC, nT, nI, nB, nX;
+
+    vector<double> x;                       // 待估状态
+    vector<vector<double>> P;               // 状态协方差
 
     map<int, double> ecli_f;
 };
-static PPP_Glob_t pppglob;
+static PPP_Glob_t pppglob = {0};
 
 /* functions --------------------------------------------------------------------*/
 /* comm_fun.cpp -----------------------------------------------------------------*/

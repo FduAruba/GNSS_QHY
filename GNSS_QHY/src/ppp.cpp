@@ -1,4 +1,166 @@
-#include"gnss.h"
+#include"ppp.h"
+
+
+/* initialize state and covariance -------------------------------------------*/
+static void initx(int nx, double xi, double var, int i)
+{
+	int j;
+	pppglob.x[i] = xi;
+	for (j = 0; j < nx; j++) {
+		pppglob.P[i][j] = pppglob.P[j][i] = i == j ? var : 0.0;
+	}
+}
+
+/* temporal update of clock --------------------------------------------------*/
+static void udclk_ppp(int nx, ProcOpt_t* popt, Sol_t* sol)
+{
+	//prcopt_t* opt = &rtk->opt;
+	double dtr;
+	int sys = popt->nav_sys, ic = pppglob.nP - 1;
+
+	if (pppglob.sG) {
+		dtr = sol->dtr[0];
+		if (fabs(dtr) < 1.0e-16) { dtr = 1.0e-16; }
+		ic ++;
+		initx(nx, CLIGHT * dtr, VAR_CLK, ic);
+	}
+	if (pppglob.sR) {
+		dtr = sol->dtr[1];
+		if (fabs(dtr) < 1.0e-16) { dtr = 1.0e-16; }
+		ic++;
+		initx(nx, CLIGHT * dtr, VAR_CLK, ic);
+	}
+	if (pppglob.sE) {
+		dtr = sol->dtr[2];
+		if (fabs(dtr) < 1.0e-16) { dtr = 1.0e-16; }
+		ic++;
+		initx(nx, CLIGHT * dtr, VAR_CLK, ic);
+	}
+	if (pppglob.sC) {
+		dtr = sol->dtr[3];
+		if (fabs(dtr) < 1.0e-16) { dtr = 1.0e-16; }
+		ic++;
+		initx(nx, CLIGHT * dtr, VAR_CLK, ic);
+	}
+}
+
+/* temporal update of position -----------------------------------------------*/
+static void udpos_ppp(int nx, ProcOpt_t* popt, Sol_t* sol)
+{
+	int i;
+
+	/* 1.fixed mode */
+	if (popt->pos_mode == PMODE_PPP_FIXED) {
+		for (i = 0; i < 3; i++) { initx(nx, sol->rr[i], 1E-8, i); }
+		return;
+	}
+	/* 2.initialize position for first epoch */
+	if (norm(pppglob.rr, 3) <= 0.0) {
+		for (i = 0; i < 3; i++) { initx(nx, sol->rr[i], VAR_POS, i); }
+	}
+	/* 3.static ppp mode */
+	if (popt->pos_mode == PMODE_PPP_STATIC) {
+		return;
+	}
+	/* 4.kinmatic mode without dynamics */
+	for (i = 0; i < 3; i++) { initx(nx, sol->rr[i], VAR_POS, i); }
+}
+
+/* temporal update of states --------------------------------------------------*/
+static void udstate_ppp(int nx, const ObsEphData_t* obs, NavPack_t* navall, ProcOpt_t* popt, Sol_t* sol)
+{
+	// 构建状态协方差矩阵
+	vector<double>         x_tmp;
+	vector<vector<double>> P_tmp;
+
+	pppglob.x.swap(x_tmp);
+	pppglob.P.swap(P_tmp);
+	pppglob.x = vector<double>(nx, 0.0);
+	pppglob.P = vector<vector<double>>(nx, vector<double>(nx, 0.0));
+	
+	
+	/* temporal update of position */
+	udpos_ppp(nx, popt, sol);
+
+	///* temporal update of clock */
+	udclk_ppp(nx, popt, sol);
+
+	for (int i = 0; i < pppglob.nP + pppglob.nC; i++) {
+		printf("%12.3f", pppglob.x[i]);
+	}
+	printf("\n");
+
+	for (int i = 0; i < pppglob.nP + pppglob.nC; i++) {
+		for (int j = 0; j < pppglob.nP + pppglob.nC; j++) {
+			printf("%12.3f", pppglob.P[i][j]);
+		}
+		printf("\n");
+	}
+
+	int xxx = 2;
+
+	///* temporal update of tropospheric parameters */
+	//if (rtk->opt.tropopt == TROPOPT_EST || rtk->opt.tropopt == TROPOPT_ESTG) {
+	//	udtrop_ppp(rtk);
+	//}
+	///* temporal update of ionospheric parameters */
+	//if (rtk->opt.ionoopt == IONOOPT_UC1 || rtk->opt.ionoopt == IONOOPT_UC12) {
+	//	udiono_ppp(rtk, obs, n, nav);
+	//}
+	///* temporal update of L5-receiver-dcb parameters */
+	//if (rtk->opt.nf >= 3 || rtk->opt.ionoopt == IONOOPT_UC12) {
+	//	//if (rtk->opt.nf>=3) {
+	//	uddcb_ppp(rtk);
+	//}
+	///* temporal update of phase-bias */
+	//udbias_ppp(rtk, obs, n, nav);
+}
+
+static int count_stat(ObsEphData_t* obs, map<int, Sat_t>* sat_stat, map<int, vector<int>>* svh) 
+{
+	int sat = 0;
+	int ng = 0, nr = 0, ne = 0, nc = 0;
+	int npos = 3, nclk = 0, ntrp = 1, nion = 0, namb = 0, nx = 0;
+
+	for (auto it = obs->obssat.begin(); it != obs->obssat.end();) {
+		sat = it->first;
+		
+		if (svh->find(sat) == svh->end() || sat_stat->find(sat) == sat_stat->end()) {
+			it = obs->obssat.erase(it);
+			continue;
+		}
+
+		if ((*svh)[sat][0] == -1) {
+			it = obs->obssat.erase(it);
+			continue;
+		}
+
+		if		((*sat_stat)[sat].sys == SYS_GPS) { ng++; }
+		else if ((*sat_stat)[sat].sys == SYS_GLO) { nr++; }
+		else if ((*sat_stat)[sat].sys == SYS_GAL) { ne++; }
+		else if ((*sat_stat)[sat].sys == SYS_BDS) { nc++; }
+
+		it++;
+	}
+	obs->nsat = obs->obssat.size();
+
+	nion = obs->nsat;
+	namb = obs->nsat * 2;		// 默认双频伪距相位，后期要改
+
+	if (ng) { pppglob.sG = ng; nclk++; } 
+	else    { pppglob.sG = 0; }
+	if (nr) { pppglob.sR = nr; nclk++; }
+	else    { pppglob.sR = 0; }
+	if (ne) { pppglob.sE = ne; nclk++; }
+	else    { pppglob.sE = 0; }
+	if (nc) { pppglob.sC = nc; nclk++; }
+	else    { pppglob.sC = 0; }
+
+	pppglob.nP = npos; pppglob.nC = nclk; pppglob.nT = ntrp; pppglob.nI = nion; pppglob.nB = namb;
+
+	pppglob.nX = nx = npos + nclk + ntrp + nion + namb;
+	return nx;
+}
 
 /* nominal yaw-angle ---------------------------------------------------------*/
 static double yaw_nominal(double beta, double mu)
@@ -309,7 +471,8 @@ static void cal_sat_PCV(int sat, map<int, vector<double>>* rs, const double* rr,
 	antmodel_s(sat, pcvs, nadir, pcv);
 }
 //calculate satellite elevation
-extern void calElev(Sol_t* sol, const ObsEphData_t* obs, int n, map<int, vector<double>>* rs, map<int, Sat_t>* sat_stat)
+extern void calElev(Sol_t* sol, const ObsEphData_t* obs, int n, map<int, vector<double>>* rs,
+	map<int, Sat_t>* sat_stat, map<int, vector<int>>* svh)
 {
 	int i, sat;
 	double r;
@@ -319,8 +482,9 @@ extern void calElev(Sol_t* sol, const ObsEphData_t* obs, int n, map<int, vector<
 	pair<int, vector<double>> azel;
 	map<int, vector<double>> azel_tmp;
 
-	// 1.卫星方位角/仰角清零
+	// 1.卫星状态方位角/仰角清零
 	for (auto it = (*sat_stat).begin(); it != (*sat_stat).end(); it++) {
+		it->second.vs = 0;
 		it->second.azel[0] = it->second.azel[1] = 0.0;
 	}
 	// 2.获取接收机位置
@@ -337,13 +501,14 @@ extern void calElev(Sol_t* sol, const ObsEphData_t* obs, int n, map<int, vector<
 	if (norm(rr, 3) <= 100.0) { return; }
 
 	pos = ecef2pos(rr);
-	// 3.重新计算当前历元卫星仰角
+	// 3.重新计算当前历元卫星仰角,(此时使用精密星历)
 	for (auto it = obs->obssat.begin(); it != obs->obssat.end(); it++) {
 		sat = it->first;
 
 		if (satsys(sat, NULL) == SYS_NONE)          { continue; }
 		if ((r = geodist(sat, rs, rr, &e)) < 0)     { continue; }
-		if (sat_stat->find(sat) == sat_stat->end()) { continue; }
+		if ((*svh)[sat][0] == -1)					{ continue; }
+		//if (sat_stat->find(sat) == sat_stat->end()) { continue; }
 
 		azel.first = sat;
 		for (int i = 0; i < 2; i++) {
@@ -357,13 +522,16 @@ extern void calElev(Sol_t* sol, const ObsEphData_t* obs, int n, map<int, vector<
 	for (auto it = azel_tmp.begin(); it != azel_tmp.end(); it++) {
 		sat = it->first;
 
+		(*sat_stat)[sat].sys = satsys(sat, NULL);
+		(*sat_stat)[sat].vs = 1;
 		for (int i = 0; i < 2; i++) { 
 			(*sat_stat)[sat].azel[i] = azel_tmp[sat][i]; 
 		}
 	}
 }
 /* exclude meas of eclipsing satellite (block IIA) ---------------------------*/
-static void test_eclipse(const ObsEphData_t* obs, int n, const NavPack_t* navall, map<int, vector<double>>* rs)
+static void test_eclipse(const ObsEphData_t* obs, int n, const NavPack_t* navall,
+	map<int, vector<double>>* rs, map<int, vector<int>>* svh)
 {
 	double rsun[3], esun[3], r, ang, erpv[5] = { 0 }, cosa;
 	int i, j, sat;
@@ -408,9 +576,9 @@ static void test_eclipse(const ObsEphData_t* obs, int n, const NavPack_t* navall
 		//outDebug(OUTWIN, OUTFIL, OUTTIM);
 
 		for (j = 0; j < 3; j++) { (*rs)[sat][j] = 0.0; }
+		(*svh)[sat][0] = -1;
 	}
 }
-
 
 /* precise point positioning -------------------------------------------------*/
 extern int ppp(ObsEphData_t* obs, int n, NavPack_t* navall, ProcOpt_t* popt, Sol_t* sol, map<int, Sat_t>* sat_stat)
@@ -423,7 +591,7 @@ extern int ppp(ObsEphData_t* obs, int n, NavPack_t* navall, ProcOpt_t* popt, Sol
 	double dantr[NFREQ] = { 0 }, dants[NFREQ] = { 0 };
 	double cosaz, sinaz, cosel, sinel;
 	char str[32];
-	int i, j, nv, sat, info, exc[MAXOBS] = { 0 }, stat = SOLQ_SINGLE;
+	int i, j, nv, sat, info, exc[MAXOBS] = { 0 }, stat = SOLQ_SINGLE, nx;
 
 	map<int, vector<int>> vsat;			// 卫星状态标记(1:ok  0:error)
 	map<int, vector<int>> svh;			// 卫星健康标识符(0:ok -1:error)
@@ -445,9 +613,7 @@ extern int ppp(ObsEphData_t* obs, int n, NavPack_t* navall, ProcOpt_t* popt, Sol
 		svh.insert(pair<int, vector<int>>(it->first, vector<int>(1, -1)));
 		vsat.insert(pair<int, vector<int>>(it->first, vector<int>(1, 0)));
 	}
-	
-	//rs = mat(6, n); dts = mat(2, n); var = mat(1, n); azel = zeros(2, n);
-
+		
 	//for (i = 0; i < MAXSAT; i++) for (j = 0; j < opt->nf; j++) rtk->ssat[i].fix[j] = 0;
 
 	// 1.satellite positions and clocks
@@ -469,14 +635,16 @@ extern int ppp(ObsEphData_t* obs, int n, NavPack_t* navall, ProcOpt_t* popt, Sol
 	}
 
 	// 2.exclude measurements of eclipsing satellite (block IIA) 【没搞懂】
-	test_eclipse(obs, n, navall, &rs);
+	test_eclipse(obs, n, navall, &rs, &svh);
 
 	// 3.calculate satellite elevation
-	calElev(sol, obs, n, &rs, sat_stat);
+	calElev(sol, obs, n, &rs, sat_stat, &svh);
 
 	// 4.calculate sat pcv/receiver pco/phase windup
 	for (auto it = obs->obssat.begin(); it != obs->obssat.end(); it++) {
 		sat = it->first;
+		if (sat_stat->find(sat) == sat_stat->end()) { continue; }
+
 		// 4.1 sat pcv
 		cal_sat_PCV(sat, &rs, sol->rr, &(navall->sat_pcv), (*sat_stat)[sat].pcv_s);
 		// 4.2 rec pco
@@ -487,10 +655,13 @@ extern int ppp(ObsEphData_t* obs, int n, NavPack_t* navall, ProcOpt_t* popt, Sol
 		}
 	}
 
+	// 5.detect cycle slip by MW & GF
 	dete_CS(obs, navall, popt, sol, sat_stat);
 
-	///* temporal update of ekf states */
-	//udstate_ppp(rtk, obs, n, nav);
+	nx = count_stat(obs, sat_stat, &svh);
+
+	/* temporal update of ekf states */
+	udstate_ppp(nx, obs, navall, popt, sol);
 
 	//nv = n * rtk->opt.nf * 2 + MAXSAT + 3;
 	//xp = mat(rtk->nx, 1); Pp = zeros(rtk->nx, rtk->nx);

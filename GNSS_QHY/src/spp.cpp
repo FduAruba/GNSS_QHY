@@ -492,6 +492,9 @@ extern int spp(ObsEphData_t* obs, int n, NavPack_t* navall, const ProcOpt_t* pop
 	if (n < 4) { printf("sat number = %d<4\n", n); return 0; }
 	else	   { sol->time = obs->eph; }
 	
+	map<int, Sat_t>sat_st;
+	sat_stat->swap(sat_st);
+
 	// ³õÊ¼»¯¾ØÕó
 	for (auto it = obs->obssat.begin(); it != obs->obssat.end(); it++) {
 		rs  .insert(pair<int, vector<double>>(it->first, vector<double>(6, 0.0)));
@@ -530,6 +533,7 @@ extern int spp(ObsEphData_t* obs, int n, NavPack_t* navall, const ProcOpt_t* pop
 ;			sat = it->first;
 			if ((it->second)[0] == 0) { continue; }
 			
+			sat_tmp.sys = satsys(sat, NULL);
 			sat_tmp.vs = 1;
 			sat_tmp.azel[0] = azel[sat][0];
 			sat_tmp.azel[1] = azel[sat][1];
